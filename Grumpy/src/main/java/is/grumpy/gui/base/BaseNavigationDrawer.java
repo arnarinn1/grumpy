@@ -1,6 +1,7 @@
 package is.grumpy.gui.base;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
+import is.grumpy.gui.SignUpActivity;
 import is.grumpy.gui.navigationdrawer.DrawerHeader;
 import is.grumpy.gui.navigationdrawer.DrawerListItem;
 import is.grumpy.gui.navigationdrawer.DrawerUserInfo;
@@ -105,7 +107,25 @@ public class BaseNavigationDrawer extends ActionBarActivity
         {
             mDrawerList.setItemChecked(position, true);
             mDrawerLayout.closeDrawer(mDrawerList);
-            //Initialize Fragment Manager
+            //Initialize Fragment Manager or start Activity
+
+            StartActivity(position);
         }
+    }
+
+    private void StartActivity(int position)
+    {
+        Intent intent = null;
+
+        switch(position)
+        {
+            case 8:
+                intent = new Intent(this, SignUpActivity.class);
+                break;
+            default:
+                return;
+        }
+
+        startActivity(intent);
     }
 }

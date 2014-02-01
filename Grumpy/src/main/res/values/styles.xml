@@ -37,4 +37,20 @@
         <item name="android:paddingLeft">15sp</item>
     </style>
 
+    <!-- Base Text Styles -->
+    <style name="BaseTextStyle"  parent="@android:style/TextAppearance.Medium">
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="BaseTextStyle.Header" parent="BaseTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/base_app_color</item>
+    </style>
+
+    <style name="BaseTextStyle.Item" parent="BaseTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/base2_app_color</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
 </resources>

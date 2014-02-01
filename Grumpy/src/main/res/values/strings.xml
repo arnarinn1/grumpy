@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>
+    <string name="signup_introduction">New To Grumpy ? Sign Up!</string>
+    <string name="SignUpLabel">Sign Up</string>
 
 </resources>

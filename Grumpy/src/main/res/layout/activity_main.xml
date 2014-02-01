@@ -22,7 +22,7 @@
         android:choiceMode="singleChoice"
         android:divider="#AAA"
         android:dividerHeight="0dp"
-        android:background="@color/drawer_background"
+        android:background="@color/base_app_color"
         android:listSelector="@drawable/drawer_list_selector"/>
 
 </android.support.v4.widget.DrawerLayout>
