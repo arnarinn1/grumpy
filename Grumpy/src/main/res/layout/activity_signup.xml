@@ -1,85 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10sp">
+    android:fadingEdge="vertical"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_introduction"
-        android:gravity="center"
-        style="@style/BaseTextStyle.Header" />
+        android:layout_height="fill_parent"
+        android:padding="10sp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10sp"
-        android:paddingLeft="10sp"
-        android:text="Username:"
-        style="@style/BaseTextStyle.Item"
-        />
-    
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signup_introduction"
+            android:gravity="center"
+            style="@style/BaseTextStyle.Header" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10sp"
-        android:paddingLeft="10sp"
-        android:text="Password:"
-        style="@style/BaseTextStyle.Item"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Username:"
+            style="@style/BaseTextStyle.Item"
+            />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/signupUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10sp"
-        android:paddingLeft="10sp"
-        android:text="Confirm Your Password:"
-        style="@style/BaseTextStyle.Item"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Password:"
+            style="@style/BaseTextStyle.Item"
+            />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/signupPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10sp"
-        android:paddingLeft="10sp"
-        android:text="Full Name:"
-        style="@style/BaseTextStyle.Item"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Confirm Your Password:"
+            style="@style/BaseTextStyle.Item"
+            />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"/>
+        <EditText
+            android:id="@+id/signupConfirmPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/startTraktRelatedMovies"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
-        android:textAlignment="center"
-        android:text="@string/SignUpLabel"
-        android:textColor="#fff"
-        android:background="@drawable/button_selector"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Full Name:"
+            style="@style/BaseTextStyle.Item"
+            />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/signupFullName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
 
+        <Button
+            android:id="@+id/signupUserButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:textAlignment="center"
+            android:text="@string/SignUpLabel"
+            android:textColor="#fff"
+            android:background="@drawable/button_selector"/>
+
+    </LinearLayout>
+
+</ScrollView>
