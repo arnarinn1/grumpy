@@ -3,6 +3,38 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/GrumpyActionBarStyle</item>
+    </style>
+
+    <!-- ActionBar Styles -->
+    <style name="GrumpyActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/action_bar_color</item>
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBarTitleText</item>
+    </style>
+
+    <style name="AppTheme.ActionBarTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/action_bar_text_color</item>
+    </style>
+
+    <!-- NavigationBar Styles -->
+    <style name="BaseDrawerStyle"  parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/drawer_text_color</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="BaseDrawerStyle.UserInfo" parent="BaseDrawerStyle">
+        <item name="android:paddingLeft">15sp</item>
+        <item name="android:paddingTop">10sp</item>
+    </style>
+
+    <style name="BaseDrawerStyle.Header" parent="BaseDrawerStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="BaseDrawerStyle.ListItem" parent="BaseDrawerStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">15sp</item>
     </style>
 
 </resources>

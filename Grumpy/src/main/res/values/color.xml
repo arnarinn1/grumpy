@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="drawer_background">#0F1C2E</color>
+    <color name="drawer_text_color">#fff</color>
+    <color name="drawer_background_pressed">#1C4154</color>
+    <color name="action_bar_color">#1C4154</color>
+    <color name="action_bar_text_color">#fff</color>
+    <color name="message_counter_text_color">#c5c4c4</color>
+    <color name="message_counter_text_background">#626262</color>
+</resources>

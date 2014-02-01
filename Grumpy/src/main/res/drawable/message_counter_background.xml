@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- Background Color -->
+    <solid android:color="@color/message_counter_text_background" />
+
+    <!-- Padding for the box -->
+    <padding
+        android:right="3dp"
+        android:left="3dp" >
+    </padding>
+
+    <!-- Corner Radius -->
+    <corners android:radius="2dp" />
+
+</shape>
