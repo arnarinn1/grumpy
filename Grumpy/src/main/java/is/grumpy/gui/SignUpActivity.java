@@ -61,7 +61,12 @@ public class SignUpActivity extends ActionBarActivity
                 {
                     //Call Rest Api to check if username exists.
                     new CheckCredentialsWorker(getApplicationContext()).execute();
-                    mUsernameStatus.setImageResource(R.drawable.valid);
+
+                    //Just some hard coded example to show functionality
+                    if (mUsernameField.getText().toString().equals("arnar"))
+                        mUsernameStatus.setImageResource(R.drawable.valid);
+                    else
+                        mUsernameStatus.setImageResource(R.drawable.invalid);
                 }
             }
         });
