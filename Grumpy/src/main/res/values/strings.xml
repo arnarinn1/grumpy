@@ -8,5 +8,9 @@
     <string name="drawer_close">Close Drawer</string>
     <string name="signup_introduction">New To Grumpy ? Sign Up!</string>
     <string name="SignUpLabel">Sign Up</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="confirm_password">Confirm Your Password:</string>
+    <string name="full_name">Full Name:</string>
 
 </resources>

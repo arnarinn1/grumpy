@@ -10,7 +10,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:padding="10sp">
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
-            android:text="Username:"
+            android:text="@string/username"
             style="@style/BaseTextStyle.Item"
             />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
-            android:text="Password:"
+            android:text="@string/password"
             style="@style/BaseTextStyle.Item"
             />
 
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
-            android:text="Confirm Your Password:"
+            android:text="@string/confirm_password"
             style="@style/BaseTextStyle.Item"
             />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
-            android:text="Full Name:"
+            android:text="@string/full_name"
             style="@style/BaseTextStyle.Item"
             />
 
