@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import is.grumpy.R;
@@ -22,6 +23,7 @@ public class SignUpActivity extends ActionBarActivity
     private EditText mPasswordField;
     private EditText mPasswordConfirmField;
     private EditText mFullNameField;
+    private ImageView mUsernameStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,6 +41,7 @@ public class SignUpActivity extends ActionBarActivity
         mPasswordField = (EditText) findViewById(R.id.signupPassword);
         mPasswordConfirmField = (EditText) findViewById(R.id.signupConfirmPassword);
         mFullNameField = (EditText) findViewById(R.id.signupFullName);
+        mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
 
         mSignup.setOnClickListener(new View.OnClickListener()
         {
@@ -58,6 +61,7 @@ public class SignUpActivity extends ActionBarActivity
                 {
                     //Call Rest Api to check if username exists.
                     new CheckCredentialsWorker(getApplicationContext()).execute();
+                    mUsernameStatus.setImageResource(R.drawable.valid);
                 }
             }
         });
