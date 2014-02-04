@@ -1,13 +1,15 @@
 package is.grumpy.gui.base;
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
+import is.grumpy.gui.FeedFragment;
 import is.grumpy.gui.SignUpActivity;
 import is.grumpy.gui.navigationdrawer.DrawerHeader;
 import is.grumpy.gui.navigationdrawer.DrawerListItem;
@@ -27,7 +30,7 @@ import is.grumpy.gui.navigationdrawer.IDrawerItem;
 /**
  * Created by Arnar on 27.1.2014.
  */
-public class BaseNavigationDrawer extends ActionBarActivity
+public class BaseNavigationDrawer extends BaseFragmentActivity
 {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -116,16 +119,41 @@ public class BaseNavigationDrawer extends ActionBarActivity
     private void StartActivity(int position)
     {
         Intent intent = null;
+        Fragment fragment = null;
 
         switch(position)
         {
+            case 2:
+                fragment = FeedFragment.newInstance();
+                break;
             case 8:
                 intent = new Intent(this, SignUpActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return;
         }
 
-        startActivity(intent);
+        if (fragment != null)
+        {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            closeNavigationDrawer();
+        }
+    }
+
+    private void closeNavigationDrawer()
+    {
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run()
+            {
+                mDrawerLayout.closeDrawer(mDrawerList);
+            }
+        }, 150);
     }
 }

@@ -53,4 +53,16 @@
         <item name="android:typeface">monospace</item>
     </style>
 
+    <style name="BaseTextStyle.Big">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="BaseTextStyle.Normal">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BaseTextStyle.Big.Base2Color" >
+        <item name="android:textColor">@color/base2_app_color</item>
+    </style>
+
 </resources>
