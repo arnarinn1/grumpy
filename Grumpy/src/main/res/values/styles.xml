@@ -42,6 +42,11 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="BaseTextStyle.DateHighlighter" parent="BaseTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/date_highlight</item>
+    </style>
+
     <style name="BaseTextStyle.Header" parent="BaseTextStyle">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/base_app_color</item>

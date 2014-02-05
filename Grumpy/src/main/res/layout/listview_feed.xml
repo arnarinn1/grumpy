@@ -11,6 +11,7 @@
         android:id="@+id/feedProfilePicture"
         android:layout_width="60sp"
         android:layout_height="70sp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/feed_profile_picture"/>
 
     <TextView
@@ -21,12 +22,22 @@
         android:paddingLeft="10sp"
         style="@style/BaseTextStyle.Big.Base2Color"/>
 
+    <TextView
+        android:id="@+id/grumpyFeedTimeCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/feedProfilePicture"
+        android:layout_above="@+id/splitter"
+        android:paddingLeft="10sp"
+        style="@style/BaseTextStyle.DateHighlighter"/>
+
     <View
         android:id="@+id/splitter"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/feedProfilePicture"
-        android:background="@color/base_app_color"/>
+        android:background="@color/base_app_color"
+        android:layout_marginTop="4sp"/>
 
     <TextView
         android:id="@+id/grumpyFeedPost"

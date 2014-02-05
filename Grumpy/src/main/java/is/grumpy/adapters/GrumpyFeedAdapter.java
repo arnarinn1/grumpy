@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,40 @@ public class GrumpyFeedAdapter extends BaseAdapter
     private Context mContext;
     private int layoutResourceId;
     private List<GrumpyFeedData> feed;
+    private LruCache<String, Bitmap> mMemoryCache;
 
     public GrumpyFeedAdapter(Context context, int layoutResourceId, List<GrumpyFeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;
         this.feed = feed;
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        //Key will be UserId when the Rest API is ready
+        // Use 1/8th of the available memory for this memory cache.
+        mMemoryCache = new LruCache<String, Bitmap>(maxMemory)
+        {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap)
+            {
+                // The cache size will be measured in kilobytes rather than number of items.
+                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+            }
+        };
+    }
+
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap)
+    {
+        if (getBitmapFromMemCache(key) == null)
+        {
+            mMemoryCache.put(key, bitmap);
+        }
+    }
+
+    private Bitmap getBitmapFromMemCache(String key)
+    {
+        return mMemoryCache.get(key);
     }
 
     static class GrumpyFeedHolder
@@ -37,6 +66,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
         ImageView profilePicture;
         TextView userName;
         TextView post;
+        TextView timeCreated;
         int position;
     }
 
@@ -55,6 +85,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             holder.userName = (TextView) row.findViewById(R.id.grumpyFeedUserName);
             holder.profilePicture = (ImageView) row.findViewById(R.id.feedProfilePicture);
             holder.post = (TextView) row.findViewById(R.id.grumpyFeedPost);
+            holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
             row.setTag(holder);
         }
         else
@@ -64,12 +95,19 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
         final GrumpyFeedData feed = getItem(position);
 
-        holder.profilePicture.setImageBitmap(null);
+        if(getBitmapFromMemCache(feed.getProfilePicture()) == null)
+        {
+            new ProfilePictureWorker(feed.getProfilePicture(), position).execute(holder);
+        }
+        else
+        {
+            holder.profilePicture.setImageBitmap(getBitmapFromMemCache(feed.getProfilePicture()));
+        }
+
         holder.position = position;
         holder.userName.setText(feed.getUserName());
         holder.post.setText(feed.getPost());
-
-        new ProfilePictureWorker(feed.getProfilePicture(), position).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, holder);
+        holder.timeCreated.setText(feed.getTimeCreated());
 
         return row;
     }
@@ -103,6 +141,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             if (holder.position == position)
             {
                 holder.profilePicture.setImageBitmap(bitmap);
+                addBitmapToMemoryCache(getItem(position).getProfilePicture(), bitmap);
             }
         }
 

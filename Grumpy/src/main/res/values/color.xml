@@ -10,4 +10,5 @@
     <color name="message_counter_text_background">#626262</color>
     <color name="signup_button_highlight">#002E2C</color>
     <color name="grumpy_feed_background">#e2e2e2</color>
+    <color name="date_highlight">#ABABAB</color>
 </resources>
