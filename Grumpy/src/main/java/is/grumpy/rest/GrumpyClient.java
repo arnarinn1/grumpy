@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.MessagesData;
 
 /**
  * Created by Arnar on 4.2.2014.
  */
-public class GrumpyClient
+public class GrumpyClient<T>
 {
     private RestClient mRestClient;
 
@@ -31,6 +32,44 @@ public class GrumpyClient
             String content = mRestClient.Get(grumpyFeedUrl);
 
             Type listType = new TypeToken<ArrayList<GrumpyFeedData>>() {}.getType();
+
+            return new Gson().fromJson(content, listType);
+        }
+        catch (Exception ex)
+        {
+            Log.e(getClass().getName(), "Error getting feed");
+        }
+
+        return null;
+    }
+
+    public List<MessagesData> GetMessages()
+    {
+        try
+        {
+            String grumpyFeedUrl = "https://notendur.hi.is/~arh36/Grumpy/rest/api/test_messages.php";
+            String content = mRestClient.Get(grumpyFeedUrl);
+
+            Type listType = new TypeToken<ArrayList<MessagesData>>() {}.getType();
+
+            return new Gson().fromJson(content, listType);
+        }
+        catch (Exception ex)
+        {
+            Log.e(getClass().getName(), "Error getting feed");
+        }
+
+        return null;
+    }
+
+    public List<T> GetDataSource()
+    {
+        try
+        {
+            String grumpyFeedUrl = "https://notendur.hi.is/~arh36/Grumpy/rest/api/test_messages.php";
+            String content = mRestClient.Get(grumpyFeedUrl);
+
+            Type listType = new TypeToken<ArrayList<T>>() {}.getType();
 
             return new Gson().fromJson(content, listType);
         }

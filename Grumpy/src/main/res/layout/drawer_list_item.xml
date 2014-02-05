@@ -24,7 +24,7 @@
     <TextView android:id="@+id/message_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/message_counter_background"
+        android:background="@drawable/drawer_message_counter_background"
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:textColor="@color/message_counter_text_color"/>

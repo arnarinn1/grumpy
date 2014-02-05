@@ -2,6 +2,7 @@
 <resources>
     <color name="base_app_color">#0F1C2E</color>
     <color name="base2_app_color">#1C4154</color>
+    <color name="base3_app_color">#2880CC</color>
     <color name="drawer_text_color">#fff</color>
     <color name="drawer_background_pressed">#1C4154</color>
     <color name="action_bar_color">#1C4154</color>

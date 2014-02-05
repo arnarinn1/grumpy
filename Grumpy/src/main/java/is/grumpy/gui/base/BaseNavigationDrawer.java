@@ -21,6 +21,7 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
 import is.grumpy.gui.FeedFragment;
+import is.grumpy.gui.MessagesFragment;
 import is.grumpy.gui.SignUpActivity;
 import is.grumpy.gui.navigationdrawer.DrawerHeader;
 import is.grumpy.gui.navigationdrawer.DrawerListItem;
@@ -125,6 +126,9 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         {
             case 2:
                 fragment = FeedFragment.newInstance();
+                break;
+            case 4:
+                fragment = MessagesFragment.newInstance();
                 break;
             case 8:
                 intent = new Intent(this, SignUpActivity.class);
