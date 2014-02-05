@@ -3,9 +3,13 @@ package is.grumpy.gui;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
@@ -22,7 +26,10 @@ import is.grumpy.rest.GrumpyClient;
  */
 public class FeedFragment extends BaseFragment
 {
+    private MenuItem refreshMenuItem;
     private ListView mListView;
+    private GrumpyFeedAdapter mAdapter;
+    private ProgressBar mProgressBar;
 
     public static FeedFragment newInstance()
     {
@@ -37,7 +44,10 @@ public class FeedFragment extends BaseFragment
     {
         super.onActivityCreated(savedInstanceState);
 
+        //Notify the fragment to participate in populating the MENU
+        setHasOptionsMenu(true);
         mListView = (ListView) getView().findViewById(R.id.listViewGrumpyFeed);
+        mProgressBar = (ProgressBar) getView().findViewById(R.id.progressIndicator);
 
         new GrumpyFeedWorker().execute();
     }
@@ -46,6 +56,76 @@ public class FeedFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         return inflater.inflate(R.layout.fragment_feed, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_refresh:
+                refreshMenuItem = item;
+                new UpdateGrumpyFeedWorker().execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class UpdateGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
+    {
+        @Override
+        protected List<GrumpyFeedData> doInBackground(String... params)
+        {
+            try
+            {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            refreshMenuItem.setActionView(R.layout.menu_action_progressbar);
+
+            refreshMenuItem.expandActionView();
+        }
+
+        @Override
+        protected void onPostExecute(List<GrumpyFeedData> feed)
+        {
+            if (mAdapter != null)
+            {
+                GrumpyFeedData testData = GetTestData();
+                mAdapter.AddNewItem(testData);
+                mAdapter.notifyDataSetChanged();
+
+                refreshMenuItem.collapseActionView();
+                // remove the progress bar view
+                refreshMenuItem.setActionView(null);
+            }
+        }
+
+        private GrumpyFeedData GetTestData()
+        {
+            //Just some hardcoded example to show functionality
+            GrumpyFeedData testData = new GrumpyFeedData();
+            testData.setPost("This is an test post to show functionality");
+            testData.setUserName("Arnarinn");
+            testData.setTimeCreated("2013-04-24");
+            testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
+            return testData;
+        }
     }
 
     private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
@@ -68,15 +148,17 @@ public class FeedFragment extends BaseFragment
         {
             if (grumpyFeed != null)
             {
-                GrumpyFeedAdapter adapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
+                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
 
-                SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(adapter);
+                SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
                 swingBottomInAnimationAdapter.setInitialDelayMillis(500);
-                swingBottomInAnimationAdapter.setAnimationDelayMillis(300);
+                swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
                 swingBottomInAnimationAdapter.setAbsListView(mListView);
 
                 mListView.setAdapter(swingBottomInAnimationAdapter);
             }
+
+            mProgressBar.setVisibility(View.INVISIBLE);
         }
     }
 }

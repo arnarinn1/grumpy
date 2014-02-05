@@ -23,4 +23,9 @@ public class GrumpyFeedData
     public String getProfilePicture() { return profilePicture; }
     public String getTimeCreated() { return timeCreated; }
     public String getPost() { return post; }
+
+    public void setUserName(String userName) { this.userName = userName; }
+    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+    public void setTimeCreated(String timeCreated){ this.timeCreated = timeCreated; }
+    public void setPost(String post) { this.post = post; }
 }

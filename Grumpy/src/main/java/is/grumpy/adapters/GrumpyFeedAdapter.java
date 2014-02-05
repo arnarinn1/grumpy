@@ -112,13 +112,18 @@ public class GrumpyFeedAdapter extends BaseAdapter
         return row;
     }
 
+    public void AddNewItem(GrumpyFeedData data)
+    {
+        feed.add(0, data);
+    }
+
     private class ProfilePictureWorker extends AsyncTask<GrumpyFeedHolder, Void, Bitmap>
     {
         private String posterUrl;
         private GrumpyFeedHolder holder;
         private int position;
 
-        /**
+        /**1
          * @param posterUrl The url of a picture to download
          */
         public ProfilePictureWorker(String posterUrl, int position)

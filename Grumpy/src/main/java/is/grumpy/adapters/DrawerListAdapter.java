@@ -24,7 +24,7 @@ public class DrawerListAdapter extends ArrayAdapter<IDrawerItem>
 
     /**
      @param context This is the current context of the application activity
-     @param items List of items to add to ListView
+     @param items List of items to AddNewItem to ListView
      */
     public DrawerListAdapter(Context context, List<IDrawerItem> items)
     {
