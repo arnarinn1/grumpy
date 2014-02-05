@@ -7,10 +7,10 @@
     android:padding="10sp"
     android:background="#fff">
 
-    <ImageView
+    <is.grumpy.customviews.RoundedImageView
         android:id="@+id/feedProfilePicture"
-        android:layout_width="60sp"
-        android:layout_height="70sp"
+        android:layout_width="70sp"
+        android:layout_height="80sp"
         android:scaleType="centerCrop"
         android:contentDescription="@string/feed_profile_picture"/>
 
