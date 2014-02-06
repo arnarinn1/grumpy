@@ -3,6 +3,7 @@ package is.grumpy.gui.base;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +143,14 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         if (fragment != null)
         {
             FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+
+            //Need to look better into these transactions so the flow will be more smooth
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frame_container, fragment)
+                    .addToBackStack(Integer.toString(position))
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
 
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
@@ -159,5 +168,16 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         }, 150);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        FragmentManager manager = getFragmentManager();
+
+        if (manager.getBackStackEntryCount() != 0)
+            manager.popBackStack();
+        else
+            super.onBackPressed();
     }
 }
