@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 import is.grumpy.R;
@@ -63,7 +62,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
     static class GrumpyFeedHolder
     {
-        ImageView profilePicture;
+        com.makeramen.RoundedImageView profilePicture;
         TextView userName;
         TextView post;
         TextView timeCreated;
@@ -83,7 +82,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
             holder = new GrumpyFeedHolder();
             holder.userName = (TextView) row.findViewById(R.id.grumpyFeedUserName);
-            holder.profilePicture = (ImageView) row.findViewById(R.id.feedProfilePicture);
+            holder.profilePicture = (com.makeramen.RoundedImageView) row.findViewById(R.id.feedProfilePicture);
             holder.post = (TextView) row.findViewById(R.id.grumpyFeedPost);
             holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
             row.setTag(holder);

@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10sp"
     android:background="#fff">
 
-    <is.grumpy.customviews.RoundedImageView
+    <com.makeramen.RoundedImageView
         android:id="@+id/feedProfilePicture"
         android:layout_width="70sp"
         android:layout_height="80sp"
+        android:contentDescription="@string/feed_profile_picture"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/feed_profile_picture"/>
+        app:corner_radius="30dip"
+        app:border_width="3dip"
+        app:is_oval="false"
+        app:border_color="#fff"/>
 
     <TextView
         android:id="@+id/grumpyFeedUserName"
