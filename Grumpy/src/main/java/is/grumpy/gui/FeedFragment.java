@@ -19,6 +19,7 @@ import is.grumpy.R;
 import is.grumpy.adapters.GrumpyFeedAdapter;
 import is.grumpy.contracts.GrumpyFeedData;
 import is.grumpy.gui.base.BaseFragment;
+import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyClient;
 
 /**
@@ -31,10 +32,14 @@ public class FeedFragment extends BaseFragment
     private GrumpyFeedAdapter mAdapter;
     private ProgressBar mProgressBar;
 
-    public static FeedFragment newInstance()
+    public static FeedFragment newInstance(int position)
     {
         FeedFragment fragment = new FeedFragment();
 
+        Bundle args = new Bundle();
+        args.putInt(BaseNavigationDrawer.DRAWER_POSITION, position);
+
+        fragment.setArguments(args);
         fragment.setRetainInstance(true);
         return fragment;
     }

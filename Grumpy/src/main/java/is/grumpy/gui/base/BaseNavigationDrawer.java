@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,8 @@ import is.grumpy.gui.navigationdrawer.IDrawerItem;
  */
 public class BaseNavigationDrawer extends BaseFragmentActivity
 {
+    public static final String DRAWER_POSITION = "is.grumpy.gui.base.POSITION";
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -77,7 +78,12 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        SetOnBackStackListener();
+
+        StartAction(2);
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,24 +119,23 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         {
             mDrawerList.setItemChecked(position, true);
             mDrawerLayout.closeDrawer(mDrawerList);
-            //Initialize Fragment Manager or start Activity
 
-            StartActivity(position);
+            StartAction(position);
         }
     }
 
-    private void StartActivity(int position)
+    private void StartAction(int position)
     {
-        Intent intent = null;
+        Intent intent;
         Fragment fragment = null;
 
         switch(position)
         {
             case 2:
-                fragment = FeedFragment.newInstance();
+                fragment = FeedFragment.newInstance(position);
                 break;
             case 4:
-                fragment = MessagesFragment.newInstance();
+                fragment = MessagesFragment.newInstance(position);
                 break;
             case 8:
                 intent = new Intent(this, SignUpActivity.class);
@@ -144,16 +149,15 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         {
             FragmentManager fragmentManager = getFragmentManager();
 
-            //Need to look better into these transactions so the flow will be more smooth
+            //Need to look better into these transactions so the flow will be more smooth, figure out how to remove specific
+            //fragments if they are on the stack
             fragmentManager
                     .beginTransaction()
                     .replace(R.id.frame_container, fragment)
-                    .addToBackStack(Integer.toString(position))
+                    .addToBackStack(null)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commit();
 
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
             closeNavigationDrawer();
         }
     }
@@ -175,9 +179,26 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
     {
         FragmentManager manager = getFragmentManager();
 
-        if (manager.getBackStackEntryCount() != 0)
+        if (manager.getBackStackEntryCount() != 1)
             manager.popBackStack();
         else
             super.onBackPressed();
+    }
+
+    private void SetOnBackStackListener()
+    {
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener()
+        {
+            @Override
+            public void onBackStackChanged()
+            {
+                Bundle args = getFragmentManager().findFragmentById(R.id.frame_container).getArguments();
+
+                int position = args.getInt(DRAWER_POSITION);
+
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+            }
+        });
     }
 }

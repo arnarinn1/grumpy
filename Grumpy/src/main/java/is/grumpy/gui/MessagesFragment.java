@@ -1,6 +1,5 @@
 package is.grumpy.gui;
 
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import is.grumpy.R;
 import is.grumpy.adapters.MessagesAdapter;
 import is.grumpy.contracts.MessagesData;
 import is.grumpy.gui.base.BaseFragment;
+import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyClient;
 
 /**
@@ -23,11 +23,15 @@ public class MessagesFragment extends BaseFragment
 {
     private ListView mListView;
 
-    public static MessagesFragment newInstance()
+    public static MessagesFragment newInstance(int position)
     {
         MessagesFragment fragment = new MessagesFragment();
 
+        Bundle args = new Bundle();
+        args.putInt(BaseNavigationDrawer.DRAWER_POSITION, position);
+
         fragment.setRetainInstance(true);
+        fragment.setArguments(args);
         return fragment;
     }
 
