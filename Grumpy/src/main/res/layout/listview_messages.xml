@@ -15,4 +15,6 @@
         android:textColor="#fff"
         style="@style/BaseTextStyle.Normal"/>
 
+
+
 </RelativeLayout>

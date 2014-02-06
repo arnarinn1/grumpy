@@ -65,15 +65,23 @@ public class MessagesAdapter extends BaseAdapter
         if (message.getUserid() == 1)
         {
             holder.layout.setGravity(Gravity.RIGHT);
+            holder.layout.setPadding(ConvertPixelsToDp(30), ConvertPixelsToDp(7), 0, ConvertPixelsToDp(7));
             holder.message.setBackground(mContext.getResources().getDrawable(R.drawable.message_background_user));
         }
         else
         {
             holder.layout.setGravity(Gravity.LEFT);
+            holder.layout.setPadding(0, ConvertPixelsToDp(7), ConvertPixelsToDp(30), ConvertPixelsToDp(7));
             holder.message.setBackground(mContext.getResources().getDrawable(R.drawable.message_background_me));
         }
 
         return row;
+    }
+
+    private int ConvertPixelsToDp(int sizeInDp)
+    {
+        float scale = mContext.getResources().getDisplayMetrics().density;
+        return (int) (sizeInDp*scale + 0.5f);
     }
 
     @Override
