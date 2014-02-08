@@ -179,7 +179,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
     {
         FragmentManager manager = getFragmentManager();
 
-        if (manager.getBackStackEntryCount() != 1)
+        if (manager.getBackStackEntryCount() != 0)
             manager.popBackStack();
         else
             super.onBackPressed();

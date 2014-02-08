@@ -2,19 +2,17 @@ package is.grumpy.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import is.grumpy.R;
 import is.grumpy.contracts.GrumpyFeedData;
-import is.grumpy.utils.BitmapTask;
 
 /**
  * Created by Arnar on 4.2.2014.
@@ -24,40 +22,12 @@ public class GrumpyFeedAdapter extends BaseAdapter
     private Context mContext;
     private int layoutResourceId;
     private List<GrumpyFeedData> feed;
-    private LruCache<String, Bitmap> mMemoryCache;
 
     public GrumpyFeedAdapter(Context context, int layoutResourceId, List<GrumpyFeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;
         this.feed = feed;
-
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
-        //Key will be UserId when the Rest API is ready
-        // Use 1/8th of the available memory for this memory cache.
-        mMemoryCache = new LruCache<String, Bitmap>(maxMemory)
-        {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap)
-            {
-                // The cache size will be measured in kilobytes rather than number of items.
-                return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
-            }
-        };
-    }
-
-    private void addBitmapToMemoryCache(String key, Bitmap bitmap)
-    {
-        if (getBitmapFromMemCache(key) == null)
-        {
-            mMemoryCache.put(key, bitmap);
-        }
-    }
-
-    private Bitmap getBitmapFromMemCache(String key)
-    {
-        return mMemoryCache.get(key);
     }
 
     static class GrumpyFeedHolder
@@ -94,14 +64,10 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
         final GrumpyFeedData feed = getItem(position);
 
-        if(getBitmapFromMemCache(feed.getProfilePicture()) == null)
-        {
-            new ProfilePictureWorker(feed.getProfilePicture(), position).execute(holder);
-        }
-        else
-        {
-            holder.profilePicture.setImageBitmap(getBitmapFromMemCache(feed.getProfilePicture()));
-        }
+        Picasso.with(mContext)
+                .load(feed.getProfilePicture())
+                .noFade()
+                .into(holder.profilePicture);
 
         holder.position = position;
         holder.userName.setText(feed.getUserName());
@@ -114,54 +80,6 @@ public class GrumpyFeedAdapter extends BaseAdapter
     public void AddNewItem(GrumpyFeedData data)
     {
         feed.add(0, data);
-    }
-
-    private class ProfilePictureWorker extends AsyncTask<GrumpyFeedHolder, Void, Bitmap>
-    {
-        private String posterUrl;
-        private GrumpyFeedHolder holder;
-        private int position;
-
-        /**1
-         * @param posterUrl The url of a picture to download
-         */
-        public ProfilePictureWorker(String posterUrl, int position)
-        {
-            this.posterUrl = posterUrl;
-            this.position = position;
-        }
-
-        @Override
-
-        protected Bitmap doInBackground(GrumpyFeedHolder... view)
-        {
-            holder = view[0];
-            return GetPoster();
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap)
-        {
-            if (holder.position == position)
-            {
-                holder.profilePicture.setImageBitmap(bitmap);
-                addBitmapToMemoryCache(getItem(position).getProfilePicture(), bitmap);
-            }
-        }
-
-        private Bitmap GetPoster()
-        {
-            try
-            {
-                return BitmapTask.getBitmapFromUrl(posterUrl);
-            }
-            catch (Exception ex)
-            {
-                Log.e(getClass().getName(), ex.getMessage());
-            }
-
-            return null;
-        }
     }
 
     @Override
