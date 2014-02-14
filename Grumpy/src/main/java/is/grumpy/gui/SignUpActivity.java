@@ -1,10 +1,8 @@
 package is.grumpy.gui;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,18 +10,29 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import is.grumpy.R;
+import is.grumpy.contracts.PostUser;
+import is.grumpy.contracts.ServerResponse;
+import is.grumpy.rest.GrumpyApi;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 
 /**
  * Created by Arnar on 1.2.2014.
  */
 public class SignUpActivity extends ActionBarActivity
 {
+    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
+
     private Button mSignup;
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mPasswordConfirmField;
     private EditText mFullNameField;
     private ImageView mUsernameStatus;
+    private PostUser mNewUser = new PostUser();
+
+    private Context getContext() { return this; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,8 +68,7 @@ public class SignUpActivity extends ActionBarActivity
             {
                 if (!hasFocus)
                 {
-                    //Call Rest Api to check if username exists.
-                    new CheckCredentialsWorker(getApplicationContext()).execute();
+                    //TODO: Call Rest Api to check if username exists.
 
                     //Just some hard coded example to show functionality
                     if (mUsernameField.getText().toString().equals("arnar"))
@@ -76,10 +84,30 @@ public class SignUpActivity extends ActionBarActivity
     {
         if(ValidateInputFields())
         {
-            //Call Rest Api and Create User
-            new SignUpUserWorker().execute();
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(ApiUrl)
+                    .build();
+
+            GrumpyApi api = restAdapter.create(GrumpyApi.class);
+
+            api.createUser(mNewUser, createNewUserCallback);
         }
     }
+
+    Callback<ServerResponse> createNewUserCallback = new Callback<ServerResponse>()
+    {
+        @Override
+        public void success(ServerResponse response, retrofit.client.Response response2)
+        {
+            Toast.makeText(getContext(), "Created New Account", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError)
+        {
+            Toast.makeText(getContext(), "You Fail So Hard", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private boolean ValidateInputFields()
     {
@@ -106,45 +134,9 @@ public class SignUpActivity extends ActionBarActivity
             return false;
         }
 
+        mNewUser.setPassword(password);
+        mNewUser.setUsername(userName);
+
         return true;
-    }
-
-    private class CheckCredentialsWorker extends AsyncTask<String, Void, Boolean>
-    {
-        private Context mContext;
-
-        public CheckCredentialsWorker(Context context)
-        {
-            this.mContext = context;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params)
-        {
-            try
-            {
-                return CheckIfUserExists(params[0]);
-            }
-            catch (Exception ex)
-            {
-                Log.e(getClass().getName(), ex.getMessage());
-            }
-
-            return null;
-        }
-
-        public boolean CheckIfUserExists(String userName)
-        {
-            return false;
-        }
-    }
-
-    private class SignUpUserWorker extends AsyncTask<String, Void, Boolean>
-    {
-        @Override
-        protected Boolean doInBackground(String... params)
-        {
-            return null;
-        }
     }
 }
