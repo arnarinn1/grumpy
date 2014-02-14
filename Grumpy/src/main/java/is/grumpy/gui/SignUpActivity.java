@@ -12,10 +12,12 @@ import android.widget.Toast;
 import is.grumpy.R;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
+import is.grumpy.contracts.UserAvailable;
 import is.grumpy.rest.GrumpyApi;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Arnar on 1.2.2014.
@@ -31,6 +33,8 @@ public class SignUpActivity extends ActionBarActivity
     private EditText mFullNameField;
     private ImageView mUsernameStatus;
     private PostUser mNewUser = new PostUser();
+
+    private GrumpyApi grumpyApi;
 
     private Context getContext() { return this; }
 
@@ -52,6 +56,12 @@ public class SignUpActivity extends ActionBarActivity
         mFullNameField = (EditText) findViewById(R.id.signupFullName);
         mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
 
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ApiUrl)
+                .build();
+
+        grumpyApi = restAdapter.create(GrumpyApi.class);
+
         mSignup.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -68,13 +78,8 @@ public class SignUpActivity extends ActionBarActivity
             {
                 if (!hasFocus)
                 {
-                    //TODO: Call Rest Api to check if username exists.
-
-                    //Just some hard coded example to show functionality
-                    if (mUsernameField.getText().toString().equals("arnar"))
-                        mUsernameStatus.setImageResource(R.drawable.valid);
-                    else
-                        mUsernameStatus.setImageResource(R.drawable.invalid);
+                    String usernameCheck = mUsernameField.getText().toString();
+                    grumpyApi.checkIfUserExists(usernameCheck, checkUserExistCallback);
                 }
             }
         });
@@ -84,13 +89,7 @@ public class SignUpActivity extends ActionBarActivity
     {
         if(ValidateInputFields())
         {
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(ApiUrl)
-                    .build();
-
-            GrumpyApi api = restAdapter.create(GrumpyApi.class);
-
-            api.createUser(mNewUser, createNewUserCallback);
+            grumpyApi.createUser(mNewUser, createNewUserCallback);
         }
     }
 
@@ -106,6 +105,24 @@ public class SignUpActivity extends ActionBarActivity
         public void failure(RetrofitError retrofitError)
         {
             Toast.makeText(getContext(), "You Fail So Hard", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    Callback<UserAvailable> checkUserExistCallback = new Callback<UserAvailable>()
+    {
+        @Override
+        public void success(UserAvailable userAvailable, Response response)
+        {
+            if (userAvailable.getUserExists())
+                mUsernameStatus.setImageResource(R.drawable.valid);
+            else
+                mUsernameStatus.setImageResource(R.drawable.invalid);
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError)
+        {
+            //HMM: Do something ?
         }
     };
 
