@@ -1,5 +1,6 @@
 package is.grumpy.gui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,16 +26,21 @@ import is.grumpy.contracts.GrumpyFeedData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyClient;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * Created by Arnar on 4.2.2014.
  */
-public class FeedFragment extends BaseFragment
+public class FeedFragment extends BaseFragment implements OnRefreshListener
 {
     private MenuItem refreshMenuItem;
     private ListView mListView;
     private GrumpyFeedAdapter mAdapter;
     private ProgressBar mProgressBar;
+
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     public static FeedFragment newInstance(int position)
     {
@@ -49,22 +55,27 @@ public class FeedFragment extends BaseFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super.onActivityCreated(savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
         //Notify the fragment to participate in populating the MENU
         setHasOptionsMenu(true);
-        mListView = (ListView) getView().findViewById(R.id.listViewGrumpyFeed);
-        mProgressBar = (ProgressBar) getView().findViewById(R.id.progressIndicator);
+
+        mListView = (ListView) rootView.findViewById(R.id.listViewGrumpyFeed);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressIndicator);
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refresLayout);
+
+        ActionBarPullToRefresh.from((Activity)IActivity.context())
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(mPullToRefreshLayout);
 
         new GrumpyFeedWorker().execute();
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return rootView;
     }
 
     @Override
@@ -86,6 +97,38 @@ public class FeedFragment extends BaseFragment
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onRefreshStarted(View view)
+    {
+        /**
+         * Simulate Refresh with 4 seconds sleep
+         */
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                try
+                {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result)
+            {
+                super.onPostExecute(result);
+
+                // Notify PullToRefreshLayout that the refresh has finished
+                mPullToRefreshLayout.setRefreshComplete();
+
+            }
+        }.execute();
     }
 
     private class UpdateGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>

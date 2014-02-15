@@ -25,10 +25,10 @@ repositories {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile files('libs/com.haarman.listviewanimations-2.5.2.jar')
-    compile files('libs/gson-2.2.4.jar')
-    compile files('libs/nineoldandroids-2.4.0.jar')
-    compile files('libs/picasso-2.2.0.jar')
-    compile files('libs/retrofit-1.4.1.jar')
     compile 'com.makeramen:roundedimageview:1.2.3'
+
+    compile project(':libraries:pulltorefresh')
+
+    // libs folder
+    compile fileTree(dir: 'libs', include: '*.jar')
 }
