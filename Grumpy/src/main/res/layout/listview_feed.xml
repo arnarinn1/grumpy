@@ -1,54 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10sp"
-    android:background="#fff">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#dedede">
 
-    <com.makeramen.RoundedImageView
-        android:id="@+id/feedProfilePicture"
-        android:layout_width="70sp"
-        android:layout_height="80sp"
-        android:contentDescription="@string/feed_profile_picture"
-        android:scaleType="centerCrop"
-        app:corner_radius="30dip"
-        app:border_width="3dip"
-        app:is_oval="false"
-        app:border_color="#fff"/>
-
-    <TextView
-        android:id="@+id/grumpyFeedUserName"
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/feedProfilePicture"
-        android:paddingLeft="10sp"
-        style="@style/BaseTextStyle.Big.Base2Color"/>
+        android:layout_marginLeft="1px"
+        android:layout_marginRight="1px"
+        android:layout_marginTop="1px"
+        android:padding="10dp"
+        android:background="#fff">
 
-    <TextView
-        android:id="@+id/grumpyFeedTimeCreated"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/feedProfilePicture"
-        android:layout_above="@+id/splitter"
-        android:paddingLeft="10sp"
-        style="@style/BaseTextStyle.DateHighlighter"/>
+        <com.makeramen.RoundedImageView
+            android:id="@+id/feedProfilePicture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/feed_profile_picture"
+            android:scaleType="centerCrop"
+            app:corner_radius="25dp"
+            app:border_width="0dp"
+            app:is_oval="false"
+            app:border_color="#fff"/>
 
-    <View
-        android:id="@+id/splitter"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/feedProfilePicture"
-        android:background="@color/base_app_color"
-        android:layout_marginTop="4sp"/>
+        <TextView
+            android:id="@+id/grumpyFeedUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/feedProfilePicture"
+            android:paddingLeft="10dp"
+            style="@style/BaseTextStyle.Big.Base2Color"/>
 
-    <TextView
-        android:id="@+id/grumpyFeedPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/splitter"
-        android:paddingTop="10sp"
-        style="@style/BaseTextStyle.Normal"/>
+        <TextView
+            android:id="@+id/grumpyFeedTimeCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/feedProfilePicture"
+            android:layout_below="@+id/grumpyFeedUserName"
+            android:paddingLeft="10dp"
+            style="@style/BaseTextStyle.DateHighlighter"/>
+        <!--
+        <View
+            android:id="@+id/splitter"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/feedProfilePicture"
+            android:background="@color/base_app_color"
+            android:layout_marginTop="4sp"/>
+        -->
+        <TextView
+            android:id="@+id/grumpyFeedPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/feedProfilePicture"
+            android:paddingTop="10sp"
+            style="@style/BaseTextStyle.Normal"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#dedede"
+        android:orientation="horizontal">
+        <Button
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_margin="1px"
+            android:background="#f9f9f9" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_marginTop="1px"
+            android:layout_marginBottom="1px"
+            android:background="#f9f9f9" />
+        <Button
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_margin="1px"
+            android:background="#f9f9f9" />
+    </LinearLayout>
+
+</LinearLayout>

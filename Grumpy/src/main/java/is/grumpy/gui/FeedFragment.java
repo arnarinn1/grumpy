@@ -102,7 +102,6 @@ public class FeedFragment extends BaseFragment
         protected void onPreExecute()
         {
             refreshMenuItem.setActionView(R.layout.menu_action_progressbar);
-
             refreshMenuItem.expandActionView();
         }
 
@@ -127,7 +126,7 @@ public class FeedFragment extends BaseFragment
             GrumpyFeedData testData = new GrumpyFeedData();
             testData.setPost("This is an test post to show functionality");
             testData.setUserName("Arnarinn");
-            testData.setTimeCreated("2013-04-24");
+            testData.setTimeCreated("2014-02-14 00:52:45");
             testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
             return testData;
         }

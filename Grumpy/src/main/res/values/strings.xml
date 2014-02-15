@@ -14,4 +14,10 @@
     <string name="full_name">Full Name:</string>
     <string name="feed_profile_picture">Profile Picture</string>
 
+    <string name="days_ago">%d days ago</string>
+    <string name="yesterday_at">Yesterday at %s</string>
+    <string name="today_at">Today at %s</string>
+    <string name="hours_ago">%s hours ago</string>
+    <string name="hminutes_ago">%s minutes ago</string>
+
 </resources>

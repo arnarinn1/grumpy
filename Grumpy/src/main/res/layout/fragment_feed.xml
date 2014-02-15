@@ -12,8 +12,8 @@
         android:background="@color/grumpy_feed_background"
         android:clipToPadding="false"
         android:divider="@null"
-        android:dividerHeight="12dp"
-        android:padding="8dp"
+        android:dividerHeight="10dp"
+        android:padding="10dp"
         android:fadingEdge="none"
         android:scrollbarStyle="outsideOverlay"/>
 

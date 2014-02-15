@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.security.spec.ECField;
 import java.util.List;
 import is.grumpy.R;
 import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.utils.DateCleaner;
 
 /**
  * Created by Arnar on 4.2.2014.
@@ -72,7 +74,15 @@ public class GrumpyFeedAdapter extends BaseAdapter
         holder.position = position;
         holder.userName.setText(feed.getUserName());
         holder.post.setText(feed.getPost());
-        holder.timeCreated.setText(feed.getTimeCreated());
+
+        String posted;
+        try {
+            DateCleaner cleaner = new DateCleaner(feed.getTimeCreated(), mContext);
+            posted = cleaner.getRelativeDate();
+        } catch (Exception e) {
+            posted = feed.getTimeCreated();
+        }
+        holder.timeCreated.setText(posted);
 
         return row;
     }
