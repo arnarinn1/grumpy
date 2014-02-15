@@ -8,11 +8,15 @@ import com.google.gson.annotations.SerializedName;
 public class ServerResponse
 {
     @SerializedName("message")
-    public String message;
+    private String message;
 
     @SerializedName("status")
-    public String status;
+    private boolean status;
+
+    @SerializedName("status_message")
+    private String statusMessage;
 
     public String getMessage() { return message; }
-    public String getStatus() { return status; }
+    public boolean getStatus() { return status; }
+    public String getStatusMessage() { return statusMessage; }
 }

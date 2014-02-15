@@ -110,13 +110,16 @@ public class SignUpActivity extends ActionBarActivity
         @Override
         public void success(ServerResponse response, retrofit.client.Response response2)
         {
-            Toast.makeText(getContext(), "Created New Account", Toast.LENGTH_SHORT).show();
+            if (response.getStatus())
+                Toast.makeText(getContext(), "Created New Account", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getContext(), "Username exists", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void failure(RetrofitError retrofitError)
         {
-            Toast.makeText(getContext(), "You Fail So Hard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Error Communicating With Server", Toast.LENGTH_SHORT).show();
         }
     };
 
