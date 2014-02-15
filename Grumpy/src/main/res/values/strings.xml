@@ -21,5 +21,6 @@
     <string name="hminutes_ago">%s minutes ago</string>
     <string name="refresh">Refresh</string>
     <string name="search_user">Search User</string>
+    <string name="no_users_found">Found No Users\nTry Again</string>
 
 </resources>

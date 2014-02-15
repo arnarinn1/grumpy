@@ -37,6 +37,7 @@ public class SearchFragment extends BaseFragment
     private ListView mListView;
     private EditText mSearchUser;
     private TextView mNoResults;
+    private SearchAdapter mAdapter;
 
     private GrumpyApi grumpyApi;
 
@@ -109,11 +110,13 @@ public class SearchFragment extends BaseFragment
         {
             if (users.size() > 0)
             {
-                mListView.setAdapter(new SearchAdapter(IActivity.context(), users));
+                mNoResults.setVisibility(View.GONE);
+                mAdapter = new SearchAdapter(IActivity.context(), users);
+                mListView.setAdapter(mAdapter);
             }
             else
             {
-                
+                mListView.setAdapter(null);
                 mNoResults.setVisibility(View.VISIBLE);
 
                 Animation ani = AnimationUtils.loadAnimation(IActivity.context(), R.anim.slide_in_left);

@@ -32,9 +32,10 @@
         android:id="@+id/noUsersFound"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_centerInParent="true"
-        android:text="HAHAHAHAHAHAHHA"
-        android:visibility="gone"/>
+        android:text="@string/no_users_found"
+        android:visibility="gone"
+        android:gravity="center"
+        style="@style/BaseTextStyle.Big.Base2Color"/>
 
 </RelativeLayout>
