@@ -15,6 +15,7 @@ import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
 import is.grumpy.rest.GrumpyApi;
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -56,8 +57,19 @@ public class SignUpActivity extends ActionBarActivity
         mFullNameField = (EditText) findViewById(R.id.signupFullName);
         mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
 
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestInterceptor.RequestFacade request)
+            {
+                request.addHeader("Content-Type", "application/json");
+                //If Connection header is not absent Java will throw an IO Error
+                request.addHeader("Connection", "close");
+            }
+        };
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ApiUrl)
+                .setRequestInterceptor(requestInterceptor)
                 .build();
 
         grumpyApi = restAdapter.create(GrumpyApi.class);
