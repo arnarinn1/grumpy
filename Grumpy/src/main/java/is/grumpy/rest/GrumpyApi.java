@@ -1,8 +1,11 @@
 package is.grumpy.rest;
 
+import java.util.List;
+
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
+import is.grumpy.contracts.UserData;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -19,4 +22,7 @@ public interface GrumpyApi
 
     @GET("/userexists/{username}")
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
+
+    @GET("/user/search/{username}")
+    void searchUsers(@Path("username") String username, Callback<List<UserData>> users);
 }

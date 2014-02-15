@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="4sp"
+    android:paddingBottom="4sp">
+
+    <ImageView
+        android:id="@+id/userProfilePicture"
+        android:layout_width="64sp"
+        android:layout_height="64sp" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5sp"
+        android:paddingLeft="5sp"
+        style="@style/BaseTextStyle.Big.Base2Color"/>
+
+</LinearLayout>

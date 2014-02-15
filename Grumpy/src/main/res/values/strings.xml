@@ -20,5 +20,6 @@
     <string name="hours_ago">%s hours ago</string>
     <string name="hminutes_ago">%s minutes ago</string>
     <string name="refresh">Refresh</string>
+    <string name="search_user">Search User</string>
 
 </resources>

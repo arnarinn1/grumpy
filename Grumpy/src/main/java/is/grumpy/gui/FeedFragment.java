@@ -127,6 +127,13 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 // Notify PullToRefreshLayout that the refresh has finished
                 mPullToRefreshLayout.setRefreshComplete();
 
+                if (mAdapter != null)
+                {
+                    GrumpyFeedData testData = GetTestData();
+                    mAdapter.AddNewItem(testData);
+                    mAdapter.notifyDataSetChanged();
+                }
+
             }
         }.execute();
     }
@@ -174,17 +181,17 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             refreshMenuItem.getActionView().clearAnimation();
             refreshMenuItem.setActionView(null);
         }
+    }
 
-        private GrumpyFeedData GetTestData()
-        {
-            //Just some hardcoded example to show functionality
-            GrumpyFeedData testData = new GrumpyFeedData();
-            testData.setPost("This is an test post to show functionality");
-            testData.setUserName("Arnarinn");
-            testData.setTimeCreated("2014-02-14 14:52:45");
-            testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
-            return testData;
-        }
+    private GrumpyFeedData GetTestData()
+    {
+        //Just some hardcoded example to show functionality
+        GrumpyFeedData testData = new GrumpyFeedData();
+        testData.setPost("This is an test post to show functionality");
+        testData.setUserName("Arnarinn");
+        testData.setTimeCreated("2014-02-14 14:52:45");
+        testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
+        return testData;
     }
 
     private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
