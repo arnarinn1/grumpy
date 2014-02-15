@@ -162,6 +162,9 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commit();
 
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+
             closeNavigationDrawer();
         }
     }
@@ -183,10 +186,12 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
     {
         FragmentManager manager = getFragmentManager();
 
-        if (manager.getBackStackEntryCount() != 0)
+        if (manager.getBackStackEntryCount() != 1)
             manager.popBackStack();
         else
-            super.onBackPressed();
+            finish();
+
+        //super.onBackPressed();
     }
 
     private void SetOnBackStackListener()
