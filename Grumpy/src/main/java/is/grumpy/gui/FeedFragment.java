@@ -1,5 +1,6 @@
 package is.grumpy.gui;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -101,7 +105,14 @@ public class FeedFragment extends BaseFragment
         @Override
         protected void onPreExecute()
         {
-            refreshMenuItem.setActionView(R.layout.menu_action_progressbar);
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
+
+            Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.clockwise_refresh);
+            rotation.setRepeatCount(Animation.INFINITE);
+            iv.startAnimation(rotation);
+
+            refreshMenuItem.setActionView(iv);
             refreshMenuItem.expandActionView();
         }
 
@@ -113,11 +124,12 @@ public class FeedFragment extends BaseFragment
                 GrumpyFeedData testData = GetTestData();
                 mAdapter.AddNewItem(testData);
                 mAdapter.notifyDataSetChanged();
-
-                refreshMenuItem.collapseActionView();
-                // remove the progress bar view
-                refreshMenuItem.setActionView(null);
             }
+
+            // remove the progress bar view and animation
+            refreshMenuItem.collapseActionView();
+            refreshMenuItem.getActionView().clearAnimation();
+            refreshMenuItem.setActionView(null);
         }
 
         private GrumpyFeedData GetTestData()
@@ -126,7 +138,7 @@ public class FeedFragment extends BaseFragment
             GrumpyFeedData testData = new GrumpyFeedData();
             testData.setPost("This is an test post to show functionality");
             testData.setUserName("Arnarinn");
-            testData.setTimeCreated("2014-02-14 00:52:45");
+            testData.setTimeCreated("2014-02-14 14:52:45");
             testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
             return testData;
         }
