@@ -2,6 +2,7 @@ package is.grumpy.gui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import is.grumpy.adapters.GrumpyFeedAdapter;
 import is.grumpy.contracts.GrumpyFeedData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
+import is.grumpy.gui.base.IActivity;
 import is.grumpy.rest.GrumpyClient;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -96,7 +98,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 new UpdateGrumpyFeedWorker().execute();
                 return true;
             case R.id.action_new_post:
-                Toast.makeText(IActivity.context(), "Create New Post Right hnja", Toast.LENGTH_SHORT).show();
+                StartNewPostActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -116,7 +118,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             {
                 try
                 {
-                    Thread.sleep(5000);
+                    Thread.sleep(4000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -230,5 +232,12 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
             mProgressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void StartNewPostActivity()
+    {
+        Intent intent = new Intent(IActivity.context(), NewPostActivity.class);
+        startActivity(intent);
+        ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 }

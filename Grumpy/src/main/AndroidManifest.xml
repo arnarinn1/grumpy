@@ -27,6 +27,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
+        <activity
+            android:name=".gui.NewPostActivity"
+            android:label="@string/new_post"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
