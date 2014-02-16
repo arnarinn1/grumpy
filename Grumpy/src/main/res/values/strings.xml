@@ -22,5 +22,6 @@
     <string name="refresh">Refresh</string>
     <string name="search_user">Search User</string>
     <string name="no_users_found">Found No Users\nTry Again</string>
+    <string name="new_post">New Post</string>
 
 </resources>

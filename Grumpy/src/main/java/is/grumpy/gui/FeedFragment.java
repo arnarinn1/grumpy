@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
@@ -93,6 +94,9 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             case R.id.action_refresh:
                 refreshMenuItem = item;
                 new UpdateGrumpyFeedWorker().execute();
+                return true;
+            case R.id.action_new_post:
+                Toast.makeText(IActivity.context(), "Create New Post Right hnja", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
