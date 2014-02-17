@@ -18,6 +18,7 @@ import is.grumpy.contracts.MessagesData;
 public class GrumpyClient<T>
 {
     private RestClient mRestClient;
+    private final String mClientHost = "arnarh.com/grumpy/public/";
 
     public GrumpyClient()
     {
@@ -28,7 +29,7 @@ public class GrumpyClient<T>
     {
         try
         {
-            String grumpyFeedUrl = "https://notendur.hi.is/~arh36/Grumpy/rest/api/test_feed.php";
+            String grumpyFeedUrl = "https://notendur.hi.is/~thg112/test_feed.json";
             String content = mRestClient.Get(grumpyFeedUrl);
 
             Type listType = new TypeToken<ArrayList<GrumpyFeedData>>() {}.getType();

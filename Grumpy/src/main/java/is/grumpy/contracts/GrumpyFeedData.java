@@ -7,25 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 public class GrumpyFeedData
 {
-    @SerializedName("username")
-    private String userName;
+    @SerializedName("user")
+    private GrumpyUserData user;
 
-    @SerializedName("profile_picture")
-    private String profilePicture;
-
-    @SerializedName("post")
+    @SerializedName("created_at")
     private String timeCreated;
 
-    @SerializedName("time")
+    @SerializedName("post")
     private String post;
 
-    public String getUserName() { return userName; }
-    public String getProfilePicture() { return profilePicture; }
+    public GrumpyUserData getUser() { return this.user; }
     public String getTimeCreated() { return timeCreated; }
     public String getPost() { return post; }
 
-    public void setUserName(String userName) { this.userName = userName; }
-    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+    public void setUser(GrumpyUserData user) { this.user = user; }
     public void setTimeCreated(String timeCreated){ this.timeCreated = timeCreated; }
     public void setPost(String post) { this.post = post; }
 }

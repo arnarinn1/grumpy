@@ -25,6 +25,7 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.adapters.GrumpyFeedAdapter;
 import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.GrumpyUserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.gui.base.IActivity;
@@ -193,10 +194,14 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     {
         //Just some hardcoded example to show functionality
         GrumpyFeedData testData = new GrumpyFeedData();
+        GrumpyUserData testUser = new GrumpyUserData();
         testData.setPost("This is an test post to show functionality");
-        testData.setUserName("Arnarinn");
+        testData.setUser(testUser);
+        testUser.setUsername("Arnarinn");
+        testUser.setFirstName("Arnar");
+        testUser.setLastName("Heimisson");
         testData.setTimeCreated("2014-02-14 14:52:45");
-        testData.setProfilePicture("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
+        testData.getUser().setAvatar("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
         return testData;
     }
 

@@ -67,12 +67,12 @@ public class GrumpyFeedAdapter extends BaseAdapter
         final GrumpyFeedData feed = getItem(position);
 
         Picasso.with(mContext)
-                .load(feed.getProfilePicture())
+                .load(feed.getUser().getAvatar())
                 .noFade()
                 .into(holder.profilePicture);
 
         holder.position = position;
-        holder.userName.setText(feed.getUserName());
+        holder.userName.setText(feed.getUser().getFullName());
         holder.post.setText(feed.getPost());
 
         String posted;
