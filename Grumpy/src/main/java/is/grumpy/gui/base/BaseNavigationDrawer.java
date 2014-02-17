@@ -146,10 +146,6 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 intent = new Intent(this, LauncherActivity.class);
                 startActivity(intent);
                 break;
-            case 8:
-                intent = new Intent(this, SignUpActivity.class);
-                startActivity(intent);
-                break;
             default:
                 return;
         }
