@@ -28,8 +28,6 @@ public class LauncherActivity extends Activity
         AttachEventListeners();
     }
 
-
-
     public void AttachEventListeners()
     {
         mSignUp.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +35,7 @@ public class LauncherActivity extends Activity
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SignUpActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
