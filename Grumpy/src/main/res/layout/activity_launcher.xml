@@ -9,7 +9,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:src="@drawable/ic_launchup_pic"
-        android:contentDescription="pic"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -30,10 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/launcher_button_selector"
-            android:text="Log In"
+            android:text="@string/log_in"
             android:textColor="#fff"
             android:typeface="sans"
-            style="?android:attr/buttonBarStyle"/>
+            android:textSize="25sp"
+            android:padding="10sp"/>
 
         <View
             android:layout_width="1dip"
@@ -45,10 +45,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/launcher_button_selector"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="#fff"
             android:typeface="sans"
-            style="?android:attr/buttonBarStyle"/>
+            android:textSize="25sp"
+            android:padding="10sp"/>
 
     </LinearLayout>
 
