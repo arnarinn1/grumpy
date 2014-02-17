@@ -18,7 +18,7 @@ import is.grumpy.contracts.MessagesData;
 public class GrumpyClient<T>
 {
     private RestClient mRestClient;
-    private final String mClientHost = "arnarh.com/grumpy/public/";
+    private final String mClientHost = "http://arnarh.com/grumpy/public/";
 
     public GrumpyClient()
     {

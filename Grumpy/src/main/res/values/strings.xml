@@ -23,5 +23,8 @@
     <string name="search_user">Search User</string>
     <string name="no_users_found">Found No Users\nTry Again</string>
     <string name="new_post">New Post</string>
+    <string name="less_than">Less than %d hour ago</string>
+    <string name="write_post">Write new post:</string>
+    <string name="send_new_post">Post</string>
 
 </resources>

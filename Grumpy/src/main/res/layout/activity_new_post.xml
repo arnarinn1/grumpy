@@ -4,14 +4,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#efefef"
+    android:padding="10dp"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        style="@style/BaseTextStyle.Big.Base2Color"
-        android:text="TestTestTestTestTest"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/write_post"
+            style="@style/BaseTextStyle.Item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/write_post"/>
+
+        <EditText
+            android:id="@+id/edit_post"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="#fff"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@id/write_post"
+            android:gravity="top|left" />
+
+        <Button
+            android:id="@+id/send_new_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_new_post"
+            android:layout_below="@+id/edit_post"/>
+
+    </RelativeLayout>
 </FrameLayout>

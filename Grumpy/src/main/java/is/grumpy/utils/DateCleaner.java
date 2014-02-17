@@ -2,6 +2,7 @@ package is.grumpy.utils;
 
 import android.content.Context;
 import android.support.v7.appcompat.R;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,10 +26,11 @@ public class DateCleaner {
     public String getRelativeDate() {
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
         Date start_of_today = today.getTime();
         long time = start_of_today.getTime() - date.getTime();
-
-        if (start_of_today.getTime()<date.getTime()) {
+        if (time<0) { // happened today
             Date now = new Date();
             time = now.getTime() - date.getTime();
             return hoursAgo(TimeUnit.MILLISECONDS.toHours(time));
@@ -51,6 +53,8 @@ public class DateCleaner {
     }
 
     private String hoursAgo(long hours) {
+        if (hours<1)
+            return String.format(context.getString(is.grumpy.R.string.less_than), hours);
         return String.format(context.getString(is.grumpy.R.string.hours_ago), hours);
     }
 }
