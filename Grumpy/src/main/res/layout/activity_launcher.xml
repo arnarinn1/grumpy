@@ -19,39 +19,58 @@
         style="@style/LauncherTheme"/>
 
     <LinearLayout
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/loginUsername"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:inputType="text"
+            android:hint="@string/username"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="60sp"/>
+
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="60sp"/>
+
+        <!-- Change ugly look when btn gets pressed -->
+        <Button
+            android:id="@+id/btnLoginUsername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/launcher_button_selector"
             android:text="@string/log_in"
             android:textColor="#fff"
             android:typeface="sans"
             android:textSize="25sp"
-            android:padding="10sp"/>
-
-        <View
-            android:layout_width="1dip"
-            android:layout_height="fill_parent"
-            android:background="#ffb7b7b7"/>
-
-        <Button
-            android:id="@+id/signupUser"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/launcher_button_selector"
-            android:text="@string/sign_up"
-            android:textColor="#fff"
-            android:typeface="sans"
-            android:textSize="25sp"
-            android:padding="10sp"/>
+            android:padding="10sp"
+            android:layout_marginLeft="60sp"
+            android:layout_marginRight="60sp"/>
 
     </LinearLayout>
+
+
+    <Button
+        android:layout_gravity="bottom"
+        android:id="@+id/signupUser"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/launcher_button_selector"
+        android:text="@string/sign_up"
+        android:textColor="#fff"
+        android:typeface="sans"
+        android:textSize="25sp"
+        android:padding="10sp"
+        android:layout_marginLeft="70sp"
+        android:layout_marginRight="70sp"/>
 
 </FrameLayout>
