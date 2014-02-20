@@ -2,6 +2,7 @@ package is.grumpy.rest;
 
 import java.util.List;
 
+import is.grumpy.contracts.GrumpyFeedData;
 import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
@@ -29,4 +30,7 @@ public interface GrumpyApi
 
     @GET("/user/{username}/search")
     void searchUsers(@Path("username") String username, Callback<List<UserData>> users);
+
+    @GET("/post")
+    List<GrumpyFeedData> getPosts();
 }

@@ -29,7 +29,9 @@ import is.grumpy.contracts.GrumpyUserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.gui.base.IActivity;
+import is.grumpy.rest.GrumpyApi;
 import is.grumpy.rest.GrumpyClient;
+import retrofit.RestAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
@@ -39,10 +41,13 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  */
 public class FeedFragment extends BaseFragment implements OnRefreshListener
 {
+    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
+
     private MenuItem refreshMenuItem;
     private ListView mListView;
     private GrumpyFeedAdapter mAdapter;
     private ProgressBar mProgressBar;
+    private GrumpyApi mGrumpyApi;
 
     private PullToRefreshLayout mPullToRefreshLayout;
 
@@ -77,6 +82,12 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 .listener(this)
                 .setup(mPullToRefreshLayout);
 
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(ApiUrl)
+                .build();
+
+        mGrumpyApi = restAdapter.create(GrumpyApi.class);
+
         new GrumpyFeedWorker().execute();
 
         return rootView;
@@ -94,10 +105,10 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     {
         switch (item.getItemId())
         {
-            case R.id.action_refresh:
-                refreshMenuItem = item;
-                new UpdateGrumpyFeedWorker().execute();
-                return true;
+            //case R.id.action_refresh:
+            //    refreshMenuItem = item;
+            //    new UpdateGrumpyFeedWorker().execute();
+            //    return true;
             case R.id.action_new_post:
                 StartNewPostActivity();
                 return true;
@@ -109,42 +120,43 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     @Override
     public void onRefreshStarted(View view)
     {
-        /**
-         * Simulate Refresh with 4 seconds sleep
-         */
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, List<GrumpyFeedData>>()
+        {
 
             @Override
-            protected Void doInBackground(Void... params)
+            protected List<GrumpyFeedData> doInBackground(Void... params)
             {
-                try
-                {
-                    Thread.sleep(4000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
+                return mGrumpyApi.getPosts();
             }
 
             @Override
-            protected void onPostExecute(Void result)
+            protected void onPostExecute(List<GrumpyFeedData> posts)
             {
-                super.onPostExecute(result);
+                super.onPostExecute(posts);
 
                 // Notify PullToRefreshLayout that the refresh has finished
                 mPullToRefreshLayout.setRefreshComplete();
 
+                //TODO: Loop through list in adapter and only add new posts and notifydataset changed
                 if (mAdapter != null)
                 {
-                    GrumpyFeedData testData = GetTestData();
-                    mAdapter.AddNewItem(testData);
-                    mAdapter.notifyDataSetChanged();
+                    mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, posts);
+
+                    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+                    swingBottomInAnimationAdapter.setInitialDelayMillis(500);
+                    swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
+                    swingBottomInAnimationAdapter.setAbsListView(mListView);
+
+                    mListView.setAdapter(swingBottomInAnimationAdapter);
+
+                    //mAdapter.AddNewItem(testData);
+                    //mAdapter.notifyDataSetChanged();
                 }
 
             }
         }.execute();
     }
-
+/*
     private class UpdateGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
     {
         @Override
@@ -204,7 +216,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         testData.getUser().setAvatar("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
         return testData;
     }
-
+*/
     private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
     {
         @Override
@@ -212,7 +224,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             try
             {
-                return new GrumpyClient().GetGrumpyFeed();
+                return mGrumpyApi.getPosts();
             }
             catch (Exception ex)
             {

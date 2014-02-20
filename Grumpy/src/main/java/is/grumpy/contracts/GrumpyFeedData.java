@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
  */
 public class GrumpyFeedData
 {
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("user")
     private GrumpyUserData user;
 
@@ -19,6 +22,7 @@ public class GrumpyFeedData
     public GrumpyUserData getUser() { return this.user; }
     public String getTimeCreated() { return timeCreated; }
     public String getPost() { return post; }
+    public String getId() { return id;}
 
     public void setUser(GrumpyUserData user) { this.user = user; }
     public void setTimeCreated(String timeCreated){ this.timeCreated = timeCreated; }
