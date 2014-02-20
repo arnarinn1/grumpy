@@ -3,12 +3,14 @@ package is.grumpy.rest;
 import java.util.List;
 
 import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.GrumpyPostRequest;
 import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
 import is.grumpy.contracts.UserData;
 import retrofit.Callback;
+import retrofit.Server;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -24,6 +26,9 @@ public interface GrumpyApi
 
     @POST("/login")
     void loginUser(@Body PostUser loginUser, Callback<LoginResponse> callback);
+
+    @POST("/post")
+    void postGrumpyMessage(@Body GrumpyPostRequest postRequest, Callback<ServerResponse> callback);
 
     @GET("/user/{username}/exists")
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);

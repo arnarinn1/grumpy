@@ -5,37 +5,25 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="#efefef"
-    android:padding="10dp"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <EditText
+        android:id="@+id/edit_post"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent"
+        android:background="#fff"
+        android:padding="10dp"
+        android:layout_marginBottom="40dp"
+        android:hint="What's bothering you today ?"
+        android:gravity="top"/>
 
-        <TextView
-            android:id="@+id/write_post"
-            style="@style/BaseTextStyle.Item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/write_post"/>
+    <Button
+        android:id="@+id/send_new_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_new_post"
+        android:background="@drawable/button_selector"
+        android:layout_gravity="bottom"
+        android:textColor="#fff"/>
 
-        <EditText
-            android:id="@+id/edit_post"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:background="#fff"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="40dp"
-            android:layout_below="@id/write_post"
-            android:gravity="top|left" />
-
-        <Button
-            android:id="@+id/send_new_post"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/send_new_post"
-            android:layout_below="@+id/edit_post"/>
-
-    </RelativeLayout>
 </FrameLayout>
