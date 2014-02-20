@@ -8,29 +8,22 @@ import com.google.gson.annotations.SerializedName;
 public class PostUser
 {
     @SerializedName("username")
-    public String username;
+    private String username;
 
     @SerializedName("password")
-    public String password;
+    private String password;
 
     @SerializedName("first_name")
-    public String firstName;
+    private String firstName;
 
     @SerializedName("last_name")
-    public String lastName;
+    private String lastName;
 
     @SerializedName("about")
-    public String about;
+    private String about;
 
     @SerializedName("avatar")
-    public String avatar;
-
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName;}
-    public String getAbout() { return about;}
-    public String getAvatar() { return avatar;}
+    private String avatar;
 
     public void setUsername(String username) { this.username = username;}
     public void setPassword(String password) { this.password = password;}
