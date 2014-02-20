@@ -20,9 +20,9 @@ public interface GrumpyApi
     @POST("/user")
     void createUser(@Body PostUser newUser, Callback<ServerResponse> callback);
 
-    @GET("/userexists/{username}")
+    @GET("/user/{username}/exists")
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
 
-    @GET("/user/search/{username}")
+    @GET("/user/{username}/search")
     void searchUsers(@Path("username") String username, Callback<List<UserData>> users);
 }

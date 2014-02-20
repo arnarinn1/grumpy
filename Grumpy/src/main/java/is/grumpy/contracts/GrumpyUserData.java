@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by thdg9_000 on 16.2.2014.
  */
-public class GrumpyUserData {
+public class GrumpyUserData
+{
+    @SerializedName("id")
+    private String id;
+
     @SerializedName("username")
     private String username;
 

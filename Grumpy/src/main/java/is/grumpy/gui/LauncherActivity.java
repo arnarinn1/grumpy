@@ -32,21 +32,31 @@ public class LauncherActivity extends Activity
 
     public void AttachEventListeners()
     {
-        mSignUp.setOnClickListener(new View.OnClickListener() {
+        mSignUp.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(getContext(), SignUpActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
+        mLogin.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //try login mate
+            }
+        });
 
     }
 
     private void AttachViews()
     {
         mSignUp = (Button) findViewById(R.id.signupUser);
-        //mLogin = (Button) findViewById(R.id.loginUserBtn);
+        mLogin = (Button) findViewById(R.id.btnLoginUsername);
     }
 }
