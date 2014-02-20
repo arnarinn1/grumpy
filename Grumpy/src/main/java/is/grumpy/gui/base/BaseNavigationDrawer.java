@@ -42,6 +42,15 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        InitializeNavigationDrawer();
+    }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected void InitializeNavigationDrawer()
     {
@@ -57,8 +66,8 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         items.add(new DrawerListItem("Messages", R.drawable.ic_messages, true));
         items.add(new DrawerListItem("Search Users", R.drawable.ic_search, false));
         items.add(new DrawerHeader("SETTINGS"));
-        items.add(new DrawerListItem("App Settings", R.drawable.ic_settings, false));
         items.add(new DrawerListItem("Edit Profile", R.drawable.ic_settings, false));
+        items.add(new DrawerListItem("Log Out", R.drawable.ic_logout, false));
 
         mDrawerList.setAdapter(new DrawerListAdapter(this, items));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -128,8 +137,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
 
     private void StartAction(int position)
     {
-        Intent intent;
-        Fragment fragment = null;
+        Fragment fragment;
 
         switch(position)
         {
@@ -141,10 +149,6 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 break;
             case 5:
                 fragment = SearchFragment.newInstance(position);
-                break;
-            case 7:
-                intent = new Intent(this, LauncherActivity.class);
-                startActivity(intent);
                 break;
             default:
                 return;

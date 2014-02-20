@@ -31,6 +31,7 @@ public class GrumpyUserData
     public String getFirstName() { return this.firstName; }
     public String getLastName() { return this.lastName; }
     public String getAvatar() { return this.avatar; }
+    public String getId() { return this.id; }
 
     public String getFullName() { return this.firstName + " " + this.lastName; }
 }

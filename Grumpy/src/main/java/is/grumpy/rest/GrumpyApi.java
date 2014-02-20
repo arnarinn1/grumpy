@@ -2,6 +2,7 @@ package is.grumpy.rest;
 
 import java.util.List;
 
+import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
@@ -19,6 +20,9 @@ public interface GrumpyApi
 {
     @POST("/user")
     void createUser(@Body PostUser newUser, Callback<ServerResponse> callback);
+
+    @POST("/login")
+    void loginUser(@Body PostUser loginUser, Callback<LoginResponse> callback);
 
     @GET("/user/{username}/exists")
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
