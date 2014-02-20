@@ -84,12 +84,57 @@
             android:layout_height="wrap_content"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
-            android:text="@string/full_name"
+            android:text="First Name"
             style="@style/BaseTextStyle.Item"
             />
 
         <EditText
-            android:id="@+id/signupFullName"
+            android:id="@+id/signupFirstName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Last Name"
+            style="@style/BaseTextStyle.Item"
+            />
+
+        <EditText
+            android:id="@+id/signupLastName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="About"
+            style="@style/BaseTextStyle.Item"
+            />
+
+        <EditText
+            android:id="@+id/signupAbout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:text="Avatar"
+            style="@style/BaseTextStyle.Item"
+            />
+
+        <EditText
+            android:id="@+id/signupAvatar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="text"/>

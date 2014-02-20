@@ -31,7 +31,10 @@ public class SignUpActivity extends ActionBarActivity
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mPasswordConfirmField;
-    private EditText mFullNameField;
+    private EditText mFirstNameField;
+    private EditText mLastNameField;
+    private EditText mAboutField;
+    private EditText mAvatarField;
     private ImageView mUsernameStatus;
     private PostUser mNewUser = new PostUser();
 
@@ -54,7 +57,10 @@ public class SignUpActivity extends ActionBarActivity
         mUsernameField = (EditText) findViewById(R.id.signupUsername);
         mPasswordField = (EditText) findViewById(R.id.signupPassword);
         mPasswordConfirmField = (EditText) findViewById(R.id.signupConfirmPassword);
-        mFullNameField = (EditText) findViewById(R.id.signupFullName);
+        mFirstNameField = (EditText) findViewById(R.id.signupFirstName);
+        mLastNameField = (EditText) findViewById(R.id.signupLastName);
+        mAboutField = (EditText) findViewById(R.id.signupAbout);
+        mAvatarField = (EditText) findViewById(R.id.signupAvatar);
         mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
@@ -144,9 +150,12 @@ public class SignUpActivity extends ActionBarActivity
     private boolean ValidateInputFields()
     {
         String userName = mUsernameField.getText().toString();
-        String fullName = mFullNameField.getText().toString();
         String password = mPasswordField.getText().toString();
         String confirmedPassword = mPasswordConfirmField.getText().toString();
+        String firstName = mFirstNameField.getText().toString();
+        String lastName = mLastNameField.getText().toString();
+        String about  = mAboutField.getText().toString();
+        String avatar = mAvatarField.getText().toString();
 
         if ((password.length() < 6) || (confirmedPassword.length() < 6))
         {
@@ -160,14 +169,18 @@ public class SignUpActivity extends ActionBarActivity
             return false;
         }
 
-        if (userName.length() == 0 || fullName.length() == 0)
+        if (userName.length() == 0)
         {
-            Toast.makeText(this, "Must Enter a Username and Full Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Must Enter a Username", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         mNewUser.setPassword(password);
         mNewUser.setUsername(userName);
+        mNewUser.setFirstName(firstName.equals("") ? null : firstName);
+        mNewUser.setLastName(lastName.equals("") ? null : lastName);
+        mNewUser.setAbout(about.equals("") ? null : about);
+        mNewUser.setAvatar(avatar.equals("") ? null : about);
 
         return true;
     }
