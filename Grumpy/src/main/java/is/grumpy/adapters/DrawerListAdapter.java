@@ -14,6 +14,7 @@ import is.grumpy.gui.navigationdrawer.IDrawerItem;
 public class DrawerListAdapter extends ArrayAdapter<IDrawerItem>
 {
     private LayoutInflater mInflater;
+    private Context mContext;
 
     public enum RowType
     {
@@ -30,12 +31,13 @@ public class DrawerListAdapter extends ArrayAdapter<IDrawerItem>
     {
         super(context, 0, items);
         mInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        return getItem(position).getView(mInflater, convertView);
+        return getItem(position).getView(mContext, mInflater, convertView);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package is.grumpy.gui.navigationdrawer;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ public class DrawerHeader implements IDrawerItem
     }
 
     @Override
-    public View getView(LayoutInflater inflater, View convertView)
+    public View getView(Context context, LayoutInflater inflater, View convertView)
     {
         View view;
         if (convertView == null)

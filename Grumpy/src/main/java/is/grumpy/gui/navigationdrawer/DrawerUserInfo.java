@@ -1,11 +1,13 @@
 package is.grumpy.gui.navigationdrawer;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
+import is.grumpy.cache.Credentials;
 
 /**
  * Created by Arnar on 27.1.2014.
@@ -28,20 +30,32 @@ public class DrawerUserInfo implements IDrawerItem
     }
 
     @Override
-    public View getView(LayoutInflater inflater, View convertView)
+    public View getView(Context context, LayoutInflater inflater, View convertView)
     {
-        View view;
-        if (convertView == null)
+        View row = convertView;
+        final UserInfoHolder holder;
+
+        if (row == null)
         {
-            view = inflater.inflate(R.layout.drawer_user_info, null);
+            row = inflater.inflate(R.layout.drawer_user_info, null);
+
+            holder = new UserInfoHolder();
+            holder.userName = (TextView) row.findViewById(R.id.drawerUserName);
         }
         else
         {
-            view = convertView;
+            holder = (UserInfoHolder) row.getTag();
         }
 
-        ((TextView) view.findViewById(R.id.drawerUserName)).setText(mName);
+        String userName = new Credentials(context).GetCacheToken(Credentials.mUsername);
 
-        return view;
+        holder.userName.setText(userName);
+
+        return row;
+    }
+
+    static class UserInfoHolder
+    {
+        TextView userName;
     }
 }
