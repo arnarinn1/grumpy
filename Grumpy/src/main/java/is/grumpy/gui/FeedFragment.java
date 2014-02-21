@@ -134,7 +134,6 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             {
                 super.onPostExecute(posts);
 
-                // Notify PullToRefreshLayout that the refresh has finished
                 mPullToRefreshLayout.setRefreshComplete();
 
                 //TODO: Loop through list in adapter and only add new posts and notifydataset changed

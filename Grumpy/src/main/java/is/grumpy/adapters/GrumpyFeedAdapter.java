@@ -75,14 +75,8 @@ public class GrumpyFeedAdapter extends BaseAdapter
         holder.userName.setText(feed.getUser().getFullName());
         holder.post.setText(feed.getPost());
 
-        String posted;
-        try {
-            DateCleaner cleaner = new DateCleaner(feed.getTimeCreated(), mContext);
-            posted = cleaner.getRelativeDate();
-        } catch (Exception e) {
-            posted = feed.getTimeCreated();
-        }
-        holder.timeCreated.setText(posted);
+        String postedAt = FormatDate(feed.getTimeCreated());
+        holder.timeCreated.setText(postedAt);
 
         return row;
     }
@@ -90,6 +84,22 @@ public class GrumpyFeedAdapter extends BaseAdapter
     public void AddNewItem(GrumpyFeedData data)
     {
         feed.add(0, data);
+    }
+
+    private String FormatDate(String timeCreated)
+    {
+        String posted;
+        try
+        {
+            DateCleaner cleaner = new DateCleaner(timeCreated, mContext);
+            posted = cleaner.getRelativeDate();
+        }
+        catch (Exception e)
+        {
+            posted = timeCreated;
+        }
+
+        return posted;
     }
 
     @Override
