@@ -64,7 +64,7 @@ public class LogOutDialog
 
         GrumpyApi service = restAdapter.create(GrumpyApi.class);
 
-        String accessToken = new Credentials(mContext).GetAccessToken();
+        String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
         GrumpyPostRequest request = new GrumpyPostRequest();
         request.setAccessToken(accessToken);
 

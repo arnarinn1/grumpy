@@ -28,10 +28,10 @@ public class Credentials
         return preferences.getString(mAccessToken, null) != null;
     }
 
-    public String GetAccessToken()
+    public String GetCacheToken(String cacheToken)
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return preferences.getString(mAccessToken, null);
+        return preferences.getString(cacheToken, null);
     }
 
     public void WriteCredentialsToCache(LoginResponse response)

@@ -51,7 +51,7 @@ public class NewPostActivity extends ActionBarActivity
                 String post = mPostData.getText().toString();
 
                 GrumpyPostRequest postData = new GrumpyPostRequest();
-                postData.setAccessToken(new Credentials(getContext()).GetAccessToken());
+                postData.setAccessToken(new Credentials(getContext()).GetCacheToken(Credentials.mAccessToken));
                 postData.setPostMessage(post);
 
                 mGrumpyApi.postGrumpyMessage(postData, postMessageCallback);
