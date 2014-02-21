@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -43,15 +43,7 @@
             android:layout_below="@+id/grumpyFeedUserName"
             android:paddingLeft="10dp"
             style="@style/BaseTextStyle.DateHighlighter"/>
-        <!--
-        <View
-            android:id="@+id/splitter"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/feedProfilePicture"
-            android:background="@color/base_app_color"
-            android:layout_marginTop="4sp"/>
-        -->
+
         <TextView
             android:id="@+id/grumpyFeedPost"
             android:layout_width="wrap_content"
@@ -59,6 +51,15 @@
             android:layout_below="@+id/feedProfilePicture"
             android:paddingTop="10sp"
             style="@style/BaseTextStyle.Normal"/>
+
+        <ImageButton
+            android:id="@+id/postOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_overflow"
+            android:layout_alignParentRight="true"
+            android:background="?android:selectableItemBackground"
+            android:layout_marginRight="-10sp"/>
 
     </RelativeLayout>
 
@@ -90,4 +91,4 @@
             android:background="#f9f9f9" />
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

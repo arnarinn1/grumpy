@@ -1,12 +1,16 @@
 package is.grumpy.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,11 +42,11 @@ public class GrumpyFeedAdapter extends BaseAdapter
         TextView userName;
         TextView post;
         TextView timeCreated;
-        int position;
+        ImageButton showOptions;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         View row = convertView;
         final GrumpyFeedHolder holder;
@@ -57,6 +61,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             holder.profilePicture = (com.makeramen.RoundedImageView) row.findViewById(R.id.feedProfilePicture);
             holder.post = (TextView) row.findViewById(R.id.grumpyFeedPost);
             holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
+            holder.showOptions = (ImageButton) row.findViewById(R.id.postOptions);
             row.setTag(holder);
         }
         else
@@ -73,12 +78,19 @@ public class GrumpyFeedAdapter extends BaseAdapter
                 .noFade()
                 .into(holder.profilePicture);
 
-        holder.position = position;
         holder.userName.setText(feed.getUser().getFullName());
         holder.post.setText(feed.getPost());
 
         String postedAt = FormatDate(feed.getTimeCreated());
         holder.timeCreated.setText(postedAt);
+
+        holder.showOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                RemoveItem(position);
+            }
+        });
 
         return row;
     }
@@ -86,6 +98,31 @@ public class GrumpyFeedAdapter extends BaseAdapter
     public void AddNewItem(GrumpyFeedData data)
     {
         feed.add(0, data);
+    }
+
+    //TODO: This is just to show functionality.  Only a creator of a post can destroy it.
+    public void RemoveItem(final int position)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, 2);
+        builder
+            .setTitle("Destroy Post")
+            .setMessage("Are you sure you want to destroy that post ?")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    feed.remove(position);
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+        AlertDialog alert = builder.show();
+        alert.show();
     }
 
     private String FormatDate(String timeCreated)
