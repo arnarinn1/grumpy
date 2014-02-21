@@ -121,7 +121,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
         String message;
 
         if (userCreatedPost)
-            message = "Are you sure you want to destroy that post ?";
+            message = "Are you sure you want to destroy this post ?";
         else
             message = "You can only destroy your own posts";
 
@@ -214,7 +214,9 @@ public class GrumpyFeedAdapter extends BaseAdapter
             RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
             GrumpyApi service = restAdapter.create(GrumpyApi.class);
 
-            return service.deletePost(postId);
+            String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
+
+            return service.deletePost(postId, accessToken);
         }
     }
 

@@ -43,6 +43,6 @@ public interface GrumpyApi
     @GET("/post")
     List<GrumpyFeedData> getPosts();
 
-    @DELETE("/post/{post_id}")
-    ServerResponse deletePost(@Path("post_id") String postId);
+    @DELETE("/post/{post_id}/{access_token}")
+    ServerResponse deletePost(@Path("post_id") String postId, @Path("access_token") String accessToken);
 }
