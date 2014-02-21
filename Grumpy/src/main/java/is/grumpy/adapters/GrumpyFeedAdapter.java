@@ -2,23 +2,28 @@ package is.grumpy.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.security.spec.ECField;
 import java.util.List;
 import is.grumpy.R;
+import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.ServerResponse;
+import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.DateCleaner;
+import retrofit.RestAdapter;
 
 /**
  * Created by Arnar on 4.2.2014.
@@ -88,7 +93,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                RemoveItem(position);
+                RemoveItem(position, feed);
             }
         });
 
@@ -100,17 +105,39 @@ public class GrumpyFeedAdapter extends BaseAdapter
         feed.add(0, data);
     }
 
-    //TODO: This is just to show functionality.  Only a creator of a post can destroy it.
-    public void RemoveItem(final int position)
+    private void RemoveItem(int position)
     {
+        feed.remove(position);
+        notifyDataSetChanged();
+    }
+
+    //TODO: This is just to show functionality.  Only a creator of a post can destroy it.
+    public void RemoveItem(final int position, final GrumpyFeedData post)
+    {
+        String userName = new Credentials(mContext).GetCacheToken(Credentials.mUsername);
+
+        boolean userCreatedPost = userName.equals(post.getUser().getUsername());
+
+        String message;
+
+        if (userCreatedPost)
+            message = "Are you sure you want to destroy that post ?";
+        else
+            message = "You can only destroy your own posts";
+
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, 2);
         builder
             .setTitle("Destroy Post")
-            .setMessage("Are you sure you want to destroy that post ?")
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    feed.remove(position);
-                    notifyDataSetChanged();
+            .setMessage(message);
+
+        if (userCreatedPost)
+        {
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    new DeletePostWorker(position).execute(post.getId());
+
                     dialog.dismiss();
                 }
             })
@@ -120,9 +147,75 @@ public class GrumpyFeedAdapter extends BaseAdapter
                     dialog.dismiss();
                 }
             });
+        }
+        else
+        {
+            builder.setPositiveButton("Close", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+                }
+            });
+        }
 
         AlertDialog alert = builder.show();
         alert.show();
+    }
+
+    private class DeletePostWorker extends AsyncTask<String, Void, ServerResponse>
+    {
+        private int position;
+        private ProgressDialog mProgressDialog;
+
+        public DeletePostWorker(int position)
+        {
+            this.position = position;
+            this.mProgressDialog = new ProgressDialog(mContext, 2);
+            mProgressDialog.setMessage("Deleting Post");
+        }
+
+        @Override
+        protected ServerResponse doInBackground(String... params)
+        {
+            try
+            {
+                return DestroyPost(params[0]);
+            }
+            catch (Exception ex)
+            {
+                //Show some toast with error message
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(ServerResponse response)
+        {
+            if(response.getStatus())
+            {
+                RemoveItem(position);
+            }
+
+            mProgressDialog.dismiss();
+        }
+
+        private ServerResponse DestroyPost(String postId)
+        {
+            RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+            GrumpyApi service = restAdapter.create(GrumpyApi.class);
+
+            return service.deletePost(postId);
+        }
     }
 
     private String FormatDate(String timeCreated)
