@@ -1,7 +1,6 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,13 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 import java.util.List;
@@ -25,12 +19,9 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.adapters.GrumpyFeedAdapter;
 import is.grumpy.contracts.GrumpyFeedData;
-import is.grumpy.contracts.GrumpyUserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
-import is.grumpy.gui.base.IActivity;
 import is.grumpy.rest.GrumpyApi;
-import is.grumpy.rest.GrumpyClient;
 import retrofit.RestAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -87,10 +78,22 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 .build();
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
-
         new GrumpyFeedWorker().execute();
 
         return rootView;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        //TODO: There is a better way to get this callback, will look into that
+        if (NewPostActivity.CallbackCreatedNewPost)
+        {
+            new GrumpyFeedWorker().execute();
+            NewPostActivity.CallbackCreatedNewPost = false;
+        }
     }
 
     @Override
@@ -120,42 +123,53 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     @Override
     public void onRefreshStarted(View view)
     {
-        new AsyncTask<Void, Void, List<GrumpyFeedData>>()
-        {
+        new GrumpyFeedWorker().execute();
+    }
 
-            @Override
-            protected List<GrumpyFeedData> doInBackground(Void... params)
+    private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
+    {
+        @Override
+        protected List<GrumpyFeedData> doInBackground(String... params)
+        {
+            try
             {
                 return mGrumpyApi.getPosts();
             }
-
-            @Override
-            protected void onPostExecute(List<GrumpyFeedData> posts)
+            catch (Exception ex)
             {
-                super.onPostExecute(posts);
-
-                mPullToRefreshLayout.setRefreshComplete();
-
-                //TODO: Loop through list in adapter and only add new posts and notifydataset changed
-                if (mAdapter != null)
-                {
-                    mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, posts);
-
-                    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-                    swingBottomInAnimationAdapter.setInitialDelayMillis(500);
-                    swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
-                    swingBottomInAnimationAdapter.setAbsListView(mListView);
-
-                    mListView.setAdapter(swingBottomInAnimationAdapter);
-
-                    //mAdapter.AddNewItem(testData);
-                    //mAdapter.notifyDataSetChanged();
-                }
-
+                return null;
             }
-        }.execute();
+        }
+
+        @Override
+        protected void onPostExecute(List<GrumpyFeedData> grumpyFeed)
+        {
+            mPullToRefreshLayout.setRefreshComplete();
+
+            if (grumpyFeed != null)
+            {
+                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
+
+                SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+                swingBottomInAnimationAdapter.setInitialDelayMillis(500);
+                swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
+                swingBottomInAnimationAdapter.setAbsListView(mListView);
+
+                mListView.setAdapter(swingBottomInAnimationAdapter);
+            }
+
+            mProgressBar.setVisibility(View.INVISIBLE);
+        }
     }
-/*
+
+    private void StartNewPostActivity()
+    {
+        Intent intent = new Intent(IActivity.context(), NewPostActivity.class);
+        startActivity(intent);
+        ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+    }
+
+    /*
     private class UpdateGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
     {
         @Override
@@ -200,60 +214,6 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             refreshMenuItem.setActionView(null);
         }
     }
-
-    private GrumpyFeedData GetTestData()
-    {
-        //Just some hardcoded example to show functionality
-        GrumpyFeedData testData = new GrumpyFeedData();
-        GrumpyUserData testUser = new GrumpyUserData();
-        testData.setPost("This is an test post to show functionality");
-        testData.setUser(testUser);
-        testUser.setUsername("Arnarinn");
-        testUser.setFirstName("Arnar");
-        testUser.setLastName("Heimisson");
-        testData.setTimeCreated("2014-02-14 14:52:45");
-        testData.getUser().setAvatar("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg");
-        return testData;
-    }
 */
-    private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
-    {
-        @Override
-        protected List<GrumpyFeedData> doInBackground(String... params)
-        {
-            try
-            {
-                return mGrumpyApi.getPosts();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
 
-        @Override
-        protected void onPostExecute(List<GrumpyFeedData> grumpyFeed)
-        {
-            if (grumpyFeed != null)
-            {
-                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
-
-                SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-                swingBottomInAnimationAdapter.setInitialDelayMillis(500);
-                swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
-                swingBottomInAnimationAdapter.setAbsListView(mListView);
-
-                mListView.setAdapter(swingBottomInAnimationAdapter);
-            }
-
-            mProgressBar.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    private void StartNewPostActivity()
-    {
-        Intent intent = new Intent(IActivity.context(), NewPostActivity.class);
-        startActivity(intent);
-        ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
-    }
 }

@@ -24,6 +24,8 @@ import retrofit.client.Response;
  */
 public class NewPostActivity extends ActionBarActivity
 {
+    public static boolean CallbackCreatedNewPost = false;
+
     private Button mSendNewPost;
     private EditText mPostData;
     private GrumpyApi mGrumpyApi;
@@ -66,6 +68,7 @@ public class NewPostActivity extends ActionBarActivity
         {
             if (serverResponse.getStatus())
             {
+                CallbackCreatedNewPost = true;
                 finish();
                 overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
             }
