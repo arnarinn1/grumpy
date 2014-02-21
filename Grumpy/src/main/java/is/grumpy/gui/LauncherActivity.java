@@ -1,13 +1,13 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
@@ -34,6 +34,8 @@ public class LauncherActivity extends Activity
     private EditText mPassword;
     private GrumpyApi mGrumpyApi;
 
+    private ProgressDialog mProgressDialog;
+
     public Context getContext() { return this; }
 
     @Override
@@ -58,6 +60,9 @@ public class LauncherActivity extends Activity
                 .build();
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
+
+        mProgressDialog = new ProgressDialog(this, 2);
+        mProgressDialog.setMessage("Logging In");
 
         AttachViews();
         AttachEventListeners();
@@ -90,9 +95,9 @@ public class LauncherActivity extends Activity
                 user.setPassword(passWord);
 
                 mGrumpyApi.loginUser(user, loginCallback);
+                mProgressDialog.show();
             }
         });
-
     }
 
     Callback<LoginResponse> loginCallback = new Callback<LoginResponse>()
@@ -100,6 +105,8 @@ public class LauncherActivity extends Activity
         @Override
         public void success(LoginResponse loginResponse, Response response)
         {
+            mProgressDialog.dismiss();
+
             if (loginResponse.getStatus())
             {
                 new Credentials(getContext()).WriteCredentialsToCache(loginResponse);
@@ -117,6 +124,7 @@ public class LauncherActivity extends Activity
         @Override
         public void failure(RetrofitError retrofitError)
         {
+            mProgressDialog.dismiss();
             Dialog.LoginFailedDialog(getContext());
         }
     };
