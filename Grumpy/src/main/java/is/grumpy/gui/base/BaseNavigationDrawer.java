@@ -21,6 +21,7 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
+import is.grumpy.cache.Credentials;
 import is.grumpy.gui.FeedFragment;
 import is.grumpy.gui.LauncherActivity;
 import is.grumpy.gui.MessagesFragment;
@@ -137,7 +138,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
 
     private void StartAction(int position)
     {
-        Fragment fragment;
+        Fragment fragment = null;
 
         switch(position)
         {
@@ -149,6 +150,9 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 break;
             case 5:
                 fragment = SearchFragment.newInstance(position);
+                break;
+            case 8:
+                LogOutUser();
                 break;
             default:
                 return;
@@ -184,6 +188,14 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         }, 150);
+    }
+
+    private void LogOutUser()
+    {
+        new Credentials(this).ClearCredentialsCache();
+        Intent intent = new Intent(this, LauncherActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override

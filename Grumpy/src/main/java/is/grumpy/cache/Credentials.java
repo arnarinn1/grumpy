@@ -43,4 +43,14 @@ public class Credentials
         editor.putString(mAccessToken, response.getAccessToken());
         editor.commit();
     }
+
+    public void ClearCredentialsCache()
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(mUsername, null);
+        editor.putString(mId, null);
+        editor.putString(mAccessToken, null);
+        editor.commit();
+    }
 }
