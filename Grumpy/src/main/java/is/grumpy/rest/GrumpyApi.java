@@ -30,6 +30,9 @@ public interface GrumpyApi
     @POST("/post")
     void postGrumpyMessage(@Body GrumpyPostRequest postRequest, Callback<ServerResponse> callback);
 
+    @POST("/logout")
+    void logOutUser(@Body GrumpyPostRequest postRequest, Callback<ServerResponse> callback);
+
     @GET("/user/{username}/exists")
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
 

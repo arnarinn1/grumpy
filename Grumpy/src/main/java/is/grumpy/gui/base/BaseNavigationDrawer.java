@@ -22,8 +22,10 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
 import is.grumpy.cache.Credentials;
+import is.grumpy.gui.Dialog;
 import is.grumpy.gui.FeedFragment;
 import is.grumpy.gui.LauncherActivity;
+import is.grumpy.gui.LogOutDialog;
 import is.grumpy.gui.MessagesFragment;
 import is.grumpy.gui.SearchFragment;
 import is.grumpy.gui.SignUpActivity;
@@ -129,7 +131,6 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
-            mDrawerList.setItemChecked(position, true);
             mDrawerLayout.closeDrawer(mDrawerList);
 
             StartAction(position);
@@ -192,10 +193,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
 
     private void LogOutUser()
     {
-        new Credentials(this).ClearCredentialsCache();
-        Intent intent = new Intent(this, LauncherActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        new LogOutDialog(this).LogOut();
     }
 
     @Override
