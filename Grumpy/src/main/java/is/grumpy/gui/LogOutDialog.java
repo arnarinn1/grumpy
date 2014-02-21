@@ -10,11 +10,10 @@ import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.GrumpyPostRequest;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.ApacheClient;
 import retrofit.client.Response;
 
 /**
@@ -61,22 +60,7 @@ public class LogOutDialog
 
     private void LogOutUser()
     {
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request)
-            {
-                request.addHeader("Content-Type", "application/json");
-                request.addHeader("Accept", "application/json");
-                request.addHeader("Accept-Encoding", "" );
-                request.addHeader("Connection", "Close");
-            }
-        };
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .setClient(new ApacheClient())
-                .setRequestInterceptor(requestInterceptor)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
         GrumpyApi service = restAdapter.create(GrumpyApi.class);
 

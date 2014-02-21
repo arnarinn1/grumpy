@@ -1,7 +1,6 @@
 package is.grumpy.gui;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -14,12 +13,10 @@ import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.GrumpyPostRequest;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.ApacheClient;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -27,8 +24,6 @@ import retrofit.client.Response;
  */
 public class NewPostActivity extends ActionBarActivity
 {
-    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
-
     private Button mSendNewPost;
     private EditText mPostData;
     private GrumpyApi mGrumpyApi;
@@ -44,27 +39,7 @@ public class NewPostActivity extends ActionBarActivity
         mSendNewPost = (Button) findViewById(R.id.send_new_post);
         mPostData = (EditText) findViewById(R.id.edit_post);
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request)
-            {
-                request.addHeader("Content-Type", "application/json");
-                request.addHeader("Accept", "application/json");
-                //If Connection header is not absent Java will throw an IO Error
-                request.addHeader("Accept-Encoding", "" );
-                request.addHeader("Connection", "Close");
-            }
-        };
-
-        //NOTE: There seems to be some bug in Retrofit(Might be an Android Bug).  If Connection header is not set to Close
-        //      and the client is not set to ApacheClient, java will throw an EOFException.  This seems to work for now
-        //      but will need to keep a close a eye on this one.
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .setClient(new ApacheClient())
-                .setRequestInterceptor(requestInterceptor)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
 
