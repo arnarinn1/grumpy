@@ -66,8 +66,10 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
         final GrumpyFeedData feed = getItem(position);
 
+        String picture = feed.getUser().getAvatar();
+
         Picasso.with(mContext)
-                .load("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg")
+                .load(picture == null ? "https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg" : picture)
                 .noFade()
                 .into(holder.profilePicture);
 

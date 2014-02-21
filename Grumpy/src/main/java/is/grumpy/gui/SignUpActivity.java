@@ -180,7 +180,7 @@ public class SignUpActivity extends ActionBarActivity
         mNewUser.setFirstName(firstName.equals("") ? null : firstName);
         mNewUser.setLastName(lastName.equals("") ? null : lastName);
         mNewUser.setAbout(about.equals("") ? null : about);
-        mNewUser.setAvatar(avatar.equals("") ? null : about);
+        mNewUser.setAvatar(avatar.equals("") ? null : avatar);
 
         return true;
     }

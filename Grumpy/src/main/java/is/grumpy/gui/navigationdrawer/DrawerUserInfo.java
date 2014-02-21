@@ -41,13 +41,15 @@ public class DrawerUserInfo implements IDrawerItem
 
             holder = new UserInfoHolder();
             holder.userName = (TextView) row.findViewById(R.id.drawerUserName);
+
+            row.setTag(holder);
         }
         else
         {
             holder = (UserInfoHolder) row.getTag();
         }
 
-        String userName = new Credentials(context).GetCacheToken(Credentials.mUsername);
+        String userName = new Credentials(context).GetCacheToken(Credentials.mFullName);
 
         holder.userName.setText(userName);
 
