@@ -52,15 +52,6 @@
             android:paddingTop="10sp"
             style="@style/BaseTextStyle.Normal"/>
 
-        <ImageButton
-            android:id="@+id/postOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_overflow"
-            android:layout_alignParentRight="true"
-            android:background="?android:selectableItemBackground"
-            android:layout_marginRight="-10sp"/>
-
     </RelativeLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -69,6 +60,7 @@
         android:background="#dedede"
         android:orientation="horizontal"
         android:visibility="gone">
+
         <Button
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -90,5 +82,13 @@
             android:layout_margin="1px"
             android:background="#f9f9f9" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/postOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_overflow"
+        android:background="?android:selectableItemBackground"
+        android:layout_gravity="right"/>
 
 </FrameLayout>

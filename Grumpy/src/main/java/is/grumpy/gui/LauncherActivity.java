@@ -15,6 +15,7 @@ import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -44,20 +45,7 @@ public class LauncherActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request)
-            {
-                request.addHeader("Content-Type", "application/json");
-                //If Connection header is not absent Java will throw an IO Error
-                request.addHeader("Connection", "close");
-            }
-        };
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .setRequestInterceptor(requestInterceptor)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
 
