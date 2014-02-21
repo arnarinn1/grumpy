@@ -1,11 +1,13 @@
 package is.grumpy.gui;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
@@ -16,6 +18,8 @@ import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.ApacheClient;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 /**
@@ -40,8 +44,26 @@ public class NewPostActivity extends ActionBarActivity
         mSendNewPost = (Button) findViewById(R.id.send_new_post);
         mPostData = (EditText) findViewById(R.id.edit_post);
 
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestInterceptor.RequestFacade request)
+            {
+                request.addHeader("Content-Type", "application/json");
+                request.addHeader("Accept", "application/json");
+                //If Connection header is not absent Java will throw an IO Error
+                request.addHeader("Accept-Encoding", "" );
+                request.addHeader("Connection", "Close");
+            }
+        };
+
+        //NOTE: There seems to be some bug in Retrofit(Might be an Android Bug).  If Connection header is not set to Close
+        //      and the client is not set to ApacheClient, java will throw an EOFException.  This seems to work for now
+        //      but will need to keep a close a eye on this one.
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ApiUrl)
+                .setClient(new ApacheClient())
+                .setRequestInterceptor(requestInterceptor)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
@@ -77,14 +99,7 @@ public class NewPostActivity extends ActionBarActivity
         @Override
         public void failure(RetrofitError retrofitError)
         {
-            if (retrofitError.getResponse().getStatus() == 403)
-            {
-
-            }
-            else
-            {
-
-            }
+            Toast.makeText(getContext(), "Something went horribly wrong!", Toast.LENGTH_SHORT).show();
         }
     };
 
