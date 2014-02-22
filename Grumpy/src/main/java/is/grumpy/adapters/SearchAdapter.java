@@ -62,8 +62,10 @@ public class SearchAdapter extends BaseAdapter
 
         holder.username.setText(user.getUsername());
 
+        String avatar = user.getAvatar();
+
         Picasso.with(mContext)
-                .load("https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg")
+                .load(avatar == null ? "https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg" : avatar)
                 .into(holder.profilePicture);
 
         return row;

@@ -2,6 +2,8 @@ package is.grumpy.gui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -93,6 +96,22 @@ public class SearchFragment extends BaseFragment
                 }
                 return false;
             }
+        });
+
+        mSearchUser.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void onTextChanged(CharSequence userName, int start, int before, int count)
+            {
+                if (userName.toString().length() > 2)
+                {
+                    grumpyApi.searchUsers(userName.toString(), searchUserCallback);
+                }
+            }
+
+            //Mayby we want to use these events
+            @Override public void afterTextChanged(Editable s) {}
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
     }
 
