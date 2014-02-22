@@ -1,6 +1,7 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
@@ -108,10 +112,10 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     {
         switch (item.getItemId())
         {
-            //case R.id.action_refresh:
-            //    refreshMenuItem = item;
-            //    new UpdateGrumpyFeedWorker().execute();
-            //    return true;
+            case R.id.action_refresh:
+                refreshMenuItem = item;
+                new MenuGrumpyFeedWorker().execute();
+                return true;
             case R.id.action_new_post:
                 StartNewPostActivity();
                 return true;
@@ -169,19 +173,21 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 
-    /*
-    private class UpdateGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
+    private class MenuGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
     {
         @Override
         protected List<GrumpyFeedData> doInBackground(String... params)
         {
             try
             {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                //Simulate sleep for 1 sec to show the menu rotation
+                Thread.sleep(1000);
+                return mGrumpyApi.getPosts();
             }
-            return null;
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         @Override
@@ -191,7 +197,6 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             ImageView iv = (ImageView) inflater.inflate(R.layout.refresh_action_view, null);
 
             Animation rotation = AnimationUtils.loadAnimation(getActivity(), R.anim.clockwise_refresh);
-            rotation.setRepeatCount(Animation.INFINITE);
             iv.startAnimation(rotation);
 
             refreshMenuItem.setActionView(iv);
@@ -203,9 +208,14 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             if (mAdapter != null)
             {
-                GrumpyFeedData testData = GetTestData();
-                mAdapter.AddNewItem(testData);
-                mAdapter.notifyDataSetChanged();
+                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, feed);
+
+                SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+                swingBottomInAnimationAdapter.setInitialDelayMillis(500);
+                swingBottomInAnimationAdapter.setAnimationDelayMillis(500);
+                swingBottomInAnimationAdapter.setAbsListView(mListView);
+
+                mListView.setAdapter(swingBottomInAnimationAdapter);
             }
 
             // remove the progress bar view and animation
@@ -214,6 +224,4 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             refreshMenuItem.setActionView(null);
         }
     }
-*/
-
 }
