@@ -4,13 +4,12 @@ import java.util.List;
 
 import is.grumpy.contracts.GrumpyFeedData;
 import is.grumpy.contracts.GrumpyPostRequest;
+import is.grumpy.contracts.GrumpyUserData;
 import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
-import is.grumpy.contracts.UserData;
 import retrofit.Callback;
-import retrofit.Server;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
@@ -38,7 +37,7 @@ public interface GrumpyApi
     void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
 
     @GET("/user/{username}/search")
-    void searchUsers(@Path("username") String username, Callback<List<UserData>> users);
+    void searchUsers(@Path("username") String username, Callback<List<GrumpyUserData>> users);
 
     @GET("/post")
     List<GrumpyFeedData> getPosts();

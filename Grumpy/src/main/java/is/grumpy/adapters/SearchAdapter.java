@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import is.grumpy.R;
-import is.grumpy.contracts.UserData;
+import is.grumpy.contracts.GrumpyUserData;
 
 /**
  * Created by Arnar on 15.2.2014.
@@ -21,9 +21,9 @@ public class SearchAdapter extends BaseAdapter
     private static final int mLayoutResourceId = R.layout.listview_search_user;
 
     private Context mContext;
-    private List<UserData> users;
+    private List<GrumpyUserData> users;
 
-    public SearchAdapter(Context context, List<UserData> users)
+    public SearchAdapter(Context context, List<GrumpyUserData> users)
     {
         this.mContext = context;
         this.users = users;
@@ -32,6 +32,7 @@ public class SearchAdapter extends BaseAdapter
     static class UserHolder
     {
         TextView username;
+        TextView fullname;
         ImageView profilePicture;
     }
 
@@ -47,8 +48,8 @@ public class SearchAdapter extends BaseAdapter
             row = inflater.inflate(mLayoutResourceId, parent, false);
 
             holder = new UserHolder();
-
             holder.username = (TextView) row.findViewById(R.id.userName);
+            holder.fullname = (TextView) row.findViewById(R.id.fullName);
             holder.profilePicture = (ImageView) row.findViewById(R.id.userProfilePicture);
 
             row.setTag(holder);
@@ -58,9 +59,10 @@ public class SearchAdapter extends BaseAdapter
             holder = (UserHolder) row.getTag();
         }
 
-        final UserData user = getItem(position);
+        final GrumpyUserData user = getItem(position);
 
         holder.username.setText(user.getUsername());
+        holder.fullname.setText(user.getFirstName() + " " + user.getLastName());
 
         String avatar = user.getAvatar();
 
@@ -78,7 +80,7 @@ public class SearchAdapter extends BaseAdapter
     }
 
     @Override
-    public UserData getItem(int position)
+    public GrumpyUserData getItem(int position)
     {
         return users.get(position);
     }

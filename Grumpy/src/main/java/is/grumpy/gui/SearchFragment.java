@@ -15,13 +15,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.SearchAdapter;
-import is.grumpy.contracts.UserData;
+import is.grumpy.contracts.GrumpyUserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyApi;
@@ -122,10 +121,10 @@ public class SearchFragment extends BaseFragment
         grumpyApi.searchUsers(username, searchUserCallback);
     }
 
-    Callback<List<UserData>> searchUserCallback = new Callback<List<UserData>>()
+    Callback<List<GrumpyUserData>> searchUserCallback = new Callback<List<GrumpyUserData>>()
     {
         @Override
-        public void success(List<UserData> users, Response response)
+        public void success(List<GrumpyUserData> users, Response response)
         {
             if (users.size() > 0)
             {
