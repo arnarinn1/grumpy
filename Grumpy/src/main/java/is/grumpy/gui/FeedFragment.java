@@ -1,8 +1,12 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +20,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 import java.util.List;
@@ -40,6 +46,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
     private MenuItem refreshMenuItem;
     private ListView mListView;
+    private TextView mNoNetworkView;
     private GrumpyFeedAdapter mAdapter;
     private ProgressBar mProgressBar;
     private GrumpyApi mGrumpyApi;
@@ -71,6 +78,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         mListView = (ListView) rootView.findViewById(R.id.listViewGrumpyFeed);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressIndicator);
         mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refresLayout);
+        mNoNetworkView = (TextView) rootView.findViewById(R.id.no_network);
 
         ActionBarPullToRefresh.from((Activity)IActivity.context())
                 .allChildrenArePullable()
@@ -83,6 +91,8 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
         mGrumpyApi = restAdapter.create(GrumpyApi.class);
         new GrumpyFeedWorker().execute();
+
+        AttachBroadcastReceiver();
 
         return rootView;
     }
@@ -223,5 +233,37 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             refreshMenuItem.getActionView().clearAnimation();
             refreshMenuItem.setActionView(null);
         }
+    }
+
+    //TODO: Extract Broadcast to another file
+    private void AttachBroadcastReceiver()
+    {
+        if (getActivity() == null) return;
+
+        getActivity().registerReceiver(new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo wifiStatus   = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                NetworkInfo mobileStatus = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+                boolean wifiNetworkStatus = (wifiStatus != null && wifiStatus.isConnected());
+                boolean mobileNetworkStatus = (mobileStatus != null && mobileStatus.isConnected());
+
+                if(wifiNetworkStatus || mobileNetworkStatus)
+                {
+                    new GrumpyFeedWorker().execute();
+                    mNoNetworkView.setVisibility(View.GONE);
+                }
+                else
+                {
+                    mNoNetworkView.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+        , new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 }
