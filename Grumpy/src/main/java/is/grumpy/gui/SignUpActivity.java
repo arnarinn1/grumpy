@@ -13,7 +13,7 @@ import is.grumpy.R;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -38,7 +38,7 @@ public class SignUpActivity extends ActionBarActivity
     private ImageView mUsernameStatus;
     private PostUser mNewUser = new PostUser();
 
-    private GrumpyApi grumpyApi;
+    private GrumpyService grumpyApi;
 
     private Context getContext() { return this; }
 
@@ -78,7 +78,7 @@ public class SignUpActivity extends ActionBarActivity
                 .setRequestInterceptor(requestInterceptor)
                 .build();
 
-        grumpyApi = restAdapter.create(GrumpyApi.class);
+        grumpyApi = restAdapter.create(GrumpyService.class);
 
         mSignup.setOnClickListener(new View.OnClickListener()
         {

@@ -28,10 +28,10 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.GrumpyFeedAdapter;
-import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.FeedData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import retrofit.RestAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -49,7 +49,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     private TextView mNoNetworkView;
     private GrumpyFeedAdapter mAdapter;
     private ProgressBar mProgressBar;
-    private GrumpyApi mGrumpyApi;
+    private GrumpyService mGrumpyApi;
 
     private PullToRefreshLayout mPullToRefreshLayout;
 
@@ -89,7 +89,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 .setEndpoint(ApiUrl)
                 .build();
 
-        mGrumpyApi = restAdapter.create(GrumpyApi.class);
+        mGrumpyApi = restAdapter.create(GrumpyService.class);
         new GrumpyFeedWorker().execute();
 
         AttachBroadcastReceiver();
@@ -140,10 +140,10 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         new GrumpyFeedWorker().execute();
     }
 
-    private class GrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
+    private class GrumpyFeedWorker extends AsyncTask<String, Void, List<FeedData>>
     {
         @Override
-        protected List<GrumpyFeedData> doInBackground(String... params)
+        protected List<FeedData> doInBackground(String... params)
         {
             try
             {
@@ -156,7 +156,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         }
 
         @Override
-        protected void onPostExecute(List<GrumpyFeedData> grumpyFeed)
+        protected void onPostExecute(List<FeedData> grumpyFeed)
         {
             mPullToRefreshLayout.setRefreshComplete();
 
@@ -183,10 +183,10 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
     }
 
-    private class MenuGrumpyFeedWorker extends AsyncTask<String, Void, List<GrumpyFeedData>>
+    private class MenuGrumpyFeedWorker extends AsyncTask<String, Void, List<FeedData>>
     {
         @Override
-        protected List<GrumpyFeedData> doInBackground(String... params)
+        protected List<FeedData> doInBackground(String... params)
         {
             try
             {
@@ -214,7 +214,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         }
 
         @Override
-        protected void onPostExecute(List<GrumpyFeedData> feed)
+        protected void onPostExecute(List<FeedData> feed)
         {
             if (mAdapter != null)
             {

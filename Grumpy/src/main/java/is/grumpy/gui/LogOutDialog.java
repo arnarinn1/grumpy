@@ -7,9 +7,9 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import is.grumpy.cache.Credentials;
-import is.grumpy.contracts.GrumpyPostRequest;
+import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -62,10 +62,10 @@ public class LogOutDialog
     {
         RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
-        GrumpyApi service = restAdapter.create(GrumpyApi.class);
+        GrumpyService service = restAdapter.create(GrumpyService.class);
 
         String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
-        GrumpyPostRequest request = new GrumpyPostRequest();
+        PostRequest request = new PostRequest();
         request.setAccessToken(accessToken);
 
         service.logOutUser(request, logoutCallback);

@@ -18,9 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
-import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.ServerResponse;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.DateCleaner;
 import retrofit.RestAdapter;
@@ -32,9 +32,9 @@ public class GrumpyFeedAdapter extends BaseAdapter
 {
     private Context mContext;
     private int layoutResourceId;
-    private List<GrumpyFeedData> feed;
+    private List<FeedData> feed;
 
-    public GrumpyFeedAdapter(Context context, int layoutResourceId, List<GrumpyFeedData> feed)
+    public GrumpyFeedAdapter(Context context, int layoutResourceId, List<FeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;
@@ -74,7 +74,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             holder = (GrumpyFeedHolder)row.getTag();
         }
 
-        final GrumpyFeedData feed = getItem(position);
+        final FeedData feed = getItem(position);
 
         String picture = feed.getUser().getAvatar();
 
@@ -100,7 +100,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
         return row;
     }
 
-    public void AddNewItem(GrumpyFeedData data)
+    public void AddNewItem(FeedData data)
     {
         feed.add(0, data);
     }
@@ -112,7 +112,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
     }
 
     //TODO: This is just to show functionality.  Only a creator of a post can destroy it.
-    public void RemoveItem(final int position, final GrumpyFeedData post)
+    public void RemoveItem(final int position, final FeedData post)
     {
         String userName = new Credentials(mContext).GetCacheToken(Credentials.mUsername);
 
@@ -212,7 +212,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
         private ServerResponse DestroyPost(String postId)
         {
             RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
-            GrumpyApi service = restAdapter.create(GrumpyApi.class);
+            GrumpyService service = restAdapter.create(GrumpyService.class);
 
             String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
 
@@ -243,7 +243,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
     }
 
     @Override
-    public GrumpyFeedData getItem(int position)
+    public FeedData getItem(int position)
     {
         return feed.get(position);
     }

@@ -35,4 +35,11 @@ public class RetrofitUtil
                 .setRequestInterceptor(requestInterceptor)
                 .build();
     }
+
+    public static RestAdapter RestAdapterGetInstance()
+    {
+        return new RestAdapter.Builder()
+                .setEndpoint(ApiUrl)
+                .build();
+    }
 }

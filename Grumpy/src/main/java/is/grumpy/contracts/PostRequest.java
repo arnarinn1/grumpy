@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Arnar on 20.2.2014.
  */
-public class GrumpyPostRequest
+public class PostRequest
 {
     @SerializedName("access_token")
     private String accessToken;

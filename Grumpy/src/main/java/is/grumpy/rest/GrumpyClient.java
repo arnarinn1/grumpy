@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import is.grumpy.contracts.GrumpyFeedData;
+import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.MessagesData;
 
 /**
@@ -25,14 +25,14 @@ public class GrumpyClient<T>
         this.mRestClient = new RestClient();
     }
 
-    public List<GrumpyFeedData> GetGrumpyFeed()
+    public List<FeedData> GetGrumpyFeed()
     {
         try
         {
             String grumpyFeedUrl = "https://notendur.hi.is/~thg112/test_feed.json";
             String content = mRestClient.Get(grumpyFeedUrl);
 
-            Type listType = new TypeToken<ArrayList<GrumpyFeedData>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<FeedData>>() {}.getType();
 
             return new Gson().fromJson(content, listType);
         }

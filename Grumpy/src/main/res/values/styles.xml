@@ -58,6 +58,11 @@
         <item name="android:typeface">sans</item>
     </style>
 
+    <style name="BaseTextStyle.ProfileHeader" parent="BaseTextStyle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
     <style name="BaseTextStyle.Big">
         <item name="android:textSize">20sp</item>
     </style>

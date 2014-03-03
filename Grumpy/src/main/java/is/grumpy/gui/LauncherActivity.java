@@ -14,10 +14,9 @@ import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.gui.base.BaseNavigationDrawer;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,13 +26,11 @@ import retrofit.client.Response;
  */
 public class LauncherActivity extends Activity
 {
-    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
-
     private Button mSignUp;
     private Button mLogin;
     private EditText mUsername;
     private EditText mPassword;
-    private GrumpyApi mGrumpyApi;
+    private GrumpyService mGrumpyApi;
 
     private ProgressDialog mProgressDialog;
 
@@ -47,7 +44,7 @@ public class LauncherActivity extends Activity
 
         RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
-        mGrumpyApi = restAdapter.create(GrumpyApi.class);
+        mGrumpyApi = restAdapter.create(GrumpyService.class);
 
         mProgressDialog = new ProgressDialog(this, 2);
         mProgressDialog.setMessage("Logging In");

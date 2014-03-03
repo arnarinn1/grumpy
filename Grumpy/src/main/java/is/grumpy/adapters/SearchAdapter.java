@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import is.grumpy.R;
-import is.grumpy.contracts.GrumpyUserData;
+import is.grumpy.contracts.UserData;
 
 /**
  * Created by Arnar on 15.2.2014.
@@ -21,9 +21,9 @@ public class SearchAdapter extends BaseAdapter
     private static final int mLayoutResourceId = R.layout.listview_search_user;
 
     private Context mContext;
-    private List<GrumpyUserData> users;
+    private List<UserData> users;
 
-    public SearchAdapter(Context context, List<GrumpyUserData> users)
+    public SearchAdapter(Context context, List<UserData> users)
     {
         this.mContext = context;
         this.users = users;
@@ -59,7 +59,7 @@ public class SearchAdapter extends BaseAdapter
             holder = (UserHolder) row.getTag();
         }
 
-        final GrumpyUserData user = getItem(position);
+        final UserData user = getItem(position);
 
         holder.username.setText(user.getUsername());
         holder.fullname.setText(user.getFirstName() + " " + user.getLastName());
@@ -80,7 +80,7 @@ public class SearchAdapter extends BaseAdapter
     }
 
     @Override
-    public GrumpyUserData getItem(int position)
+    public UserData getItem(int position)
     {
         return users.get(position);
     }

@@ -27,6 +27,7 @@ import is.grumpy.gui.FeedFragment;
 import is.grumpy.gui.LauncherActivity;
 import is.grumpy.gui.LogOutDialog;
 import is.grumpy.gui.MessagesFragment;
+import is.grumpy.gui.ProfileFragment;
 import is.grumpy.gui.SearchFragment;
 import is.grumpy.gui.SignUpActivity;
 import is.grumpy.gui.navigationdrawer.DrawerHeader;
@@ -143,6 +144,9 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
 
         switch(position)
         {
+            case 0:
+                fragment = ProfileFragment.newInstance(position);
+                break;
             case 2:
                 fragment = FeedFragment.newInstance(position);
                 break;
@@ -171,9 +175,6 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                     .addToBackStack(null)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .commit();
-
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
 
             closeNavigationDrawer();
         }

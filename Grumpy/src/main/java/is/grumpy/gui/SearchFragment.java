@@ -20,10 +20,10 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.SearchAdapter;
-import is.grumpy.contracts.GrumpyUserData;
+import is.grumpy.contracts.UserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -41,7 +41,7 @@ public class SearchFragment extends BaseFragment
     private TextView mNoResults;
     private SearchAdapter mAdapter;
 
-    private GrumpyApi grumpyApi;
+    private GrumpyService grumpyApi;
 
     public static SearchFragment newInstance(int position)
     {
@@ -68,7 +68,7 @@ public class SearchFragment extends BaseFragment
                 .setEndpoint(ApiUrl)
                 .build();
 
-        grumpyApi = restAdapter.create(GrumpyApi.class);
+        grumpyApi = restAdapter.create(GrumpyService.class);
 
         InitializeEditTextSearch();
     }
@@ -121,10 +121,10 @@ public class SearchFragment extends BaseFragment
         grumpyApi.searchUsers(username, searchUserCallback);
     }
 
-    Callback<List<GrumpyUserData>> searchUserCallback = new Callback<List<GrumpyUserData>>()
+    Callback<List<UserData>> searchUserCallback = new Callback<List<UserData>>()
     {
         @Override
-        public void success(List<GrumpyUserData> users, Response response)
+        public void success(List<UserData> users, Response response)
         {
             if (users.size() > 0)
             {

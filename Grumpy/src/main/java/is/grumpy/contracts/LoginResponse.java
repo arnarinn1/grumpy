@@ -14,13 +14,13 @@ public class LoginResponse
     private String accessToken;
 
     @SerializedName("user")
-    private GrumpyUserData user;
+    private UserData user;
 
     @SerializedName("status")
     private boolean status;
 
     public String getMessage() { return message; }
     public String getAccessToken() { return accessToken; }
-    public GrumpyUserData getUser() { return user; }
+    public UserData getUser() { return user; }
     public boolean getStatus() { return status; }
 }

@@ -11,8 +11,11 @@ import is.grumpy.contracts.LoginResponse;
  */
 public class Credentials
 {
+    //Todo: Create SharedPreferences instance in constructor
+
     public static final String mUsername = "is.grumpy.cache.USERNAME";
-    public static final String mFullName = "is.grumpy.cache.ID";
+    public static final String mFullName = "is.grumpy.cache.FULLNAME";
+    public static final String mId = "is.grumpy.cache.ID";
     public static final String mAccessToken = "is.grumpy.cache.ACCESSTOKEN";
 
     public Context mContext;
@@ -41,16 +44,15 @@ public class Credentials
         editor.putString(mUsername, response.getUser().getUsername());
         editor.putString(mFullName, String.format("%s %s", response.getUser().getFirstName(), response.getUser().getLastName()));
         editor.putString(mAccessToken, response.getAccessToken());
+        editor.putString(mId, response.getUser().getId());
         editor.commit();
     }
 
     public void ClearCredentialsCache()
     {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(mUsername, null);
-        editor.putString(mFullName, null);
-        editor.putString(mAccessToken, null);
-        editor.commit();
+        preferences.edit()
+                   .clear()
+                   .commit();
     }
 }

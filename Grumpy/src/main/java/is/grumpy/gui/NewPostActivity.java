@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
-import is.grumpy.contracts.GrumpyPostRequest;
+import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
-import is.grumpy.rest.GrumpyApi;
+import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -28,7 +28,7 @@ public class NewPostActivity extends ActionBarActivity
 
     private Button mSendNewPost;
     private EditText mPostData;
-    private GrumpyApi mGrumpyApi;
+    private GrumpyService mGrumpyApi;
 
     private Context getContext() { return this; }
 
@@ -43,7 +43,7 @@ public class NewPostActivity extends ActionBarActivity
 
         RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
 
-        mGrumpyApi = restAdapter.create(GrumpyApi.class);
+        mGrumpyApi = restAdapter.create(GrumpyService.class);
 
         mSendNewPost.setOnClickListener(new View.OnClickListener()
         {
@@ -52,7 +52,7 @@ public class NewPostActivity extends ActionBarActivity
             {
                 String post = mPostData.getText().toString();
 
-                GrumpyPostRequest postData = new GrumpyPostRequest();
+                PostRequest postData = new PostRequest();
                 postData.setAccessToken(new Credentials(getContext()).GetCacheToken(Credentials.mAccessToken));
                 postData.setPostMessage(post);
 
