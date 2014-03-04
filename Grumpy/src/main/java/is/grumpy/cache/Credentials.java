@@ -17,6 +17,7 @@ public class Credentials
     public static final String mFullName = "is.grumpy.cache.FULLNAME";
     public static final String mId = "is.grumpy.cache.ID";
     public static final String mAccessToken = "is.grumpy.cache.ACCESSTOKEN";
+    public static final String mAvatar = "is.grumpy.cache.AVATAR";
 
     public Context mContext;
 
@@ -45,6 +46,7 @@ public class Credentials
         editor.putString(mFullName, String.format("%s %s", response.getUser().getFirstName(), response.getUser().getLastName()));
         editor.putString(mAccessToken, response.getAccessToken());
         editor.putString(mId, response.getUser().getId());
+        editor.putString(mAvatar, response.getUser().getAvatar());
         editor.commit();
     }
 

@@ -70,7 +70,6 @@ public class NewPostActivity extends ActionBarActivity
             {
                 CallbackCreatedNewPost = true;
                 finish();
-                overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
             }
         }
 
@@ -82,10 +81,9 @@ public class NewPostActivity extends ActionBarActivity
     };
 
     @Override
-    public void onBackPressed()
+    public void finish()
     {
-        super.onBackPressed();
-
+        super.finish();
         overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
     }
 }

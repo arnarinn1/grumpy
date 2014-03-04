@@ -3,7 +3,11 @@ package is.grumpy.gui.navigationdrawer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.makeramen.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
@@ -41,6 +45,7 @@ public class DrawerUserInfo implements IDrawerItem
 
             holder = new UserInfoHolder();
             holder.userName = (TextView) row.findViewById(R.id.drawerUserName);
+            holder.avatar = (RoundedImageView) row.findViewById(R.id.avatar);
 
             row.setTag(holder);
         }
@@ -49,9 +54,17 @@ public class DrawerUserInfo implements IDrawerItem
             holder = (UserInfoHolder) row.getTag();
         }
 
-        String userName = new Credentials(context).GetCacheToken(Credentials.mFullName);
+        Credentials credentials = new Credentials(context);
+        String userName = credentials.GetCacheToken(Credentials.mFullName);
+        String avatar = credentials.GetCacheToken(Credentials.mAvatar);
 
         holder.userName.setText(userName);
+
+        Picasso.with(context)
+               .load(avatar)
+               .error(R.drawable.ic_launcher)
+               .placeholder(R.drawable.ic_launcher)
+               .into(holder.avatar);
 
         return row;
     }
@@ -59,5 +72,6 @@ public class DrawerUserInfo implements IDrawerItem
     static class UserInfoHolder
     {
         TextView userName;
+        RoundedImageView avatar;
     }
 }

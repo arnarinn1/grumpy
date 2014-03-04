@@ -1,6 +1,7 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -179,8 +180,9 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     private void StartNewPostActivity()
     {
         Intent intent = new Intent(IActivity.context(), NewPostActivity.class);
-        startActivity(intent);
-        ((Activity)IActivity.context()).overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);
+        Bundle newPostBundle = ActivityOptions.makeCustomAnimation(IActivity.context(),
+                               R.anim.slide_in_bottom, R.anim.slide_out_top).toBundle();
+        startActivity(intent, newPostBundle);
     }
 
     private class MenuGrumpyFeedWorker extends AsyncTask<String, Void, List<FeedData>>
