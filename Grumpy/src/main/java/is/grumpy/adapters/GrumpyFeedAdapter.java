@@ -111,7 +111,6 @@ public class GrumpyFeedAdapter extends BaseAdapter
         notifyDataSetChanged();
     }
 
-    //TODO: This is just to show functionality.  Only a creator of a post can destroy it.
     public void RemoveItem(final int position, final FeedData post)
     {
         String userName = new Credentials(mContext).GetCacheToken(Credentials.mUsername);
