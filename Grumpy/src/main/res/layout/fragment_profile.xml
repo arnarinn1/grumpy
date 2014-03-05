@@ -48,8 +48,6 @@
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true" />
 
-
-
     <ListView
         android:id="@+id/profilePosts"
         android:layout_width="match_parent"

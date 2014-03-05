@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,21 +14,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
-import is.grumpy.cache.Credentials;
-import is.grumpy.gui.Dialog;
+import is.grumpy.client.LogOutUser;
 import is.grumpy.gui.FeedFragment;
-import is.grumpy.gui.LauncherActivity;
-import is.grumpy.gui.LogOutDialog;
+import is.grumpy.gui.dialogs.LogOutDialog;
 import is.grumpy.gui.MessagesFragment;
 import is.grumpy.gui.ProfileFragment;
 import is.grumpy.gui.SearchFragment;
-import is.grumpy.gui.SignUpActivity;
 import is.grumpy.gui.navigationdrawer.DrawerHeader;
 import is.grumpy.gui.navigationdrawer.DrawerListItem;
 import is.grumpy.gui.navigationdrawer.DrawerUserInfo;
@@ -38,7 +35,7 @@ import is.grumpy.gui.navigationdrawer.IDrawerItem;
 /**
  * Created by Arnar on 27.1.2014.
  */
-public class BaseNavigationDrawer extends BaseFragmentActivity
+public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOutDialog.OnLogOutListener
 {
     public static final String DRAWER_POSITION = "is.grumpy.gui.base.POSITION";
 
@@ -194,7 +191,8 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
 
     private void LogOutUser()
     {
-        new LogOutDialog(this).LogOut();
+        LogOutDialog logOutDialog = LogOutDialog.newInstance();
+        logOutDialog.show(getFragmentManager(), "tag_logout");
     }
 
     @Override
@@ -225,5 +223,11 @@ public class BaseNavigationDrawer extends BaseFragmentActivity
                 mDrawerList.setSelection(position);
             }
         });
+    }
+
+    @Override
+    public void onLogOut()
+    {
+        new LogOutUser(this);
     }
 }

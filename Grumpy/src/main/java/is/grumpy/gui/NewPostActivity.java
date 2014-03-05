@@ -38,6 +38,8 @@ public class NewPostActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         mSendNewPost = (Button) findViewById(R.id.send_new_post);
         mPostData = (EditText) findViewById(R.id.edit_post);
 
