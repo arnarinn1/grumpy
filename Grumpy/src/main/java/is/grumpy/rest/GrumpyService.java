@@ -2,6 +2,7 @@ package is.grumpy.rest;
 
 import java.util.List;
 
+import is.grumpy.contracts.CommentData;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.UserData;
@@ -44,12 +45,15 @@ public interface GrumpyService
     List<FeedData> getPosts();
 
     @DELETE("/post/{post_id}/{access_token}")
-    ServerResponse deletePost(@Path("post_id") String postId, @Path("access_token") String accessToken);
+    ServerResponse deletePost(@Path("post_id") String postId,
+                              @Path("access_token") String accessToken);
 
     @GET("/user/{userId}/info")
     void getUserProfileInfo(@Path("userId") String userId,
                             Callback<UserProfileData> callback);
 
     @POST("/post/comment/{postId}")
-    void postNewComment(@Path("postId") String postId, @Body PostRequest postRequest, Callback<ServerResponse> callback);
+    void postNewComment(@Path("postId") String postId,
+                        @Body PostRequest postRequest,
+                        Callback<CommentData> callback);
 }

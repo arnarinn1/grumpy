@@ -76,6 +76,11 @@ public class CommentsAdapter extends BaseAdapter
         return row;
     }
 
+    public void AddNewItem(CommentData data)
+    {
+        mComments.add(data);
+    }
+
     private String FormatDate(String timeCreated)
     {
         String posted;

@@ -16,10 +16,10 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.adapters.CommentsAdapter;
 import is.grumpy.cache.Credentials;
+import is.grumpy.contracts.CommentData;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.LikeData;
 import is.grumpy.contracts.PostRequest;
-import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserData;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
@@ -38,6 +38,7 @@ public class CommentLikeDialog extends DialogFragment
     private EditText mEditText;
     private ImageButton mPostComment;
     private GrumpyService mService;
+    private CommentsAdapter mAdapter;
 
     public static CommentLikeDialog newInstance(FeedData feed)
     {
@@ -56,6 +57,7 @@ public class CommentLikeDialog extends DialogFragment
         setStyle(STYLE_NO_TITLE, R.style.CommentLikeDialog);
     }
 
+    //Todo: Refactor this method, this is crowded
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -63,10 +65,11 @@ public class CommentLikeDialog extends DialogFragment
 
         final View mLayout = inflater.inflate(R.layout.dialog_comments, null);
 
+        mAdapter = new CommentsAdapter(getActivity(), feed.getComments());
         String likes = CreateLikeText(feed.getLikes());
 
         ((TextView) mLayout.findViewById(R.id.likeCounter)).setText(likes);
-        ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(new CommentsAdapter(getActivity(), feed.getComments()));
+        ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(mAdapter);
 
         RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
         mService = restAdapter.create(GrumpyService.class);
@@ -107,18 +110,19 @@ public class CommentLikeDialog extends DialogFragment
         return String.format("%s people like this", commentSize);
     }
 
-    Callback<ServerResponse> postNewCommentCallback = new Callback<ServerResponse>()
+    Callback<CommentData> postNewCommentCallback = new Callback<CommentData>()
     {
         @Override
-        public void success(ServerResponse serverResponse, Response response)
+        public void success(CommentData commentData, Response response)
         {
-            Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+            mAdapter.AddNewItem(commentData);
+            mAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void failure(RetrofitError retrofitError)
         {
-            Toast.makeText(getActivity(), "Everything failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Godzilla has destroyed Tokyo", Toast.LENGTH_SHORT).show();
         }
     };
 }

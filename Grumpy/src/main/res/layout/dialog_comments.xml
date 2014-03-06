@@ -49,24 +49,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:measureWithLargestChild="true"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:orientation="horizontal">
 
+        <!--
+            NOTICE: Since this view is hosted in a Dialog Fragment, it
+            resizes the window when bunch of text is entered in the EditText view.
+            Fixed it on my phone by adding ems=5 + singleLine=true
+            Might act differently on other phones
+        -->
         <EditText
             android:id="@+id/editTextComment"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:hint="@string/write_comment"
-            android:layout_weight="1.99"
-            android:textColor="#fff"/>
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:singleLine="true"
+            android:ems="5"/>
 
         <ImageButton
             android:id="@+id/postComment"
             style="?android:attr/borderlessButtonStyle"
             android:src="@drawable/ic_action_send_now"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.01"/>
+            android:layout_height="fill_parent"/>
 
     </LinearLayout>
 
