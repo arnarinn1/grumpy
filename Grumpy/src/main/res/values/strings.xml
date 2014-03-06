@@ -29,5 +29,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
     <string name="no_network">No Network Connection</string>
+    <string name="write_comment">Write Comment</string>
 
 </resources>
