@@ -26,7 +26,6 @@
             android:textColor="#fff"
             android:typeface="serif"
             android:textStyle="bold"
-            android:text="Arnar Heimisson"
             android:paddingLeft="5sp"/>
 
         <TextView
@@ -35,8 +34,14 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             android:typeface="serif"
-            android:text="Asni pirradur a thessu"
             android:paddingLeft="5sp"/>
+
+        <TextView
+            android:id="@+id/commentCreatedAt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5sp"
+            style="@style/BaseTextStyle.DateHighlighter"/>
 
     </LinearLayout>
 

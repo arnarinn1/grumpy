@@ -7,10 +7,33 @@
     android:layout_height="match_parent"
     android:background="#222">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_good"/>
+
+        <TextView
+            android:id="@+id/likeCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:layout_marginTop="8sp"
+            android:layout_marginLeft="5sp"
+            />
+
+        </LinearLayout>
+
     <ListView
         android:id="@+id/postComments"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@color/base3_app_color"
         android:dividerHeight="0.5dp"
         android:choiceMode="singleChoice"

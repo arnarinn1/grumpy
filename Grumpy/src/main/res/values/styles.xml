@@ -102,7 +102,7 @@
         <item name="android:windowActionModeOverlay" tools:targetApi="honeycomb">true</item>
         <item name="android:windowCloseOnTouchOutside" tools:targetApi="honeycomb">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:backgroundDimAmount">0.7</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowMinWidthMajor" tools:targetApi="honeycomb">45%</item>
         <item name="android:windowMinWidthMinor" tools:targetApi="honeycomb">85%</item>

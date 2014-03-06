@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import is.grumpy.R;
-import is.grumpy.adapters.GrumpyFeedAdapter;
+import is.grumpy.adapters.FeedAdapter;
 import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.UserProfileData;
 import is.grumpy.gui.base.BaseFragment;
@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseFragment
 
                 mFullName.setText(user.getUser().getFullName());
 
-                mListView.setAdapter(new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, user.getPosts()));
+                mListView.setAdapter(new FeedAdapter(IActivity.context(), R.layout.listview_feed, user.getPosts()));
 
                 mLayout.setVisibility(View.VISIBLE);
             }

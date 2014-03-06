@@ -28,7 +28,7 @@ import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnim
 import java.util.List;
 
 import is.grumpy.R;
-import is.grumpy.adapters.GrumpyFeedAdapter;
+import is.grumpy.adapters.FeedAdapter;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
@@ -48,7 +48,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     private MenuItem refreshMenuItem;
     private ListView mListView;
     private TextView mNoNetworkView;
-    private GrumpyFeedAdapter mAdapter;
+    private FeedAdapter mAdapter;
     private ProgressBar mProgressBar;
     private GrumpyService mGrumpyApi;
 
@@ -163,7 +163,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
             if (grumpyFeed != null)
             {
-                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
+                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
 
                 SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
                 swingBottomInAnimationAdapter.setInitialDelayMillis(500);
@@ -220,7 +220,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             if (mAdapter != null)
             {
-                mAdapter = new GrumpyFeedAdapter(IActivity.context(), R.layout.listview_feed, feed);
+                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_feed, feed);
 
                 SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
                 swingBottomInAnimationAdapter.setInitialDelayMillis(500);

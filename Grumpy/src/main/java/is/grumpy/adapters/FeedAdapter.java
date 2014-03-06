@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,13 +29,13 @@ import retrofit.RestAdapter;
 /**
  * Created by Arnar on 4.2.2014.
  */
-public class GrumpyFeedAdapter extends BaseAdapter
+public class FeedAdapter extends BaseAdapter
 {
     private Context mContext;
     private int layoutResourceId;
     private List<FeedData> feed;
 
-    public GrumpyFeedAdapter(Context context, int layoutResourceId, List<FeedData> feed)
+    public FeedAdapter(Context context, int layoutResourceId, List<FeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;

@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.text.Format;
 import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.contracts.CommentData;
+import is.grumpy.utils.DateCleaner;
 
 /**
  * Created by Arnar on 6.3.2014.
@@ -35,6 +38,7 @@ public class CommentsAdapter extends BaseAdapter
         ImageView profilePicture;
         TextView userName;
         TextView comment;
+        TextView commentCreatedAt;
     }
 
     @Override
@@ -52,6 +56,7 @@ public class CommentsAdapter extends BaseAdapter
             holder.profilePicture = (ImageView) row.findViewById(R.id.commentProfilePicture);
             holder.userName = (TextView) row.findViewById(R.id.commentUserName);
             holder.comment = (TextView) row.findViewById(R.id.comment);
+            holder.commentCreatedAt = (TextView) row.findViewById(R.id.commentCreatedAt);
             row.setTag(holder);
         }
         else
@@ -67,8 +72,25 @@ public class CommentsAdapter extends BaseAdapter
 
         holder.userName.setText(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
         holder.comment.setText(comment.getComment());
+        holder.commentCreatedAt.setText(FormatDate(comment.getCreatedAt()));
 
         return row;
+    }
+
+    private String FormatDate(String timeCreated)
+    {
+        String posted;
+        try
+        {
+            DateCleaner cleaner = new DateCleaner(timeCreated, mContext);
+            posted = cleaner.getRelativeDate();
+        }
+        catch (Exception e)
+        {
+            posted = timeCreated;
+        }
+
+        return posted;
     }
 
     @Override
