@@ -47,6 +47,11 @@
         <item name="android:textColor">@color/date_highlight</item>
     </style>
 
+    <style name="BaseTextStyle.CommentLikeCount" parent="BaseTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/date_highlight</item>
+    </style>
+
     <style name="BaseTextStyle.Header" parent="BaseTextStyle">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/base_app_color</item>

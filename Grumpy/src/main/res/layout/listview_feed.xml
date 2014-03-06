@@ -52,6 +52,18 @@
             android:paddingTop="10sp"
             style="@style/BaseTextStyle.Normal"/>
 
+        <TextView
+            android:id="@+id/commentLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/grumpyFeedPost"
+            android:layout_marginTop="7sp"
+            android:paddingTop="3sp"
+            android:paddingBottom="3sp"
+            android:background="@drawable/comment_like_selector"
+            android:visibility="gone"
+            style="@style/BaseTextStyle.CommentLikeCount"/>
+
     </RelativeLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

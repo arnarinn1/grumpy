@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +49,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
         TextView post;
         TextView timeCreated;
         ImageButton showOptions;
+        TextView commentLikeCount;
     }
 
     @Override
@@ -67,6 +69,7 @@ public class GrumpyFeedAdapter extends BaseAdapter
             holder.post = (TextView) row.findViewById(R.id.grumpyFeedPost);
             holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
             holder.showOptions = (ImageButton) row.findViewById(R.id.postOptions);
+            holder.commentLikeCount = (TextView) row.findViewById(R.id.commentLikeCount);
             row.setTag(holder);
         }
         else
@@ -94,6 +97,15 @@ public class GrumpyFeedAdapter extends BaseAdapter
             public void onClick(View v)
             {
                 RemoveItem(position, feed);
+            }
+        });
+
+        SetCommentLikeLogic(feed, holder.commentLikeCount);
+
+        holder.commentLikeCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, String.format("%d", feed.getComments().size()), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -233,6 +245,34 @@ public class GrumpyFeedAdapter extends BaseAdapter
         }
 
         return posted;
+    }
+
+    private void SetCommentLikeLogic(FeedData feed, TextView commentLikeTextView)
+    {
+        String commentLikes = null;
+        String commentArray[] = {"comment", "comments"};
+        String likeArray[] = {"like", "likes"};
+
+        if(feed.getComments().size() > 0)
+        {
+            int commentSize = feed.getComments().size();
+            commentLikes = String.format("%d %s", commentSize, commentArray[commentSize == 1 ? 0 : 1]);
+        }
+
+        if (feed.getLikes().size() > 0)
+        {
+            int likesSize = feed.getLikes().size();
+
+            if (commentLikes != null)
+                commentLikes += (String.format(" %d %s", likesSize, likeArray[likesSize == 1 ? 0 : 1]));
+            else
+                commentLikes = String.format("%d %s", likesSize, likeArray[likesSize == 1 ? 0 : 1]);
+        }
+
+        if (commentLikes != null)
+            commentLikeTextView.setText(commentLikes);
+
+        commentLikeTextView.setVisibility(commentLikes == null ? View.GONE : View.VISIBLE);
     }
 
     @Override
