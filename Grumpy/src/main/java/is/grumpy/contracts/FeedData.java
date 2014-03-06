@@ -2,12 +2,13 @@ package is.grumpy.contracts;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Arnar on 4.2.2014.
  */
-public class FeedData
+public class FeedData implements Serializable
 {
     @SerializedName("id")
     private String id;

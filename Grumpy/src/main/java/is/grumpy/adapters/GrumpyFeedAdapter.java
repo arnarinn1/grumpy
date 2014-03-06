@@ -21,6 +21,7 @@ import is.grumpy.R;
 import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.ServerResponse;
+import is.grumpy.gui.dialogs.CommentLikeDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.DateCleaner;
@@ -104,8 +105,10 @@ public class GrumpyFeedAdapter extends BaseAdapter
 
         holder.commentLikeCount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, String.format("%d", feed.getComments().size()), Toast.LENGTH_SHORT).show();
+            public void onClick(View v)
+            {
+                CommentLikeDialog dialog = CommentLikeDialog.newInstance(feed);
+                dialog.show(((Activity) mContext).getFragmentManager(), "dialog");
             }
         });
 
