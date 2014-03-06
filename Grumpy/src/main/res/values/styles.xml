@@ -94,8 +94,6 @@
     <!-- Dialog Theme -->
     <style name="CommentLikeDialog">
         <item name="android:windowFrame">@null</item>
-        <!--<item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>-->
-        <!--<item name="android:windowBackground"></item>-->
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>

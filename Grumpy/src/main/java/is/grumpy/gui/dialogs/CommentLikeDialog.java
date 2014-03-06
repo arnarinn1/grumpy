@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import is.grumpy.R;
+import is.grumpy.adapters.CommentsAdapter;
 import is.grumpy.contracts.CommentData;
 import is.grumpy.contracts.FeedData;
+import is.grumpy.gui.base.IActivity;
 
 
 /**
@@ -41,19 +44,9 @@ public class CommentLikeDialog extends DialogFragment
     {
         FeedData feed = (FeedData) getArguments().getSerializable("feed");
 
-        List<CommentData> comments = feed.getComments();
-
-        //TODO: Tired now, data will be displayed in listview
         final View mLayout = inflater.inflate(R.layout.dialog_comments, null);
-        getDialog().setTitle("Fheck");
 
-        StringBuilder builder = new StringBuilder();
-        for (CommentData c : comments)
-        {
-            builder.append(c.getUser().getUsername() +" said\n" + c.getComment() + '\n');
-        }
-
-        ((TextView) mLayout.findViewById(R.id.godzilla)).setText(builder.toString());
+        ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(new CommentsAdapter(getActivity(), feed.getComments()));
 
         return mLayout;
     }

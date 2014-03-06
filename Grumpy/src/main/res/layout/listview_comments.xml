@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222"
+    android:padding="5sp">
+
+    <ImageView
+        android:id="@+id/commentProfilePicture"
+        android:layout_width="54sp"
+        android:layout_height="54sp"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/commentUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:typeface="serif"
+            android:textStyle="bold"
+            android:text="Arnar Heimisson"
+            android:paddingLeft="5sp"/>
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:typeface="serif"
+            android:text="Asni pirradur a thessu"
+            android:paddingLeft="5sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

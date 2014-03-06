@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     android:background="#222">
 
-    <TextView
-        android:id="@+id/godzilla"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HAHAH"
-        android:textColor="#fff"
-        android:layout_gravity="center"
-        android:lineSpacingMultiplier="2"/>
+    <ListView
+        android:id="@+id/postComments"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/base3_app_color"
+        android:dividerHeight="0.5dp"
+        android:choiceMode="singleChoice"
+        />
 
 </LinearLayout>
