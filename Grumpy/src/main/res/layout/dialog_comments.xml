@@ -53,21 +53,20 @@
         android:weightSum="2">
 
         <EditText
-            android:id="@+id/negative"
-            android:layout_width="wrap_content"
+            android:id="@+id/editTextComment"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:hint="@string/write_comment"
             android:layout_weight="1.99"
             android:textColor="#fff"/>
 
         <ImageButton
-            android:id="@+id/positive"
+            android:id="@+id/postComment"
             style="?android:attr/borderlessButtonStyle"
             android:src="@drawable/ic_action_send_now"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="0.01"
-            android:maxLines="1"/>
+            android:layout_weight="0.01"/>
 
     </LinearLayout>
 

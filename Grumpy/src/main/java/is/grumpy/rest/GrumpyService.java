@@ -49,4 +49,7 @@ public interface GrumpyService
     @GET("/user/{userId}/info")
     void getUserProfileInfo(@Path("userId") String userId,
                             Callback<UserProfileData> callback);
+
+    @POST("/post/comment/{postId}")
+    void postNewComment(@Path("postId") String postId, @Body PostRequest postRequest, Callback<ServerResponse> callback);
 }

@@ -5,16 +5,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.CommentsAdapter;
+import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.LikeData;
+import is.grumpy.contracts.PostRequest;
+import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserData;
+import is.grumpy.rest.GrumpyService;
+import is.grumpy.rest.RetrofitUtil;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Arnar on 6.3.2014.
@@ -22,6 +34,10 @@ import is.grumpy.contracts.UserData;
 public class CommentLikeDialog extends DialogFragment
 {
     public static final String EXTRA_FEED = "is.grumpy.gui.dialogs.FEED";
+
+    private EditText mEditText;
+    private ImageButton mPostComment;
+    private GrumpyService mService;
 
     public static CommentLikeDialog newInstance(FeedData feed)
     {
@@ -43,7 +59,7 @@ public class CommentLikeDialog extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        FeedData feed = (FeedData) getArguments().getSerializable(EXTRA_FEED);
+        final FeedData feed = (FeedData) getArguments().getSerializable(EXTRA_FEED);
 
         final View mLayout = inflater.inflate(R.layout.dialog_comments, null);
 
@@ -52,7 +68,30 @@ public class CommentLikeDialog extends DialogFragment
         ((TextView) mLayout.findViewById(R.id.likeCounter)).setText(likes);
         ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(new CommentsAdapter(getActivity(), feed.getComments()));
 
+        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+        mService = restAdapter.create(GrumpyService.class);
+
+        mEditText = (EditText) mLayout.findViewById(R.id.editTextComment);
+        mPostComment = (ImageButton) mLayout.findViewById(R.id.postComment);
+
+        mPostComment.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PostNewComment(feed.getId());
+            }
+        });
+
         return mLayout;
+    }
+
+    private void PostNewComment(String postId)
+    {
+        PostRequest request = new PostRequest();
+        request.setAccessToken(new Credentials(getActivity()).GetCacheToken(Credentials.mAccessToken));
+        request.setComment(mEditText.getText().toString());
+        mService.postNewComment(postId, request, postNewCommentCallback);
     }
 
     private String CreateLikeText(List<LikeData> likes)
@@ -67,4 +106,19 @@ public class CommentLikeDialog extends DialogFragment
 
         return String.format("%s people like this", commentSize);
     }
+
+    Callback<ServerResponse> postNewCommentCallback = new Callback<ServerResponse>()
+    {
+        @Override
+        public void success(ServerResponse serverResponse, Response response)
+        {
+            Toast.makeText(getActivity(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError)
+        {
+            Toast.makeText(getActivity(), "Everything failed", Toast.LENGTH_SHORT).show();
+        }
+    };
 }

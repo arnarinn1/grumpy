@@ -33,6 +33,7 @@ import is.grumpy.contracts.FeedData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyService;
+import is.grumpy.rest.RetrofitUtil;
 import retrofit.RestAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
@@ -43,8 +44,6 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  */
 public class FeedFragment extends BaseFragment implements OnRefreshListener
 {
-    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
-
     private MenuItem refreshMenuItem;
     private ListView mListView;
     private TextView mNoNetworkView;
@@ -86,9 +85,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 .listener(this)
                 .setup(mPullToRefreshLayout);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
 
         mGrumpyApi = restAdapter.create(GrumpyService.class);
         new GrumpyFeedWorker().execute();

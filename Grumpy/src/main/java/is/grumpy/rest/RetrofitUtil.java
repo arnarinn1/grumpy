@@ -33,6 +33,7 @@ public class RetrofitUtil
                 .setEndpoint(ApiUrl)
                 .setClient(new ApacheClient())
                 .setRequestInterceptor(requestInterceptor)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
     }
 
@@ -40,6 +41,7 @@ public class RetrofitUtil
     {
         return new RestAdapter.Builder()
                 .setEndpoint(ApiUrl)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
     }
 }
