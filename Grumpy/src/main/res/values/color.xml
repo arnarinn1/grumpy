@@ -12,4 +12,5 @@
     <color name="signup_button_highlight">#002E2C</color>
     <color name="grumpy_feed_background">#e2e2e2</color>
     <color name="date_highlight">#ABABAB</color>
+    <color name="button_feed_color">#f9f9f9</color>
 </resources>

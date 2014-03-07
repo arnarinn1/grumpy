@@ -30,5 +30,7 @@
     <string name="log_in">Log In</string>
     <string name="no_network">No Network Connection</string>
     <string name="write_comment">Write Comment</string>
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
 
 </resources>

@@ -41,7 +41,7 @@ public class RetrofitUtil
     {
         return new RestAdapter.Builder()
                 .setEndpoint(ApiUrl)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.FULL  )
                 .build();
     }
 }

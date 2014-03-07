@@ -64,36 +64,40 @@
             android:visibility="gone"
             style="@style/BaseTextStyle.CommentLikeCount"/>
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:background="#dedede"
+            android:layout_below="@id/commentLikeCount"
+            android:layout_marginTop="5sp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_margin="1px"
+                android:background="@color/button_feed_color"
+                android:drawableLeft="@drawable/ic_action_good_dark"
+                android:text="@string/like"
+                android:paddingRight="70sp"/>
+
+            <Button
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_margin="1px"
+                android:background="@color/button_feed_color"
+                android:drawableLeft="@drawable/ic_action_comment"
+                android:text="@string/comment"
+                android:paddingLeft="5sp"
+                android:paddingRight="30sp"/>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:background="#dedede"
-        android:orientation="horizontal"
-        android:visibility="gone">
 
-        <Button
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_margin="1px"
-            android:background="#f9f9f9" />
-
-        <Button
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_marginTop="1px"
-            android:layout_marginBottom="1px"
-            android:background="#f9f9f9" />
-        <Button
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_margin="1px"
-            android:background="#f9f9f9" />
-    </LinearLayout>
 
     <ImageButton
         android:id="@+id/postOptions"
