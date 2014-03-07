@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,18 +21,25 @@ import java.util.List;
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.FeedData;
+import is.grumpy.contracts.LikeData;
+import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.gui.dialogs.CommentLikeDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.DateCleaner;
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Arnar on 4.2.2014.
  */
 public class FeedAdapter extends BaseAdapter
 {
+    private static int mFeedPosition;
+
     private Context mContext;
     private int layoutResourceId;
     private List<FeedData> feed;
@@ -50,6 +59,8 @@ public class FeedAdapter extends BaseAdapter
         TextView timeCreated;
         ImageButton showOptions;
         TextView commentLikeCount;
+        Button likePost;
+        Button commentPost;
     }
 
     @Override
@@ -70,6 +81,8 @@ public class FeedAdapter extends BaseAdapter
             holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
             holder.showOptions = (ImageButton) row.findViewById(R.id.postOptions);
             holder.commentLikeCount = (TextView) row.findViewById(R.id.commentLikeCount);
+            holder.likePost = (Button) row.findViewById(R.id.likePost);
+            holder.commentPost = (Button) row.findViewById(R.id.commentOnPost);
             row.setTag(holder);
         }
         else
@@ -106,8 +119,24 @@ public class FeedAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                CommentLikeDialog dialog = CommentLikeDialog.newInstance(feed);
-                dialog.show(((Activity) mContext).getFragmentManager(), "dialog");
+                StartCommentLikeDialog(feed);
+            }
+        });
+
+        holder.likePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                //Toast.makeText(mContext, "Sauron rules", Toast.LENGTH_SHORT).show();
+                LikePost(feed, position);
+            }
+        });
+
+        holder.commentPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                StartCommentLikeDialog(feed);
             }
         });
 
@@ -119,10 +148,28 @@ public class FeedAdapter extends BaseAdapter
         feed.add(0, data);
     }
 
+    public void AddNewLike(int position, LikeData like)
+    {
+        feed.get(position).getLikes().add(like);
+        notifyDataSetChanged();
+    }
+
     private void RemoveItem(int position)
     {
         feed.remove(position);
         notifyDataSetChanged();
+    }
+
+    private void LikePost(FeedData feed, int position)
+    {
+        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+        GrumpyService mService = restAdapter.create(GrumpyService.class);
+
+        PostRequest request = new PostRequest();
+        request.setAccessToken(new Credentials(mContext).GetCacheToken(Credentials.mAccessToken));
+
+        mFeedPosition = position;
+        mService.likePost(feed.getId(), request, likePostCallback);
     }
 
     public void RemoveItem(final int position, final FeedData post)
@@ -175,6 +222,27 @@ public class FeedAdapter extends BaseAdapter
         AlertDialog alert = builder.show();
         alert.show();
     }
+
+    private void StartCommentLikeDialog(FeedData feed)
+    {
+        CommentLikeDialog dialog = CommentLikeDialog.newInstance(feed);
+        dialog.show(((Activity) mContext).getFragmentManager(), "dialog");
+    }
+
+    Callback<LikeData> likePostCallback = new Callback<LikeData>()
+    {
+        @Override
+        public void success(final LikeData like, Response response)
+        {
+            AddNewLike(mFeedPosition, like);
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError)
+        {
+            Toast.makeText(mContext, "Negative", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private class DeletePostWorker extends AsyncTask<String, Void, ServerResponse>
     {

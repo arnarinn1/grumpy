@@ -4,6 +4,7 @@ import java.util.List;
 
 import is.grumpy.contracts.CommentData;
 import is.grumpy.contracts.FeedData;
+import is.grumpy.contracts.LikeData;
 import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.UserData;
 import is.grumpy.contracts.LoginResponse;
@@ -56,4 +57,9 @@ public interface GrumpyService
     void postNewComment(@Path("postId") String postId,
                         @Body PostRequest postRequest,
                         Callback<CommentData> callback);
+
+    @POST("/post/like/{postId}")
+    void likePost(@Path("postId") String postId,
+                  @Body PostRequest request,
+                  Callback<LikeData> callback);
 }
