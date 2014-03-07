@@ -60,7 +60,7 @@
             android:layout_marginTop="7sp"
             android:paddingTop="3sp"
             android:paddingBottom="3sp"
-            android:background="@drawable/comment_like_selector"
+            android:background="@drawable/tv_comment_like_selector"
             android:visibility="gone"
             style="@style/BaseTextStyle.CommentLikeCount"/>
 
@@ -73,6 +73,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/likePost"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -80,9 +81,11 @@
                 android:background="@color/button_feed_color"
                 android:drawableLeft="@drawable/ic_action_good_dark"
                 android:text="@string/like"
-                android:paddingRight="70sp"/>
+                android:paddingRight="70sp"
+                android:textSize="16sp"/>
 
             <Button
+                android:id="@+id/commentOnPost"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -91,7 +94,8 @@
                 android:drawableLeft="@drawable/ic_action_comment"
                 android:text="@string/comment"
                 android:paddingLeft="5sp"
-                android:paddingRight="30sp"/>
+                android:paddingRight="30sp"
+                android:textSize="16sp"/>
 
         </LinearLayout>
 

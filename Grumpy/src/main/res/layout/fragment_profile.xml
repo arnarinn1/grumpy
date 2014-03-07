@@ -16,7 +16,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="150sp"
-            android:background="@drawable/button_color"/>
+            android:background="@drawable/btn_login_signup_pressed"/>
 
         <TextView
             android:id="@+id/profileFullName"

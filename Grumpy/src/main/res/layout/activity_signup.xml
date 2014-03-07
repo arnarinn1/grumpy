@@ -148,7 +148,7 @@
             android:textAlignment="center"
             android:text="@string/SignUpLabel"
             android:textColor="#fff"
-            android:background="@drawable/button_selector"/>
+            android:background="@drawable/btn_login_signup_selector"/>
 
     </LinearLayout>
 
