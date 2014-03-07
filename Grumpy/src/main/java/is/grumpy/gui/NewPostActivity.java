@@ -43,7 +43,7 @@ public class NewPostActivity extends BaseActivity
         mSendNewPost = (Button) findViewById(R.id.send_new_post);
         mPostData = (EditText) findViewById(R.id.edit_post);
 
-        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
 
         mGrumpyApi = restAdapter.create(GrumpyService.class);
 

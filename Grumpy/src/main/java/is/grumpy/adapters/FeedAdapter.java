@@ -27,7 +27,7 @@ import is.grumpy.contracts.ServerResponse;
 import is.grumpy.gui.dialogs.CommentLikeDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
-import is.grumpy.utils.DateCleaner;
+import is.grumpy.utils.StringHelper;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -42,13 +42,21 @@ public class FeedAdapter extends BaseAdapter
 
     private Context mContext;
     private int layoutResourceId;
-    private List<FeedData> feed;
+    private List<FeedData> mFeed;
+    private GrumpyService mService;
 
     public FeedAdapter(Context context, int layoutResourceId, List<FeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;
-        this.feed = feed;
+        this.mFeed = feed;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        mService = restAdapter.create(GrumpyService.class);
     }
 
     static class GrumpyFeedHolder
@@ -102,7 +110,7 @@ public class FeedAdapter extends BaseAdapter
         holder.userName.setText(feed.getUser().getFullName());
         holder.post.setText(feed.getPost());
 
-        String postedAt = FormatDate(feed.getTimeCreated());
+        String postedAt = StringHelper.FormatDate(mContext, feed.getTimeCreated());
         holder.timeCreated.setText(postedAt);
 
         holder.showOptions.setOnClickListener(new View.OnClickListener() {
@@ -113,13 +121,13 @@ public class FeedAdapter extends BaseAdapter
             }
         });
 
-        SetCommentLikeLogic(feed, holder.commentLikeCount);
+        StringHelper.SetCommentLikeLogic(feed, holder.commentLikeCount);
 
         holder.commentLikeCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                StartCommentLikeDialog(feed);
+                StartCommentDialog(feed);
             }
         });
 
@@ -127,7 +135,6 @@ public class FeedAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                //Toast.makeText(mContext, "Sauron rules", Toast.LENGTH_SHORT).show();
                 LikePost(feed, position);
             }
         });
@@ -136,35 +143,27 @@ public class FeedAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                StartCommentLikeDialog(feed);
+                StartCommentDialog(feed);
             }
         });
 
         return row;
     }
 
-    public void AddNewItem(FeedData data)
-    {
-        feed.add(0, data);
-    }
-
     public void AddNewLike(int position, LikeData like)
     {
-        feed.get(position).getLikes().add(like);
+        mFeed.get(position).getLikes().add(like);
         notifyDataSetChanged();
     }
 
     private void RemoveItem(int position)
     {
-        feed.remove(position);
+        mFeed.remove(position);
         notifyDataSetChanged();
     }
 
     private void LikePost(FeedData feed, int position)
     {
-        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
-        GrumpyService mService = restAdapter.create(GrumpyService.class);
-
         PostRequest request = new PostRequest();
         request.setAccessToken(new Credentials(mContext).GetCacheToken(Credentials.mAccessToken));
 
@@ -223,7 +222,7 @@ public class FeedAdapter extends BaseAdapter
         alert.show();
     }
 
-    private void StartCommentLikeDialog(FeedData feed)
+    private void StartCommentDialog(FeedData feed)
     {
         CommentLikeDialog dialog = CommentLikeDialog.newInstance(feed);
         dialog.show(((Activity) mContext).getFragmentManager(), "dialog");
@@ -292,74 +291,26 @@ public class FeedAdapter extends BaseAdapter
 
         private ServerResponse DestroyPost(String postId)
         {
-            RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
-            GrumpyService service = restAdapter.create(GrumpyService.class);
-
             String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
-
-            return service.deletePost(postId, accessToken);
+            return mService.deletePost(postId, accessToken);
         }
-    }
-
-    private String FormatDate(String timeCreated)
-    {
-        String posted;
-        try
-        {
-            DateCleaner cleaner = new DateCleaner(timeCreated, mContext);
-            posted = cleaner.getRelativeDate();
-        }
-        catch (Exception e)
-        {
-            posted = timeCreated;
-        }
-
-        return posted;
-    }
-
-    private void SetCommentLikeLogic(FeedData feed, TextView commentLikeTextView)
-    {
-        String commentLikes = null;
-        String commentArray[] = {"comment", "comments"};
-        String likeArray[] = {"like", "likes"};
-
-        if(feed.getComments().size() > 0)
-        {
-            int commentSize = feed.getComments().size();
-            commentLikes = String.format("%d %s", commentSize, commentArray[commentSize == 1 ? 0 : 1]);
-        }
-
-        if (feed.getLikes().size() > 0)
-        {
-            int likesSize = feed.getLikes().size();
-
-            if (commentLikes != null)
-                commentLikes += (String.format(" %d %s", likesSize, likeArray[likesSize == 1 ? 0 : 1]));
-            else
-                commentLikes = String.format("%d %s", likesSize, likeArray[likesSize == 1 ? 0 : 1]);
-        }
-
-        if (commentLikes != null)
-            commentLikeTextView.setText(commentLikes);
-
-        commentLikeTextView.setVisibility(commentLikes == null ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public int getCount()
     {
-        return (feed == null) ? 0 : feed.size();
+        return (mFeed == null) ? 0 : mFeed.size();
     }
 
     @Override
     public FeedData getItem(int position)
     {
-        return feed.get(position);
+        return mFeed.get(position);
     }
 
     @Override
     public long getItemId(int position)
     {
-        return feed.indexOf(getItem(position));
+        return mFeed.indexOf(getItem(position));
     }
 }

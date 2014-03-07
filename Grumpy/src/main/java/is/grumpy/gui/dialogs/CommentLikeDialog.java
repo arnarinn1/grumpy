@@ -71,7 +71,7 @@ public class CommentLikeDialog extends DialogFragment
         ((TextView) mLayout.findViewById(R.id.likeCounter)).setText(likes);
         ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(mAdapter);
 
-        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
         mService = restAdapter.create(GrumpyService.class);
 
         mEditText = (EditText) mLayout.findViewById(R.id.editTextComment);

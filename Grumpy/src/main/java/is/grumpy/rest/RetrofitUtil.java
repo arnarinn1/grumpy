@@ -11,7 +11,7 @@ public class RetrofitUtil
 {
     public static final String ApiUrl = "http://arnarh.com/grumpy/public";
 
-    public static RestAdapter GetRetrofitRestAdapter()
+    public static RestAdapter RestAdapterPostInstance()
     {
         //NOTE: There seems to be some bug in Retrofit(Might be an Android Bug).  If Connection header is not set to Close
         //      and the client is not set to ApacheClient, java will throw an EOFException.  This seems to work for now

@@ -30,7 +30,7 @@ public class LogOutUser
 
     private void LogOut()
     {
-        RestAdapter restAdapter = RetrofitUtil.GetRetrofitRestAdapter();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
 
         GrumpyService service = restAdapter.create(GrumpyService.class);
 
