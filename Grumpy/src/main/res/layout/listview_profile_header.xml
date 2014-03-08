@@ -39,8 +39,6 @@
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:contentDescription="@string/feed_profile_picture"
-        android:scaleType="centerCrop"
-        app:corner_radius="25dp"
         app:border_width="2dp"
         app:is_oval="true"
         app:border_color="#fff"
