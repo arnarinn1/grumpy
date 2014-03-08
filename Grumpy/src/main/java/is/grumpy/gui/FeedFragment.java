@@ -159,7 +159,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
             if (grumpyFeed != null)
             {
-                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_feed, grumpyFeed);
+                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_launcher_feed, grumpyFeed);
 
                 SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
                 swingBottomInAnimationAdapter.setInitialDelayMillis(500);
@@ -216,7 +216,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             if (mAdapter != null)
             {
-                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_feed, feed);
+                mAdapter = new FeedAdapter(IActivity.context(), R.layout.listview_launcher_feed, feed);
 
                 SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
                 swingBottomInAnimationAdapter.setInitialDelayMillis(500);
