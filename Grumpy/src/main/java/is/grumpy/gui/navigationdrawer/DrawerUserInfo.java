@@ -45,7 +45,7 @@ public class DrawerUserInfo implements IDrawerItem
 
             holder = new UserInfoHolder();
             holder.userName = (TextView) row.findViewById(R.id.drawerUserName);
-            holder.avatar = (RoundedImageView) row.findViewById(R.id.avatar);
+            holder.avatar = (ImageView) row.findViewById(R.id.avatar);
 
             row.setTag(holder);
         }
@@ -72,6 +72,6 @@ public class DrawerUserInfo implements IDrawerItem
     static class UserInfoHolder
     {
         TextView userName;
-        RoundedImageView avatar;
+        ImageView avatar;
     }
 }

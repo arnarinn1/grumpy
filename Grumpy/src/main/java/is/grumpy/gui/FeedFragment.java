@@ -259,6 +259,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
                 else
                 {
                     mNoNetworkView.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.INVISIBLE);
                 }
             }
         }
