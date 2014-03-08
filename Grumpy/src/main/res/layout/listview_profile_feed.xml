@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/grumpy_feed_background"
+    android:paddingLeft="10sp"
+    android:paddingRight="10sp"
+    android:paddingBottom="10sp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#fff">
+
+        <com.makeramen.RoundedImageView
+            android:id="@+id/feedProfilePicture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/feed_profile_picture"
+            android:scaleType="centerCrop"
+            app:corner_radius="25dp"
+            app:border_width="0dp"
+            app:is_oval="false"
+            app:border_color="#fff"/>
+
+        <TextView
+            android:id="@+id/grumpyFeedUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/feedProfilePicture"
+            android:paddingLeft="10dp"
+            style="@style/BaseTextStyle.Big.Base2Color"/>
+
+        <TextView
+            android:id="@+id/grumpyFeedTimeCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/feedProfilePicture"
+            android:layout_below="@+id/grumpyFeedUserName"
+            android:paddingLeft="10dp"
+            style="@style/BaseTextStyle.DateHighlighter"/>
+
+        <TextView
+            android:id="@+id/grumpyFeedPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/feedProfilePicture"
+            android:paddingTop="10sp"
+            style="@style/BaseTextStyle.Normal"/>
+
+        <TextView
+            android:id="@+id/commentLikeCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/grumpyFeedPost"
+            android:layout_marginTop="7sp"
+            android:paddingTop="3sp"
+            android:paddingBottom="3sp"
+            android:background="@drawable/tv_comment_like_selector"
+            android:visibility="gone"
+            style="@style/BaseTextStyle.CommentLikeCount"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:background="#dedede"
+            android:layout_below="@id/commentLikeCount"
+            android:layout_marginTop="5sp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/likePost"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_margin="1px"
+                android:background="@drawable/btn_comment_like_selector"
+                android:drawableLeft="@drawable/ic_action_good_dark"
+                android:text="@string/like"
+                android:paddingRight="70sp"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/commentOnPost"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_margin="1px"
+                android:background="@drawable/btn_comment_like_selector"
+                android:drawableLeft="@drawable/ic_action_comment"
+                android:text="@string/comment"
+                android:paddingLeft="5sp"
+                android:paddingRight="30sp"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+    <ImageButton
+        android:id="@+id/postOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_overflow"
+        android:background="?android:selectableItemBackground"
+        android:layout_gravity="right"/>
+
+</FrameLayout>

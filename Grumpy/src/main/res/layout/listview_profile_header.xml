@@ -6,8 +6,7 @@
     android:id="@+id/profileHeader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grumpy_feed_background"
-    android:visibility="visible">
+    android:background="@color/grumpy_feed_background">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -26,11 +25,11 @@
             style="@style/BaseTextStyle.ProfileHeader"/>
 
         <TextView
-            android:id="@+id/profileBirthDay"
+            android:id="@+id/grumpyStatus"
             android:layout_width="wrap_content"
             android:layout_height="75dp"
             android:layout_gravity="center"
-            android:text="27 October 1991"
+            android:text="Grumpy"
             style="@style/BaseTextStyle.DateHighlighter"/>
 
     </FrameLayout>
@@ -46,6 +45,7 @@
         app:is_oval="true"
         app:border_color="#fff"
         android:layout_marginTop="80dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10sp"/>
 
 </RelativeLayout>
