@@ -1,16 +1,20 @@
 package is.grumpy.gui.dialogs;
 
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import is.grumpy.R;
@@ -31,7 +35,7 @@ import retrofit.client.Response;
 /**
  * Created by Arnar on 6.3.2014.
  */
-public class CommentLikeDialog extends DialogFragment
+public class CommentDialog extends DialogFragment
 {
     public static final String EXTRA_FEED = "is.grumpy.gui.dialogs.FEED";
 
@@ -40,9 +44,9 @@ public class CommentLikeDialog extends DialogFragment
     private GrumpyService mService;
     private CommentsAdapter mAdapter;
 
-    public static CommentLikeDialog newInstance(FeedData feed)
+    public static CommentDialog newInstance(FeedData feed)
     {
-        CommentLikeDialog f = new CommentLikeDialog();
+        CommentDialog f = new CommentDialog();
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_FEED, feed);
         f.setArguments(args);
@@ -65,11 +69,21 @@ public class CommentLikeDialog extends DialogFragment
 
         final View mLayout = inflater.inflate(R.layout.dialog_comments, null);
 
+        TextView mLikeCount = (TextView) mLayout.findViewById(R.id.likeCounter);
+        mLikeCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowLikeDialog(feed.getLikes());
+            }
+        });
+
         mAdapter = new CommentsAdapter(getActivity(), feed.getComments());
         String likes = CreateLikeText(feed.getLikes());
 
         ((TextView) mLayout.findViewById(R.id.likeCounter)).setText(likes);
-        ((ListView) mLayout.findViewById(R.id.postComments)).setAdapter(mAdapter);
+
+        ListView mListView = (ListView) mLayout.findViewById(R.id.postComments);
+        mListView.setAdapter(mAdapter);
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
         mService = restAdapter.create(GrumpyService.class);
@@ -126,4 +140,20 @@ public class CommentLikeDialog extends DialogFragment
             Toast.makeText(getActivity(), "Godzilla has destroyed Tokyo", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void ShowLikeDialog(List<LikeData> likes)
+    {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prevFragment = getFragmentManager().findFragmentByTag("dialog");
+
+        if (prevFragment != null)
+        {
+            ft.remove(prevFragment);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = LikeDialog.newInstance((ArrayList) likes);
+        newFragment.show(ft, "dialog");
+    }
 }

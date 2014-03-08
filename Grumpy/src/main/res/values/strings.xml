@@ -32,5 +32,6 @@
     <string name="write_comment">Write Comment</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
+    <string name="people_like_posts">People Who Like This!</string>
 
 </resources>

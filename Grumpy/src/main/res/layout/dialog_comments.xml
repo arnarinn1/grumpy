@@ -23,8 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:layout_marginTop="8sp"
+            android:layout_marginTop="5sp"
             android:layout_marginLeft="5sp"
+            android:paddingTop="4sp"
+            android:paddingBottom="4sp"
+            android:background="@drawable/tv_comment_like_selector"
             />
 
         </LinearLayout>

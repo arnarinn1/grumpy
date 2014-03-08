@@ -24,7 +24,7 @@ import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.LikeData;
 import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
-import is.grumpy.gui.dialogs.CommentLikeDialog;
+import is.grumpy.gui.dialogs.CommentDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.StringHelper;
@@ -224,7 +224,7 @@ public class FeedAdapter extends BaseAdapter
 
     private void StartCommentDialog(FeedData feed)
     {
-        CommentLikeDialog dialog = CommentLikeDialog.newInstance(feed);
+        CommentDialog dialog = CommentDialog.newInstance(feed);
         dialog.show(((Activity) mContext).getFragmentManager(), "dialog");
     }
 
