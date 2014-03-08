@@ -18,7 +18,11 @@ public class LikeData implements Serializable
     @SerializedName("user")
     private UserData user;
 
+    @SerializedName("user_id")
+    private String userId;
+
     public String getId() { return id; }
     public String getCreatedAt() { return createdAt; }
     public UserData getUser() { return user; }
+    public String getUserId() { return userId; }
 }

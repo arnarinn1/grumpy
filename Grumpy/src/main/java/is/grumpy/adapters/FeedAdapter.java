@@ -100,6 +100,8 @@ public class FeedAdapter extends BaseAdapter
 
         final FeedData feed = getItem(position);
 
+        SetLikeButtonStatus(holder.likePost, feed.getLikes());
+
         String picture = feed.getUser().getAvatar();
 
         Picasso.with(mContext)
@@ -171,6 +173,22 @@ public class FeedAdapter extends BaseAdapter
         mService.likePost(feed.getId(), request, likePostCallback);
     }
 
+    private void SetLikeButtonStatus(Button likeButton, List<LikeData> likes)
+    {
+        String userId = new Credentials(mContext).GetCacheToken(Credentials.mId);
+
+        //Set likeButton blue if current user has liked this post
+        for(LikeData like : likes)
+        {
+            if (like.getUserId().equals(userId))
+            {
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_good_blue, 0, 0, 0);
+                likeButton.setHasTransientState(true);
+                return;
+            }
+        }
+    }
+
     public void RemoveItem(final int position, final FeedData post)
     {
         String userName = new Credentials(mContext).GetCacheToken(Credentials.mUsername);
@@ -239,7 +257,7 @@ public class FeedAdapter extends BaseAdapter
         @Override
         public void failure(RetrofitError retrofitError)
         {
-            Toast.makeText(mContext, "Negative", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "You can't like this post again", Toast.LENGTH_SHORT).show();
         }
     };
 
