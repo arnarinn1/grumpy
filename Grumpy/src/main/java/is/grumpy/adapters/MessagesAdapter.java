@@ -13,6 +13,7 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.contracts.MessagesData;
+import is.grumpy.utils.ConversionHelper;
 
 /**
  * Created by Arnar on 4.2.2014.
@@ -62,26 +63,23 @@ public class MessagesAdapter extends BaseAdapter
 
         holder.message.setText(message.getUserMessage());
 
+        final int paddingBig   = ConversionHelper.PixelsToDp(mContext, 30);
+        final int paddingSmall = ConversionHelper.PixelsToDp(mContext, 7);
+
         if (message.getUserid() == 1)
         {
             holder.layout.setGravity(Gravity.RIGHT);
-            holder.layout.setPadding(ConvertPixelsToDp(30), ConvertPixelsToDp(7), 0, ConvertPixelsToDp(7));
+            holder.layout.setPadding(paddingBig, paddingSmall, 0, paddingSmall);
             holder.message.setBackground(mContext.getResources().getDrawable(R.drawable.message_background_user));
         }
         else
         {
             holder.layout.setGravity(Gravity.LEFT);
-            holder.layout.setPadding(0, ConvertPixelsToDp(7), ConvertPixelsToDp(30), ConvertPixelsToDp(7));
+            holder.layout.setPadding(0, paddingSmall, paddingBig, paddingSmall);
             holder.message.setBackground(mContext.getResources().getDrawable(R.drawable.message_background_me));
         }
 
         return row;
-    }
-
-    private int ConvertPixelsToDp(int sizeInDp)
-    {
-        float scale = mContext.getResources().getDisplayMetrics().density;
-        return (int) (sizeInDp*scale + 0.5f);
     }
 
     @Override

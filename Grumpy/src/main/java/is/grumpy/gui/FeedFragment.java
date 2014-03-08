@@ -77,7 +77,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 
         mListView = (ListView) rootView.findViewById(R.id.listViewGrumpyFeed);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressIndicator);
-        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refresLayout);
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         mNoNetworkView = (TextView) rootView.findViewById(R.id.no_network);
 
         ActionBarPullToRefresh.from((Activity)IActivity.context())
@@ -88,7 +88,6 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
 
         mGrumpyApi = restAdapter.create(GrumpyService.class);
-        new GrumpyFeedWorker().execute();
 
         AttachBroadcastReceiver();
 
