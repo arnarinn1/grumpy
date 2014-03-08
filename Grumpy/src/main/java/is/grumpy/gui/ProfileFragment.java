@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,10 +55,14 @@ public class ProfileFragment extends BaseFragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        mProfilePicture = (ImageView) getView().findViewById(R.id.profilePicture);
-        mFullName = (TextView) getView().findViewById(R.id.profileFullName);
-        mLayout = (RelativeLayout) getView().findViewById(R.id.profileLayout);
         mListView = (ListView) getView().findViewById(R.id.profilePosts);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        ViewGroup profileHeader = (ViewGroup) inflater.inflate(R.layout.listview_profile_header, mListView , false);
+        mProfilePicture = (ImageView) profileHeader.findViewById(R.id.profilePicture);
+        mFullName = (TextView) profileHeader.findViewById(R.id.profileFullName);
+        mLayout = (RelativeLayout) profileHeader.findViewById(R.id.profileLayout);
+
+        mListView.addHeaderView(profileHeader);
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
 
@@ -87,7 +92,7 @@ public class ProfileFragment extends BaseFragment
 
                 mListView.setAdapter(new FeedAdapter(IActivity.context(), R.layout.listview_feed, user.getPosts()));
 
-                mLayout.setVisibility(View.VISIBLE);
+              //  mLayout.setVisibility(View.VISIBLE);
             }
         }
 

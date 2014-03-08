@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profileHeader"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grumpy_feed_background"
+    android:visibility="visible">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="150sp"
+            android:background="@drawable/btn_login_signup_pressed"/>
+
+        <TextView
+            android:id="@+id/profileFullName"
+            android:layout_width="fill_parent"
+            android:layout_height="36dp"
+            android:gravity="center"
+            style="@style/BaseTextStyle.ProfileHeader"/>
+
+        <TextView
+            android:id="@+id/profileBirthDay"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:text="27 October 1991"
+            style="@style/BaseTextStyle.DateHighlighter"/>
+
+    </FrameLayout>
+
+    <com.makeramen.RoundedImageView
+        android:id="@+id/profilePicture"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:contentDescription="@string/feed_profile_picture"
+        android:scaleType="centerCrop"
+        app:corner_radius="25dp"
+        app:border_width="2dp"
+        app:is_oval="true"
+        app:border_color="#fff"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
