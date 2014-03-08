@@ -36,7 +36,7 @@ public class LikeDialog extends DialogFragment
     {
         super.onCreate(savedInstanceState);
 
-        setStyle(STYLE_NO_TITLE, R.style.CommentLikeDialog);
+        setStyle(STYLE_NO_TITLE, R.style.CommentLikeDialog_SlideInAnimation);
     }
 
     @Override
