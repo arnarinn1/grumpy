@@ -117,6 +117,7 @@ public class CommentLikeDialog extends DialogFragment
         {
             mAdapter.AddNewItem(commentData);
             mAdapter.notifyDataSetChanged();
+            mEditText.getText().clear();
         }
 
         @Override

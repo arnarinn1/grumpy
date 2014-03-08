@@ -15,7 +15,7 @@ import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.contracts.CommentData;
-import is.grumpy.utils.DateCleaner;
+import is.grumpy.utils.StringHelper;
 
 /**
  * Created by Arnar on 6.3.2014.
@@ -71,7 +71,7 @@ public class CommentsAdapter extends BaseAdapter
 
         holder.userName.setText(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
         holder.comment.setText(comment.getComment());
-        holder.commentCreatedAt.setText(FormatDate(comment.getCreatedAt()));
+        holder.commentCreatedAt.setText(StringHelper.FormatDate(mContext, comment.getCreatedAt()));
 
         return row;
     }
@@ -79,22 +79,6 @@ public class CommentsAdapter extends BaseAdapter
     public void AddNewItem(CommentData data)
     {
         mComments.add(data);
-    }
-
-    private String FormatDate(String timeCreated)
-    {
-        String posted;
-        try
-        {
-            DateCleaner cleaner = new DateCleaner(timeCreated, mContext);
-            posted = cleaner.getRelativeDate();
-        }
-        catch (Exception e)
-        {
-            posted = timeCreated;
-        }
-
-        return posted;
     }
 
     @Override
