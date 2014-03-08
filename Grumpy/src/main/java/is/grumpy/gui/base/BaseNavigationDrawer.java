@@ -14,13 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import is.grumpy.R;
 import is.grumpy.adapters.DrawerListAdapter;
+import is.grumpy.cache.Credentials;
 import is.grumpy.client.LogOutUser;
 import is.grumpy.gui.FeedFragment;
 import is.grumpy.gui.dialogs.LogOutDialog;
@@ -142,7 +142,8 @@ public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOut
         switch(position)
         {
             case 0:
-                fragment = ProfileFragment.newInstance(position);
+                String userId = new Credentials(this).GetCacheToken(Credentials.mId);
+                fragment = ProfileFragment.newInstance(userId);
                 break;
             case 2:
                 fragment = FeedFragment.newInstance(position);

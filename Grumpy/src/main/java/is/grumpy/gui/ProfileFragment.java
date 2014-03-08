@@ -14,10 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import is.grumpy.R;
 import is.grumpy.adapters.FeedAdapter;
-import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.UserProfileData;
 import is.grumpy.gui.base.BaseFragment;
-import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
@@ -30,6 +28,8 @@ import retrofit.client.Response;
  */
 public class ProfileFragment extends BaseFragment
 {
+    public static final String EXTRA_USERID = "is.grumpy.gui.USERID";
+
     private ImageView mProfilePicture;
     private TextView mFullName;
     private RelativeLayout mLayout;
@@ -37,12 +37,12 @@ public class ProfileFragment extends BaseFragment
 
     private GrumpyService mService;
 
-    public static ProfileFragment newInstance(int position)
+    public static ProfileFragment newInstance(String userId)
     {
         ProfileFragment fragment = new ProfileFragment();
 
         Bundle args = new Bundle();
-        args.putInt(BaseNavigationDrawer.DRAWER_POSITION, position);
+        args.putString(EXTRA_USERID, userId);
 
         fragment.setArguments(args);
         fragment.setRetainInstance(true);
@@ -66,7 +66,7 @@ public class ProfileFragment extends BaseFragment
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
 
-        String userId = new Credentials(IActivity.context()).GetCacheToken(Credentials.mId);
+        String userId = getArguments().getString(EXTRA_USERID);
         mService = restAdapter.create(GrumpyService.class);
         mService.getUserProfileInfo(userId, userProfileCallback);
     }

@@ -1,6 +1,8 @@
 package is.grumpy.gui;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +27,7 @@ import is.grumpy.contracts.UserData;
 import is.grumpy.gui.base.BaseFragment;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 import is.grumpy.rest.GrumpyService;
+import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -32,10 +36,8 @@ import retrofit.client.Response;
 /**
  * Created by Arnar on 15.2.2014.
  */
-public class SearchFragment extends BaseFragment
+public class SearchFragment extends BaseFragment implements AdapterView.OnItemClickListener
 {
-    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
-
     private ListView mListView;
     private EditText mSearchUser;
     private TextView mNoResults;
@@ -61,14 +63,23 @@ public class SearchFragment extends BaseFragment
         super.onActivityCreated(savedInstanceState);
 
         mListView = (ListView) getView().findViewById(R.id.lvSearchUsers);
+        mListView.setOnItemClickListener(this);
         mSearchUser = (EditText) getView().findViewById(R.id.edtSearchUser);
         mNoResults = (TextView) getView().findViewById(R.id.noUsersFound);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
 
         grumpyApi = restAdapter.create(GrumpyService.class);
+
+        mSearchUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                {
+                    HideKeyboard();
+                }
+            }
+        });
 
         InitializeEditTextSearch();
     }
@@ -87,9 +98,7 @@ public class SearchFragment extends BaseFragment
                 if (actionId == EditorInfo.IME_ACTION_SEARCH)
                 {
                     PerformSearch();
-
-                    InputMethodManager imm = (InputMethodManager) IActivity.context().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //Close the keyboard
+                    HideKeyboard();
 
                     return true;
                 }
@@ -108,7 +117,6 @@ public class SearchFragment extends BaseFragment
                 }
             }
 
-            //Mayby we want to use these events
             @Override public void afterTextChanged(Editable s) {}
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
@@ -119,6 +127,12 @@ public class SearchFragment extends BaseFragment
         String username = mSearchUser.getText().toString();
 
         grumpyApi.searchUsers(username, searchUserCallback);
+    }
+
+    private void HideKeyboard()
+    {
+        InputMethodManager imm = (InputMethodManager) IActivity.context().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //Close the keyboard
     }
 
     Callback<List<UserData>> searchUserCallback = new Callback<List<UserData>>()
@@ -148,4 +162,20 @@ public class SearchFragment extends BaseFragment
             //Do some cray shit
         }
     };
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        UserData user = mAdapter.getItem(position);
+
+        ProfileFragment fragment = ProfileFragment.newInstance(user.getId());
+
+        FragmentManager manager = getFragmentManager();
+
+        manager.beginTransaction()
+               .replace(R.id.frame_container, fragment)
+               .addToBackStack(null)
+               .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+               .commit();
+    }
 }
