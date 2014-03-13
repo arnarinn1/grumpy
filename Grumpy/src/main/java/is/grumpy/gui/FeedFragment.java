@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
@@ -44,6 +45,8 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  */
 public class FeedFragment extends BaseFragment implements OnRefreshListener
 {
+    public static final int RefreshCallback = 1;
+
     private MenuItem refreshMenuItem;
     private ListView mListView;
     private TextView mNoNetworkView;
@@ -92,19 +95,6 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         AttachBroadcastReceiver();
 
         return rootView;
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-
-        //TODO: There is a better way to get this callback, will look into that
-        if (NewPostActivity.CallbackCreatedNewPost)
-        {
-            new GrumpyFeedWorker().execute();
-            NewPostActivity.CallbackCreatedNewPost = false;
-        }
     }
 
     @Override
@@ -178,7 +168,7 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         Intent intent = new Intent(IActivity.context(), NewPostActivity.class);
         Bundle newPostBundle = ActivityOptions.makeCustomAnimation(IActivity.context(),
                                R.anim.slide_in_bottom, R.anim.slide_out_top).toBundle();
-        startActivity(intent, newPostBundle);
+        startActivityForResult(intent, RefreshCallback, newPostBundle);
     }
 
     private class MenuGrumpyFeedWorker extends AsyncTask<String, Void, List<FeedData>>
@@ -264,5 +254,14 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
             }
         }
         , new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == RefreshCallback && resultCode == getActivity().RESULT_OK)
+        {
+            new GrumpyFeedWorker().execute();
+        }
     }
 }

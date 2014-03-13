@@ -24,8 +24,6 @@ import retrofit.client.Response;
  */
 public class NewPostActivity extends BaseActivity
 {
-    public static boolean CallbackCreatedNewPost = false;
-
     private Button mSendNewPost;
     private EditText mPostData;
     private GrumpyService mGrumpyApi;
@@ -70,7 +68,7 @@ public class NewPostActivity extends BaseActivity
         {
             if (serverResponse.getStatus())
             {
-                CallbackCreatedNewPost = true;
+                setResult(RESULT_OK);
                 finish();
             }
         }
