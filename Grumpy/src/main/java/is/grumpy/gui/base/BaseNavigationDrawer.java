@@ -23,6 +23,7 @@ import is.grumpy.adapters.DrawerListAdapter;
 import is.grumpy.cache.Credentials;
 import is.grumpy.client.LogOutUser;
 import is.grumpy.gui.FeedFragment;
+import is.grumpy.gui.FollowingFragment;
 import is.grumpy.gui.dialogs.LogOutDialog;
 import is.grumpy.gui.MessagesFragment;
 import is.grumpy.gui.ProfileFragment;
@@ -147,6 +148,9 @@ public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOut
                 break;
             case 2:
                 fragment = FeedFragment.newInstance(position);
+                break;
+            case 3:
+                fragment = FollowingFragment.newInstance(position);
                 break;
             case 4:
                 fragment = MessagesFragment.newInstance(position);

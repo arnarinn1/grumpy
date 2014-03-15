@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvFollowersText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:gravity="center"
+        style="@style/BaseTextStyle.Big.Base2Color"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1sp"
+        android:background="@color/base2_app_color"/>
+
+    <ListView
+        android:id="@+id/lvFollowingUsers"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/base2_app_color"
+        android:dividerHeight="1sp"
+        android:padding="5sp"/>
+
+</LinearLayout>

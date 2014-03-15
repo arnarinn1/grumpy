@@ -4,6 +4,7 @@ import java.util.List;
 
 import is.grumpy.contracts.CommentData;
 import is.grumpy.contracts.FeedData;
+import is.grumpy.contracts.FollowingData;
 import is.grumpy.contracts.LikeData;
 import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.UserData;
@@ -25,22 +26,28 @@ import retrofit.http.Path;
 public interface GrumpyService
 {
     @POST("/user")
-    void createUser(@Body PostUser newUser, Callback<ServerResponse> callback);
+    void createUser(@Body PostUser newUser,
+                    Callback<ServerResponse> callback);
 
     @POST("/login")
-    void loginUser(@Body PostUser loginUser, Callback<LoginResponse> callback);
+    void loginUser(@Body PostUser loginUser,
+                   Callback<LoginResponse> callback);
 
     @POST("/post")
-    void postGrumpyMessage(@Body PostRequest postRequest, Callback<ServerResponse> callback);
+    void postGrumpyMessage(@Body PostRequest postRequest,
+                           Callback<ServerResponse> callback);
 
     @POST("/logout")
-    void logOutUser(@Body PostRequest postRequest, Callback<ServerResponse> callback);
+    void logOutUser(@Body PostRequest postRequest,
+                    Callback<ServerResponse> callback);
 
     @GET("/user/{username}/exists")
-    void checkIfUserExists(@Path("username") String username, Callback<UserAvailable> callback);
+    void checkIfUserExists(@Path("username") String username,
+                           Callback<UserAvailable> callback);
 
     @GET("/user/{username}/search")
-    void searchUsers(@Path("username") String username, Callback<List<UserData>> users);
+    void searchUsers(@Path("username") String username,
+                     Callback<List<UserData>> users);
 
     @GET("/post")
     List<FeedData> getPosts();
@@ -62,4 +69,8 @@ public interface GrumpyService
     void likePost(@Path("postId") String postId,
                   @Body PostRequest request,
                   Callback<LikeData> callback);
+
+    @GET("/follow/{userId}")
+    void getFollowingUsers(@Path("userId") String userId,
+                           Callback<List<FollowingData>> callback);
 }
