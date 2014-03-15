@@ -1,5 +1,8 @@
 package is.grumpy.rest;
 
+import android.content.Context;
+
+import is.grumpy.cache.Credentials;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.ApacheClient;
@@ -11,7 +14,7 @@ public class RetrofitUtil
 {
     public static final String ApiUrl = "http://arnarh.com/grumpy/public";
 
-    public static RestAdapter RestAdapterPostInstance()
+    public static RestAdapter RestAdapterPostInstance(final Context context)
     {
         //NOTE: There seems to be some bug in Retrofit(Might be an Android Bug).  If Connection header is not set to Close
         //      and the client is not set to ApacheClient, java will throw an EOFException.  This seems to work for now
@@ -25,6 +28,7 @@ public class RetrofitUtil
                 request.addHeader("Accept", "application/json");
                 request.addHeader("Accept-Encoding", "" );
                 request.addHeader("Connection", "Close");
+                request.addHeader("Authorization", new Credentials(context).GetCacheToken(Credentials.mAccessToken));
             }
         };
 

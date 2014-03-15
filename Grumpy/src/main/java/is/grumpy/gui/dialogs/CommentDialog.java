@@ -85,7 +85,7 @@ public class CommentDialog extends DialogFragment
         ListView mListView = (ListView) mLayout.findViewById(R.id.postComments);
         mListView.setAdapter(mAdapter);
 
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(getActivity());
         mService = restAdapter.create(GrumpyService.class);
 
         mEditText = (EditText) mLayout.findViewById(R.id.editTextComment);
@@ -106,7 +106,6 @@ public class CommentDialog extends DialogFragment
     private void PostNewComment(String postId)
     {
         PostRequest request = new PostRequest();
-        request.setAccessToken(new Credentials(getActivity()).GetCacheToken(Credentials.mAccessToken));
         request.setComment(mEditText.getText().toString());
         mService.postNewComment(postId, request, postNewCommentCallback);
     }

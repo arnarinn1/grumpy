@@ -42,7 +42,7 @@ public class LauncherActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(this);
 
         mGrumpyApi = restAdapter.create(GrumpyService.class);
 

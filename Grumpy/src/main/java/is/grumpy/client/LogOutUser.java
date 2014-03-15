@@ -30,15 +30,11 @@ public class LogOutUser
 
     private void LogOut()
     {
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(mContext);
 
         GrumpyService service = restAdapter.create(GrumpyService.class);
 
-        String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
-        PostRequest request = new PostRequest();
-        request.setAccessToken(accessToken);
-
-        service.logOutUser(request, logoutCallback);
+        service.logOutUser(logoutCallback);
     }
 
     Callback<ServerResponse> logoutCallback = new Callback<ServerResponse>()

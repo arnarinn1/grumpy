@@ -38,8 +38,7 @@ public interface GrumpyService
                            Callback<ServerResponse> callback);
 
     @POST("/logout")
-    void logOutUser(@Body PostRequest postRequest,
-                    Callback<ServerResponse> callback);
+    void logOutUser(Callback<ServerResponse> callback);
 
     @GET("/user/{username}/exists")
     void checkIfUserExists(@Path("username") String username,
@@ -52,9 +51,8 @@ public interface GrumpyService
     @GET("/post")
     List<FeedData> getPosts();
 
-    @DELETE("/post/{post_id}/{access_token}")
-    ServerResponse deletePost(@Path("post_id") String postId,
-                              @Path("access_token") String accessToken);
+    @DELETE("/post/{post_id}")
+    ServerResponse deletePost(@Path("post_id") String postId);
 
     @GET("/user/{userId}/info")
     void getUserProfileInfo(@Path("userId") String userId,
@@ -67,7 +65,6 @@ public interface GrumpyService
 
     @POST("/post/like/{postId}")
     void likePost(@Path("postId") String postId,
-                  @Body PostRequest request,
                   Callback<LikeData> callback);
 
     @GET("/follow/{userId}")
@@ -76,6 +73,5 @@ public interface GrumpyService
 
     @POST("/follow/{userId}")
     void followUser(@Path("userId") String userId,
-                    @Body PostRequest request,
                     Callback<ServerResponse> callback);
 }

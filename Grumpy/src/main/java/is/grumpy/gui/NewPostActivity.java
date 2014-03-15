@@ -41,7 +41,7 @@ public class NewPostActivity extends BaseActivity
         mSendNewPost = (Button) findViewById(R.id.send_new_post);
         mPostData = (EditText) findViewById(R.id.edit_post);
 
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(this);
 
         mGrumpyApi = restAdapter.create(GrumpyService.class);
 
@@ -53,7 +53,6 @@ public class NewPostActivity extends BaseActivity
                 String post = mPostData.getText().toString();
 
                 PostRequest postData = new PostRequest();
-                postData.setAccessToken(new Credentials(getContext()).GetCacheToken(Credentials.mAccessToken));
                 postData.setPostMessage(post);
 
                 mGrumpyApi.postGrumpyMessage(postData, postMessageCallback);

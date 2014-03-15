@@ -55,7 +55,7 @@ public class FeedAdapter extends BaseAdapter
 
     private void Initialize()
     {
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(mContext);
         mService = restAdapter.create(GrumpyService.class);
     }
 
@@ -166,11 +166,8 @@ public class FeedAdapter extends BaseAdapter
 
     private void LikePost(FeedData feed, int position)
     {
-        PostRequest request = new PostRequest();
-        request.setAccessToken(new Credentials(mContext).GetCacheToken(Credentials.mAccessToken));
-
         mFeedPosition = position;
-        mService.likePost(feed.getId(), request, likePostCallback);
+        mService.likePost(feed.getId(), likePostCallback);
     }
 
     private void SetLikeButtonStatus(Button likeButton, List<LikeData> likes)
@@ -309,8 +306,7 @@ public class FeedAdapter extends BaseAdapter
 
         private ServerResponse DestroyPost(String postId)
         {
-            String accessToken = new Credentials(mContext).GetCacheToken(Credentials.mAccessToken);
-            return mService.deletePost(postId, accessToken);
+            return mService.deletePost(postId);
         }
     }
 

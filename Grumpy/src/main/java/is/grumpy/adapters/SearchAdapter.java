@@ -40,7 +40,7 @@ public class SearchAdapter extends BaseAdapter
         this.mContext = context;
         this.users = users;
 
-        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(context);
         mService = restAdapter.create(GrumpyService.class);
     }
 
@@ -94,10 +94,8 @@ public class SearchAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
-                PostRequest request = new PostRequest();
-                request.setAccessToken(new Credentials(mContext).GetCacheToken(Credentials.mAccessToken));
                 holder.followUser.setVisibility(View.GONE);
-                mService.followUser(user.getId(), request, followUserCallback);
+                mService.followUser(user.getId(), followUserCallback);
             }
         });
 
