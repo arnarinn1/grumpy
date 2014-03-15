@@ -94,5 +94,4 @@ public class FollowingAdapter extends BaseAdapter
     {
         return users.indexOf(getItem(position));
     }
-
 }

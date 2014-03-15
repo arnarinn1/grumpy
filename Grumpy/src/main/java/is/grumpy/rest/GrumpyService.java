@@ -73,4 +73,9 @@ public interface GrumpyService
     @GET("/follow/{userId}")
     void getFollowingUsers(@Path("userId") String userId,
                            Callback<List<FollowingData>> callback);
+
+    @POST("/follow/{userId}")
+    void followUser(@Path("userId") String userId,
+                    @Body PostRequest request,
+                    Callback<ServerResponse> callback);
 }
