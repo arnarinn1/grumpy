@@ -41,17 +41,28 @@
                 android:paddingTop="8sp"
                 android:layout_toRightOf="@+id/signupUsernameLabel"/>
 
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/signupAvatar"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:src="@drawable/profile_placeholder"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"
+            android:padding="5sp"/>
 
         <EditText
             android:id="@+id/signupUsername"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/signupUsernameLabel"
+            android:layout_toLeftOf="@id/signupAvatar"
             android:inputType="text"/>
 
         <TextView
+            android:id="@+id/signupPasswordLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/signupUsername"
             android:paddingTop="10sp"
             android:paddingLeft="10sp"
             android:text="@string/password"
@@ -62,7 +73,10 @@
             android:id="@+id/signupPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/signupPasswordLabel"
             android:inputType="textPassword"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -123,21 +137,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10sp"
-            android:paddingLeft="10sp"
-            android:text="Avatar"
-            style="@style/BaseTextStyle.Item"
-            />
-
-        <EditText
-            android:id="@+id/signupAvatar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
 
         <Button
             android:id="@+id/signupUserButton"

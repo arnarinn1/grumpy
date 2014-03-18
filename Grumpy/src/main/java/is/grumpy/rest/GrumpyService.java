@@ -1,5 +1,9 @@
 package is.grumpy.rest;
 
+import android.app.DownloadManager;
+
+import org.apache.http.protocol.RequestDate;
+
 import java.util.List;
 
 import is.grumpy.contracts.CommentData;

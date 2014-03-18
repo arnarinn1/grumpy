@@ -1,7 +1,13 @@
 package is.grumpy.gui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +19,10 @@ import is.grumpy.R;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
+import is.grumpy.rest.ExifUtil;
 import is.grumpy.rest.GrumpyService;
+import is.grumpy.rest.RetrofitUtil;
+import is.grumpy.utils.BitmapHelper;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -25,7 +34,7 @@ import retrofit.client.Response;
  */
 public class SignUpActivity extends ActionBarActivity
 {
-    public static final String ApiUrl = "http://arnarh.com/grumpy/public";
+    private static int RESULT_LOAD_IMAGE = 1;
 
     private Button mSignup;
     private EditText mUsernameField;
@@ -34,8 +43,8 @@ public class SignUpActivity extends ActionBarActivity
     private EditText mFirstNameField;
     private EditText mLastNameField;
     private EditText mAboutField;
-    private EditText mAvatarField;
     private ImageView mUsernameStatus;
+    private ImageView mProfileAvatar;
     private PostUser mNewUser = new PostUser();
 
     private GrumpyService grumpyApi;
@@ -60,23 +69,10 @@ public class SignUpActivity extends ActionBarActivity
         mFirstNameField = (EditText) findViewById(R.id.signupFirstName);
         mLastNameField = (EditText) findViewById(R.id.signupLastName);
         mAboutField = (EditText) findViewById(R.id.signupAbout);
-        mAvatarField = (EditText) findViewById(R.id.signupAvatar);
         mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
+        mProfileAvatar = (ImageView) findViewById(R.id.signupAvatar);
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request)
-            {
-                request.addHeader("Content-Type", "application/json");
-                //If Connection header is not absent Java will throw an IO Error
-                request.addHeader("Connection", "close");
-            }
-        };
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(ApiUrl)
-                .setRequestInterceptor(requestInterceptor)
-                .build();
+        RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(this);
 
         grumpyApi = restAdapter.create(GrumpyService.class);
 
@@ -86,6 +82,13 @@ public class SignUpActivity extends ActionBarActivity
             public void onClick(View v)
             {
                 SignUpUser();
+            }
+        });
+
+        mProfileAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetBitmapFromGallery();
             }
         });
 
@@ -101,6 +104,26 @@ public class SignUpActivity extends ActionBarActivity
                 }
             }
         });
+    }
+
+    private void GetBitmapFromGallery()
+    {
+        Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data)
+        {
+            Uri selectedImage = data.getData();
+            Bitmap bitmap = BitmapHelper.getBitmapFromGallery(this, selectedImage);
+
+            String base64image = BitmapHelper.getBase64StringFromBitmap(bitmap);
+            mNewUser.setBase64image(base64image);
+            mProfileAvatar.setImageBitmap(bitmap);
+        }
     }
 
     private void SignUpUser()
@@ -155,7 +178,6 @@ public class SignUpActivity extends ActionBarActivity
         String firstName = mFirstNameField.getText().toString();
         String lastName = mLastNameField.getText().toString();
         String about  = mAboutField.getText().toString();
-        String avatar = mAvatarField.getText().toString();
 
         if ((password.length() < 6) || (confirmedPassword.length() < 6))
         {
@@ -180,7 +202,6 @@ public class SignUpActivity extends ActionBarActivity
         mNewUser.setFirstName(firstName.equals("") ? null : firstName);
         mNewUser.setLastName(lastName.equals("") ? null : lastName);
         mNewUser.setAbout(about.equals("") ? null : about);
-        mNewUser.setAvatar(avatar.equals("") ? null : avatar);
 
         return true;
     }
