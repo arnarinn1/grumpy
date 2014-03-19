@@ -29,6 +29,7 @@
         </activity>
         <activity
             android:name=".gui.NewPostActivity"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/new_post"
             android:screenOrientation="portrait">
         </activity>
