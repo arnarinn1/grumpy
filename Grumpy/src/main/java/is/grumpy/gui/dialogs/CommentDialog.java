@@ -96,7 +96,10 @@ public class CommentDialog extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                PostNewComment(feed.getId());
+                if(!mEditText.getText().toString().equals(""))
+                {
+                    PostNewComment(feed.getId());
+                }
             }
         });
 
