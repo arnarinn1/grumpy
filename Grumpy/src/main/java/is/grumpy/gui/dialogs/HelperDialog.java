@@ -1,4 +1,4 @@
-package is.grumpy.gui;
+package is.grumpy.gui.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 /**
  * Created by Arnar on 20.2.2014.
  */
-public class Dialog
+public class HelperDialog
 {
     public static final int THEME_HOLO_DARK = 2;
 

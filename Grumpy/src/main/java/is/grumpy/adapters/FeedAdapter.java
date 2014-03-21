@@ -18,11 +18,13 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.FeedData;
 import is.grumpy.contracts.LikeData;
-import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.gui.dialogs.CommentDialog;
 import is.grumpy.rest.GrumpyService;
@@ -61,14 +63,19 @@ public class FeedAdapter extends BaseAdapter
 
     static class GrumpyFeedHolder
     {
-        com.makeramen.RoundedImageView profilePicture;
-        TextView userName;
-        TextView post;
-        TextView timeCreated;
-        ImageButton showOptions;
-        TextView commentLikeCount;
-        Button likePost;
-        Button commentPost;
+        public GrumpyFeedHolder(View view)
+        {
+            ButterKnife.inject(this, view);
+        }
+
+        @InjectView(R.id.feedProfilePicture)    com.makeramen.RoundedImageView profilePicture;
+        @InjectView(R.id.grumpyFeedUserName)    TextView userName;
+        @InjectView(R.id.grumpyFeedPost)        TextView post;
+        @InjectView(R.id.grumpyFeedTimeCreated) TextView timeCreated;
+        @InjectView(R.id.postOptions)           ImageButton showOptions;
+        @InjectView(R.id.commentLikeCount)      TextView commentLikeCount;
+        @InjectView(R.id.likePost)              Button likePost;
+        @InjectView(R.id.commentOnPost)         Button commentPost;
     }
 
     @Override
@@ -82,15 +89,7 @@ public class FeedAdapter extends BaseAdapter
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new GrumpyFeedHolder();
-            holder.userName = (TextView) row.findViewById(R.id.grumpyFeedUserName);
-            holder.profilePicture = (com.makeramen.RoundedImageView) row.findViewById(R.id.feedProfilePicture);
-            holder.post = (TextView) row.findViewById(R.id.grumpyFeedPost);
-            holder.timeCreated = (TextView) row.findViewById(R.id.grumpyFeedTimeCreated);
-            holder.showOptions = (ImageButton) row.findViewById(R.id.postOptions);
-            holder.commentLikeCount = (TextView) row.findViewById(R.id.commentLikeCount);
-            holder.likePost = (Button) row.findViewById(R.id.likePost);
-            holder.commentPost = (Button) row.findViewById(R.id.commentOnPost);
+            holder = new GrumpyFeedHolder(row);
             row.setTag(holder);
         }
         else

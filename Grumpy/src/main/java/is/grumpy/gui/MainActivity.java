@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import is.grumpy.R;
 import is.grumpy.cache.Credentials;
 import is.grumpy.gui.base.BaseNavigationDrawer;
 

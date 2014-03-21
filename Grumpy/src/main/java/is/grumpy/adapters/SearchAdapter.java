@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.PostRequest;
@@ -46,10 +49,15 @@ public class SearchAdapter extends BaseAdapter
 
     static class UserHolder
     {
-        TextView username;
-        TextView fullname;
-        ImageView profilePicture;
-        ImageView followUser;
+        public UserHolder(View view)
+        {
+            ButterKnife.inject(this ,view);
+        }
+
+        @InjectView(R.id.userName)           TextView username;
+        @InjectView(R.id.fullName)           TextView fullname;
+        @InjectView(R.id.userProfilePicture) ImageView profilePicture;
+        @InjectView(R.id.ivFollowUser)       ImageView followUser;
     }
 
     @Override
@@ -63,12 +71,7 @@ public class SearchAdapter extends BaseAdapter
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(mLayoutResourceId, parent, false);
 
-            holder = new UserHolder();
-            holder.username = (TextView) row.findViewById(R.id.userName);
-            holder.fullname = (TextView) row.findViewById(R.id.fullName);
-            holder.profilePicture = (ImageView) row.findViewById(R.id.userProfilePicture);
-            holder.followUser = (ImageView) row.findViewById(R.id.ivFollowUser);
-
+            holder = new UserHolder(row);
             row.setTag(holder);
         }
         else

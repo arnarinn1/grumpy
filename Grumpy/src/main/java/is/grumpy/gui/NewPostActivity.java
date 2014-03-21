@@ -7,8 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
-import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.PostRequest;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.gui.base.BaseActivity;
@@ -24,8 +25,9 @@ import retrofit.client.Response;
  */
 public class NewPostActivity extends BaseActivity
 {
-    private Button mSendNewPost;
-    private EditText mPostData;
+    @InjectView(R.id.send_new_post) Button mSendNewPost;
+    @InjectView(R.id.edit_post) EditText mPostData;
+
     private GrumpyService mGrumpyApi;
 
     private Context getContext() { return this; }
@@ -34,15 +36,13 @@ public class NewPostActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_post);
+        ButterKnife.inject(this);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSendNewPost = (Button) findViewById(R.id.send_new_post);
-        mPostData = (EditText) findViewById(R.id.edit_post);
-
         RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(this);
-
         mGrumpyApi = restAdapter.create(GrumpyService.class);
 
         mSendNewPost.setOnClickListener(new View.OnClickListener()

@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.contracts.CommentData;
 import is.grumpy.utils.StringHelper;
@@ -34,10 +36,15 @@ public class CommentsAdapter extends BaseAdapter
 
     static class Holder
     {
-        ImageView profilePicture;
-        TextView userName;
-        TextView comment;
-        TextView commentCreatedAt;
+        public Holder(View view)
+        {
+            ButterKnife.inject(this, view);
+        }
+
+        @InjectView(R.id.commentProfilePicture) ImageView profilePicture;
+        @InjectView(R.id.commentUserName)       TextView userName;
+        @InjectView(R.id.comment)               TextView comment;
+        @InjectView(R.id.commentCreatedAt)      TextView commentCreatedAt;
     }
 
     @Override
@@ -51,11 +58,7 @@ public class CommentsAdapter extends BaseAdapter
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(mLayoutResourceId, parent, false);
 
-            holder = new Holder();
-            holder.profilePicture = (ImageView) row.findViewById(R.id.commentProfilePicture);
-            holder.userName = (TextView) row.findViewById(R.id.commentUserName);
-            holder.comment = (TextView) row.findViewById(R.id.comment);
-            holder.commentCreatedAt = (TextView) row.findViewById(R.id.commentCreatedAt);
+            holder = new Holder(row);
             row.setTag(holder);
         }
         else

@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.contracts.LikeData;
 import is.grumpy.utils.StringHelper;
@@ -34,9 +36,14 @@ public class LikesAdapter extends BaseAdapter
 
     static class Holder
     {
-        ImageView profilePicture;
-        TextView userName;
-        TextView likeCreatedAt;
+        public Holder(View view)
+        {
+            ButterKnife.inject(this, view);
+        }
+
+        @InjectView(R.id.commentProfilePicture) ImageView profilePicture;
+        @InjectView(R.id.commentUserName)       TextView userName;
+        @InjectView(R.id.commentCreatedAt)      TextView likeCreatedAt;
     }
 
     @Override
@@ -50,10 +57,7 @@ public class LikesAdapter extends BaseAdapter
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(mLayoutResourceId, parent, false);
 
-            holder = new Holder();
-            holder.profilePicture = (ImageView) row.findViewById(R.id.commentProfilePicture);
-            holder.userName = (TextView) row.findViewById(R.id.commentUserName);
-            holder.likeCreatedAt = (TextView) row.findViewById(R.id.commentCreatedAt);
+            holder = new Holder(row);
             row.setTag(holder);
         }
         else

@@ -28,6 +28,8 @@ import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnim
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.adapters.FeedAdapter;
 import is.grumpy.contracts.FeedData;
@@ -47,14 +49,14 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
 {
     public static final int RefreshCallback = 1;
 
-    private MenuItem refreshMenuItem;
-    private ListView mListView;
-    private TextView mNoNetworkView;
-    private FeedAdapter mAdapter;
-    private ProgressBar mProgressBar;
-    private GrumpyService mGrumpyApi;
+    @InjectView(R.id.listViewGrumpyFeed) ListView mListView;
+    @InjectView(R.id.no_network)         TextView mNoNetworkView;
+    @InjectView(R.id.progressIndicator)  ProgressBar mProgressBar;
+    @InjectView(R.id.refreshLayout)      PullToRefreshLayout mPullToRefreshLayout;
 
-    private PullToRefreshLayout mPullToRefreshLayout;
+    private FeedAdapter mAdapter;
+    private GrumpyService mGrumpyApi;
+    private MenuItem refreshMenuItem;
 
     public static FeedFragment newInstance(int position)
     {
@@ -74,14 +76,10 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         super.onCreateView(inflater, container, savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+        ButterKnife.inject(this, rootView);
 
         //Notify the fragment to participate in populating the MENU
         setHasOptionsMenu(true);
-
-        mListView = (ListView) rootView.findViewById(R.id.listViewGrumpyFeed);
-        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressIndicator);
-        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refreshLayout);
-        mNoNetworkView = (TextView) rootView.findViewById(R.id.no_network);
 
         ActionBarPullToRefresh.from((Activity)IActivity.context())
                 .allChildrenArePullable()
@@ -263,5 +261,12 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             new GrumpyFeedWorker().execute();
         }
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 }

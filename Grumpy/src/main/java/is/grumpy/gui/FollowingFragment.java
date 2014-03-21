@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.adapters.FollowingAdapter;
 import is.grumpy.cache.Credentials;
@@ -31,8 +33,8 @@ import retrofit.client.Response;
  */
 public class FollowingFragment extends BaseFragment implements AdapterView.OnItemClickListener
 {
-    private ListView mListView;
-    private TextView mFollowersText;
+    @InjectView(R.id.lvFollowingUsers) ListView mListView;
+    @InjectView(R.id.tvFollowersText) TextView mFollowersText;
 
     public static FollowingFragment newInstance(int position)
     {
@@ -51,9 +53,7 @@ public class FollowingFragment extends BaseFragment implements AdapterView.OnIte
     {
         super.onActivityCreated(savedInstanceState);
 
-        mListView = (ListView) getView().findViewById(R.id.lvFollowingUsers);
         mListView.setOnItemClickListener(this);
-        mFollowersText = (TextView) getView().findViewById(R.id.tvFollowersText);
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
         GrumpyService mService = restAdapter.create(GrumpyService.class);
@@ -65,7 +65,16 @@ public class FollowingFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_following, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_following, container, false);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     Callback<List<FollowingData>> followingCallback = new Callback<List<FollowingData>>()

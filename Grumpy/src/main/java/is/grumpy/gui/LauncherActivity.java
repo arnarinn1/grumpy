@@ -14,6 +14,7 @@ import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.LoginResponse;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.gui.base.BaseNavigationDrawer;
+import is.grumpy.gui.dialogs.HelperDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import retrofit.Callback;
@@ -102,7 +103,7 @@ public class LauncherActivity extends Activity
             }
             else
             {
-                Dialog.LoginFailedDialog(getContext());
+                HelperDialog.LoginFailedDialog(getContext());
             }
         }
 
@@ -110,7 +111,7 @@ public class LauncherActivity extends Activity
         public void failure(RetrofitError retrofitError)
         {
             mProgressDialog.dismiss();
-            Dialog.LoginFailedDialog(getContext());
+            HelperDialog.LoginFailedDialog(getContext());
         }
     };
 

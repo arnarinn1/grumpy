@@ -1,5 +1,6 @@
 package is.grumpy.gui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.adapters.FeedAdapter;
 import is.grumpy.contracts.UserProfileData;
@@ -30,12 +33,11 @@ public class ProfileFragment extends BaseFragment
 {
     public static final String EXTRA_USERID = "is.grumpy.gui.USERID";
 
+    @InjectView(R.id.profileLayout) RelativeLayout mLayout;
+    @InjectView(R.id.profilePosts) ListView mListView;
+
     private ImageView mProfilePicture;
     private TextView mFullName;
-    private RelativeLayout mLayout;
-    private ListView mListView;
-
-    private GrumpyService mService;
 
     public static ProfileFragment newInstance(String userId)
     {
@@ -54,9 +56,6 @@ public class ProfileFragment extends BaseFragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        mListView = (ListView) getView().findViewById(R.id.profilePosts);
-        mLayout = (RelativeLayout) getView().findViewById(R.id.profileLayout);
-
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup profileHeader = (ViewGroup) inflater.inflate(R.layout.listview_profile_header, mListView , false);
         mProfilePicture = (ImageView) profileHeader.findViewById(R.id.profilePicture);
@@ -65,16 +64,25 @@ public class ProfileFragment extends BaseFragment
         mListView.addHeaderView(profileHeader);
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
+        GrumpyService mService = restAdapter.create(GrumpyService.class);
 
         String userId = getArguments().getString(EXTRA_USERID);
-        mService = restAdapter.create(GrumpyService.class);
         mService.getUserProfileInfo(userId, userProfileCallback);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     Callback<UserProfileData> userProfileCallback = new Callback<UserProfileData>()

@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
@@ -36,17 +38,17 @@ public class SignUpActivity extends ActionBarActivity
 {
     private static int RESULT_LOAD_IMAGE = 1;
 
-    private Button mSignup;
-    private EditText mUsernameField;
-    private EditText mPasswordField;
-    private EditText mPasswordConfirmField;
-    private EditText mFirstNameField;
-    private EditText mLastNameField;
-    private EditText mAboutField;
-    private ImageView mUsernameStatus;
-    private ImageView mProfileAvatar;
-    private PostUser mNewUser = new PostUser();
+    @InjectView(R.id.signupUserButton)      Button mSignup;
+    @InjectView(R.id.signupUsername)        EditText mUsernameField;
+    @InjectView(R.id.signupPassword)        EditText mPasswordField;
+    @InjectView(R.id.signupConfirmPassword) EditText mPasswordConfirmField;
+    @InjectView(R.id.signupFirstName)       EditText mFirstNameField;
+    @InjectView(R.id.signupLastName)        EditText mLastNameField;
+    @InjectView(R.id.signupAbout)           EditText mAboutField;
+    @InjectView(R.id.signupUsernameStatus)  ImageView mUsernameStatus;
+    @InjectView(R.id.signupAvatar)          ImageView mProfileAvatar;
 
+    private PostUser mNewUser = new PostUser();
     private GrumpyService grumpyApi;
 
     private Context getContext() { return this; }
@@ -57,23 +59,13 @@ public class SignUpActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        ButterKnife.inject(this);
         Initialize();
     }
 
     private void Initialize()
     {
-        mSignup = (Button) findViewById(R.id.signupUserButton);
-        mUsernameField = (EditText) findViewById(R.id.signupUsername);
-        mPasswordField = (EditText) findViewById(R.id.signupPassword);
-        mPasswordConfirmField = (EditText) findViewById(R.id.signupConfirmPassword);
-        mFirstNameField = (EditText) findViewById(R.id.signupFirstName);
-        mLastNameField = (EditText) findViewById(R.id.signupLastName);
-        mAboutField = (EditText) findViewById(R.id.signupAbout);
-        mUsernameStatus = (ImageView) findViewById(R.id.signupUsernameStatus);
-        mProfileAvatar = (ImageView) findViewById(R.id.signupAvatar);
-
         RestAdapter restAdapter = RetrofitUtil.RestAdapterPostInstance(this);
-
         grumpyApi = restAdapter.create(GrumpyService.class);
 
         mSignup.setOnClickListener(new View.OnClickListener()

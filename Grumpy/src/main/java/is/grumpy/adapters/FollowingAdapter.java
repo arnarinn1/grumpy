@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.contracts.FollowingData;
 import is.grumpy.contracts.UserData;
@@ -35,9 +37,14 @@ public class FollowingAdapter extends BaseAdapter
 
     static class ViewHolder
     {
-        TextView username;
-        TextView fullname;
-        ImageView profilePicture;
+        public ViewHolder(View view)
+        {
+            ButterKnife.inject(this, view);
+        }
+
+        @InjectView(R.id.userName)           TextView username;
+        @InjectView(R.id.fullName)           TextView fullname;
+        @InjectView(R.id.userProfilePicture) ImageView profilePicture;
     }
 
     @Override
@@ -51,11 +58,7 @@ public class FollowingAdapter extends BaseAdapter
             LayoutInflater inflater = ((Activity)mContext).getLayoutInflater();
             row = inflater.inflate(mLayoutResourceId, parent, false);
 
-            holder = new ViewHolder();
-            holder.username = (TextView) row.findViewById(R.id.userName);
-            holder.fullname = (TextView) row.findViewById(R.id.fullName);
-            holder.profilePicture = (ImageView) row.findViewById(R.id.userProfilePicture);
-
+            holder = new ViewHolder(row);
             row.setTag(holder);
         }
         else

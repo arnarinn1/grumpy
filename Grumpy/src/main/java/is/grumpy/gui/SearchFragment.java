@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.adapters.SearchAdapter;
 import is.grumpy.contracts.UserData;
@@ -38,11 +40,11 @@ import retrofit.client.Response;
  */
 public class SearchFragment extends BaseFragment implements AdapterView.OnItemClickListener
 {
-    private ListView mListView;
-    private EditText mSearchUser;
-    private TextView mNoResults;
-    private SearchAdapter mAdapter;
+    @InjectView(R.id.lvSearchUsers) ListView mListView;
+    @InjectView(R.id.edtSearchUser) EditText mSearchUser;
+    @InjectView(R.id.noUsersFound) TextView mNoResults;
 
+    private SearchAdapter mAdapter;
     private GrumpyService grumpyApi;
 
     public static SearchFragment newInstance(int position)
@@ -62,13 +64,9 @@ public class SearchFragment extends BaseFragment implements AdapterView.OnItemCl
     {
         super.onActivityCreated(savedInstanceState);
 
-        mListView = (ListView) getView().findViewById(R.id.lvSearchUsers);
         mListView.setOnItemClickListener(this);
-        mSearchUser = (EditText) getView().findViewById(R.id.edtSearchUser);
-        mNoResults = (TextView) getView().findViewById(R.id.noUsersFound);
 
         RestAdapter restAdapter = RetrofitUtil.RestAdapterGetInstance();
-
         grumpyApi = restAdapter.create(GrumpyService.class);
 
         mSearchUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -87,7 +85,16 @@ public class SearchFragment extends BaseFragment implements AdapterView.OnItemCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_search_user, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_search_user, container, false);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     private void InitializeEditTextSearch()

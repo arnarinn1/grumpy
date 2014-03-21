@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import is.grumpy.R;
 import is.grumpy.adapters.MessagesAdapter;
 import is.grumpy.contracts.MessagesData;
@@ -21,7 +23,7 @@ import is.grumpy.rest.GrumpyClient;
  */
 public class MessagesFragment extends BaseFragment
 {
-    private ListView mListView;
+    @InjectView(R.id.messagesListView) ListView mListView;
 
     public static MessagesFragment newInstance(int position)
     {
@@ -40,15 +42,22 @@ public class MessagesFragment extends BaseFragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        mListView = (ListView) getView().findViewById(R.id.messagesListView);
-
         new GetMessagesWorker().execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 
     private class GetMessagesWorker extends AsyncTask<String, Void, List<MessagesData>>
