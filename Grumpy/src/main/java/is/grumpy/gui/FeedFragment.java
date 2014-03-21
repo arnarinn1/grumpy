@@ -71,12 +71,9 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public void onActivityCreated(Bundle savedInstanceState)
     {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
-        ButterKnife.inject(this, rootView);
+        super.onActivityCreated(savedInstanceState);
 
         //Notify the fragment to participate in populating the MENU
         setHasOptionsMenu(true);
@@ -91,7 +88,13 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         mGrumpyApi = restAdapter.create(GrumpyService.class);
 
         AttachBroadcastReceiver();
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_feed, container, false);
+        ButterKnife.inject(this, rootView);
         return rootView;
     }
 
@@ -261,12 +264,5 @@ public class FeedFragment extends BaseFragment implements OnRefreshListener
         {
             new GrumpyFeedWorker().execute();
         }
-    }
-
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        ButterKnife.reset(this);
     }
 }

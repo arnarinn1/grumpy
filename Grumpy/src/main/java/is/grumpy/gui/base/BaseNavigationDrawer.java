@@ -61,7 +61,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOut
 
         List<IDrawerItem> items = new ArrayList<IDrawerItem>();
 
-        items.add(new DrawerUserInfo("Arnar Heimisson"));
+        items.add(new DrawerUserInfo());
         items.add(new DrawerHeader("FAVORITES"));
         items.add(new DrawerListItem("Grumpy Feed", R.drawable.ic_home, false));
         items.add(new DrawerListItem("Following", R.drawable.ic_people, false));

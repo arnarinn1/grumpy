@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.makeramen.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import is.grumpy.R;
@@ -18,15 +17,6 @@ import is.grumpy.cache.Credentials;
  */
 public class DrawerUserInfo implements IDrawerItem
 {
-    private final String mName;
-
-    public DrawerUserInfo(String name)
-    {
-        this.mName = name;
-    }
-
-    public String getName() { return this.mName; }
-
     @Override
     public int getViewType()
     {
