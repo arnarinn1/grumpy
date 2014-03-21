@@ -44,6 +44,7 @@
         app:border_color="#fff"
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="10sp"/>
+        android:paddingBottom="10sp"
+        android:scaleType="centerCrop"/>
 
 </RelativeLayout>
