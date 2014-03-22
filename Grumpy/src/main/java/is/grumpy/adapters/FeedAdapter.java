@@ -106,6 +106,7 @@ public class FeedAdapter extends BaseAdapter
         Picasso.with(mContext)
                 .load(picture == null ? "https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg" : picture)
                 .noFade()
+                .error(R.drawable.ic_launcher)
                 .into(holder.profilePicture);
 
         holder.userName.setText(feed.getUser().getFullName());
