@@ -53,13 +53,6 @@ public class MessagesFragment extends BaseFragment
         return rootView;
     }
 
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     private class GetMessagesWorker extends AsyncTask<String, Void, List<MessagesData>>
     {
         @Override

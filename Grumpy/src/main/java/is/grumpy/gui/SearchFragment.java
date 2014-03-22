@@ -90,13 +90,6 @@ public class SearchFragment extends BaseFragment implements AdapterView.OnItemCl
         return rootView;
     }
 
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     private void InitializeEditTextSearch()
     {
         mSearchUser.setOnEditorActionListener(new TextView.OnEditorActionListener() {

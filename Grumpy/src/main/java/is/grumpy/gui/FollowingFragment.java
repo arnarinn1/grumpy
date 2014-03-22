@@ -70,13 +70,6 @@ public class FollowingFragment extends BaseFragment implements AdapterView.OnIte
         return rootView;
     }
 
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     Callback<List<FollowingData>> followingCallback = new Callback<List<FollowingData>>()
     {
         @Override

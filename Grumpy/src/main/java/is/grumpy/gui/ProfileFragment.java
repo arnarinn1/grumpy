@@ -78,13 +78,6 @@ public class ProfileFragment extends BaseFragment
         return rootView;
     }
 
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        ButterKnife.reset(this);
-    }
-
     Callback<UserProfileData> userProfileCallback = new Callback<UserProfileData>()
     {
         @Override

@@ -2,12 +2,9 @@ package is.grumpy.gui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +18,11 @@ import is.grumpy.R;
 import is.grumpy.contracts.PostUser;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserAvailable;
-import is.grumpy.rest.ExifUtil;
+import is.grumpy.gui.dialogs.SignupSuccessFulDialog;
 import is.grumpy.rest.GrumpyService;
 import is.grumpy.rest.RetrofitUtil;
 import is.grumpy.utils.BitmapHelper;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -34,7 +30,7 @@ import retrofit.client.Response;
 /**
  * Created by Arnar on 1.2.2014.
  */
-public class SignUpActivity extends ActionBarActivity
+public class SignUpActivity extends ActionBarActivity implements SignupSuccessFulDialog.OnSignupSuccessfulListener
 {
     private static int RESULT_LOAD_IMAGE = 1;
 
@@ -100,7 +96,7 @@ public class SignUpActivity extends ActionBarActivity
 
     private void GetBitmapFromGallery()
     {
-        Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
@@ -132,7 +128,10 @@ public class SignUpActivity extends ActionBarActivity
         public void success(ServerResponse response, retrofit.client.Response response2)
         {
             if (response.getStatus())
-                Toast.makeText(getContext(), "Created New Account", Toast.LENGTH_SHORT).show();
+            {
+                SignupSuccessFulDialog dialog = new SignupSuccessFulDialog();
+                dialog.show(getFragmentManager(), "signup_tag");
+            }
             else
                 Toast.makeText(getContext(), "Username exists", Toast.LENGTH_SHORT).show();
         }
@@ -158,7 +157,7 @@ public class SignUpActivity extends ActionBarActivity
         @Override
         public void failure(RetrofitError retrofitError)
         {
-            //HMM: Do something ?
+            Toast.makeText(getContext(), "Hmmm", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -203,5 +202,11 @@ public class SignUpActivity extends ActionBarActivity
     {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onSuccess()
+    {
+        finish();
     }
 }

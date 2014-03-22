@@ -1,7 +1,6 @@
 package is.grumpy.rest;
 
 import android.content.Context;
-
 import is.grumpy.cache.Credentials;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
