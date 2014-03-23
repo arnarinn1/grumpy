@@ -22,6 +22,7 @@ import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 
 /**
@@ -31,6 +32,10 @@ public interface GrumpyService
 {
     @POST("/user")
     void createUser(@Body PostUser newUser,
+                    Callback<ServerResponse> callback);
+
+    @PUT("/user")
+    void updateUser(@Body UserData user,
                     Callback<ServerResponse> callback);
 
     @POST("/login")

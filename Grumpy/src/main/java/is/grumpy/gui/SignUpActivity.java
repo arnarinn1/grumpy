@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -89,7 +90,16 @@ public class SignUpActivity extends ActionBarActivity implements SignupSuccessFu
                 {
                     String usernameCheck = mUsernameField.getText().toString();
                     grumpyApi.checkIfUserExists(usernameCheck, checkUserExistCallback);
+                    mUsernameStatus.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        mUsernameField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                mUsernameStatus.setVisibility(View.GONE);
+                return false;
             }
         });
     }

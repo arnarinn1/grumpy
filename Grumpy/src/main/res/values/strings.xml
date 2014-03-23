@@ -29,9 +29,23 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_in">Log In</string>
     <string name="no_network">No Network Connection</string>
+    <string name="take_profile_pic">Take profile picture</string>
+    <string name="sex">Sex</string>
+    <string name="birth_year">Birth year</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="UpdateLabel">update</string>
+
+    <array name="sex_array">
+        <item>Female</item>
+        <item>Male</item>
+        <item>Other</item>
+    </array>
     <string name="write_comment">Write Comment</string>
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="people_like_posts">People Who Like This!</string>
+    <string name="email">Email</string>
+    <string name="about">About</string>
 
 </resources>
