@@ -10,8 +10,6 @@ import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
-import is.grumpy.rest.ExifUtil;
-
 /**
  * Created by Arnar on 17.3.2014.
  */

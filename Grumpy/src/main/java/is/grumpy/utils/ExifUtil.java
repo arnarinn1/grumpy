@@ -1,4 +1,4 @@
-package is.grumpy.rest;
+package is.grumpy.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
