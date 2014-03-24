@@ -63,7 +63,7 @@
         <ImageButton
             android:id="@+id/postComment"
             style="?android:attr/borderlessButtonStyle"
-            android:src="@drawable/ic_action_send_now"
+            android:src="@drawable/ic_action_send_now_dark"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"/>
 
