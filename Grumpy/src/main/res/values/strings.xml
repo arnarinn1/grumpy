@@ -34,7 +34,7 @@
     <string name="birth_year">Birth year</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
-    <string name="UpdateLabel">update</string>
+    <string name="UpdateLabel">Update</string>
 
     <array name="sex_array">
         <item>Female</item>
