@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +45,12 @@ public class EditProfileFragment extends BaseFragment {
 
     private UserData profile;
 
-    @InjectView(R.id.first_name)       EditText mFirstName;
-    @InjectView(R.id.last_name)        EditText mLastName;
-    @InjectView(R.id.birth_year)       EditText mBirthday;
-    @InjectView(R.id.about)            EditText mAbout;
-    @InjectView(R.id.email)            EditText mEmail;
-    @InjectView(R.id.spinner)          EditText mSex;
+    EditText mFirstName;
+    EditText mLastName;
+    EditText mBirthday;
+    EditText mAbout;
+    EditText mEmail;
+    Spinner mSex;
 
     private GrumpyService grumpyApi;
 
@@ -70,12 +71,16 @@ public class EditProfileFragment extends BaseFragment {
     {
         super.onActivityCreated(savedInstanceState);
 
-        ButterKnife.inject(this);
-        Spinner sexSpinner = (Spinner) getView().findViewById(R.id.spinner);
+        mFirstName = (EditText) getView().findViewById(R.id.first_name);
+        mLastName = (EditText) getView().findViewById(R.id.last_name);
+        mBirthday = (EditText) getView().findViewById(R.id.birth_year);
+        mAbout = (EditText) getView().findViewById(R.id.about);
+        mEmail = (EditText) getView().findViewById(R.id.email);
+        mSex = (Spinner) getView().findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sex_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sexSpinner.setAdapter(adapter);
+        mSex.setAdapter(adapter);
 
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
@@ -103,12 +108,20 @@ public class EditProfileFragment extends BaseFragment {
 
     private void updateUser()
     {
-        profile.setFirstName(mFirstName.getText().toString().trim());
-        profile.setLastName(mLastName.getText().toString().trim());
-        profile.setBirthday(mBirthday.getText().toString().trim());
-        profile.setSex(mSex.getText().toString().trim());
-        profile.setAbout(mAbout.getText().toString().trim());
-        profile.setEmail(mEmail.getText().toString().trim());
+        String firstName = mFirstName.getText().toString();
+        String lastName = mLastName.getText().toString();
+        String birthday = mBirthday.getText().toString();
+        String sex = mSex.getSelectedItem().toString();
+        String about = mAbout.getText().toString();
+        String email = mEmail.toString().toString();
+
+        profile = new UserData();
+        profile.setFirstName(firstName.trim());
+        profile.setLastName(lastName.trim());
+        profile.setBirthday(birthday.trim());
+        profile.setSex(sex);
+        profile.setAbout(about.trim());
+        profile.setEmail(email.trim());
 
         grumpyApi.updateUser(profile, updateUserCallback);
     }

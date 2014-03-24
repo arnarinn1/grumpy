@@ -161,6 +161,7 @@ public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOut
                 break;
             case 7:
                 fragment = EditProfileFragment.newInstance(position);
+                break;
             case 8:
                 LogOutUser();
                 break;
