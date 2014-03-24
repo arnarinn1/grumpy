@@ -91,6 +91,11 @@ public class SearchAdapter extends BaseAdapter
                 .into(holder.profilePicture);
 
         holder.followUser.setVisibility(View.VISIBLE);
+
+        if (user.getFollowing()) {
+            holder.followUser.setVisibility(View.GONE);
+        }
+
         holder.followUser.setHasTransientState(true);
         holder.followUser.setOnClickListener(new View.OnClickListener()
         {

@@ -36,6 +36,9 @@ public class UserData implements Serializable
     @SerializedName("sex")
     private String sex;
 
+    @SerializedName("following")
+    private Boolean following = false;
+
     public void setUsername(String username) { this.username = username; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
@@ -54,6 +57,10 @@ public class UserData implements Serializable
     public String getBirthday() { return this.birthday; }
     public String getAbout() { return this.about; }
     public String getSex() { return this.sex; }
+
+    public Boolean getFollowing() {
+        return this.following;
+    }
 
     public String getFullName() { return this.firstName + " " + this.lastName; }
 }
