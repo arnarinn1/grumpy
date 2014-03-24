@@ -24,8 +24,7 @@
         android:id="@+id/lvFollowingUsers"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="@color/base2_app_color"
-        android:dividerHeight="1sp"
+        android:scrollbars="none"
         android:padding="5sp"/>
 
 </LinearLayout>

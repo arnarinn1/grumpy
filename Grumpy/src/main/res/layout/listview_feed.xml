@@ -81,7 +81,7 @@
             android:drawableLeft="@drawable/ic_action_good_dark"
             android:text="@string/like"
             android:paddingRight="70sp"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/commentOnPost"
@@ -94,7 +94,7 @@
             android:text="@string/comment"
             android:paddingLeft="5sp"
             android:paddingRight="30sp"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
