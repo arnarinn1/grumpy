@@ -179,7 +179,7 @@ public class FeedAdapter extends BaseAdapter
         {
             if (like.getUserId().equals(userId))
             {
-                likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_good_blue, 0, 0, 0);
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.thumbs_up_blue, 0, 0, 0);
                 likeButton.setHasTransientState(true);
                 return;
             }

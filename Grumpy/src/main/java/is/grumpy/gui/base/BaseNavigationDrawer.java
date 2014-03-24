@@ -64,13 +64,13 @@ public class BaseNavigationDrawer extends BaseFragmentActivity implements LogOut
 
         items.add(new DrawerUserInfo());
         items.add(new DrawerHeader("FAVORITES"));
-        items.add(new DrawerListItem("Grumpy Feed", R.drawable.ic_home, false));
-        items.add(new DrawerListItem("Following", R.drawable.ic_people, false));
-        items.add(new DrawerListItem("Messages", R.drawable.ic_messages, true));
-        items.add(new DrawerListItem("Search Users", R.drawable.ic_search, false));
+        items.add(new DrawerListItem("Grumpy Feed", R.drawable.home, false));
+        items.add(new DrawerListItem("Following", R.drawable.user, false));
+        items.add(new DrawerListItem("Messages", R.drawable.bubble, true));
+        items.add(new DrawerListItem("Search Users", R.drawable.search, false));
         items.add(new DrawerHeader("SETTINGS"));
-        items.add(new DrawerListItem("Edit Profile", R.drawable.ic_settings, false));
-        items.add(new DrawerListItem("Log Out", R.drawable.ic_logout, false));
+        items.add(new DrawerListItem("Edit Profile", R.drawable.cog, false));
+        items.add(new DrawerListItem("Log Out", R.drawable.key, false));
 
         mDrawerList.setAdapter(new DrawerListAdapter(this, items));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
