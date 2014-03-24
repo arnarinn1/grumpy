@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#222"
+    android:background="#fff"
     android:padding="5sp">
 
     <ImageView
@@ -23,7 +23,6 @@
             android:id="@+id/commentUserName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
             android:typeface="serif"
             android:textStyle="bold"
             android:paddingLeft="5sp"/>
@@ -32,7 +31,6 @@
             android:id="@+id/comment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="#fff"
             android:typeface="serif"
             android:paddingLeft="5sp"/>
 

@@ -3,26 +3,25 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/login_background">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/ic_launcher_pic"
-        android:scaleType="centerCrop"/>
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Grumpy"
         android:gravity="center"
+        android:layout_marginTop="50dp"
         style="@style/LauncherTheme"/>
 
     <LinearLayout
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp">
 
         <EditText
             android:id="@+id/loginUsername"
@@ -30,8 +29,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="@string/username"
-            android:layout_marginLeft="60sp"
-            android:layout_marginRight="60sp"/>
+            android:layout_marginBottom="10dp"/>
 
         <EditText
             android:id="@+id/loginPassword"
@@ -39,22 +37,19 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="@string/password"
-            android:layout_marginLeft="60sp"
-            android:layout_marginRight="60sp"/>
+            android:layout_marginBottom="10dp"/>
 
         <!-- Change ugly look when btn gets pressed -->
         <Button
             android:id="@+id/btnLoginUsername"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_launcher_selector"
+            android:background="@drawable/btn_login_signup_selector"
             android:text="@string/log_in"
             android:textColor="#fff"
             android:typeface="sans"
-            android:textSize="25sp"
-            android:padding="10sp"
-            android:layout_marginLeft="60sp"
-            android:layout_marginRight="60sp"/>
+            android:textSize="20sp"
+            android:padding="10sp"/>
 
     </LinearLayout>
 
@@ -64,13 +59,14 @@
         android:id="@+id/signupUser"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_launcher_selector"
+        android:background="@drawable/btn_login_signup_selector"
         android:text="@string/sign_up"
         android:textColor="#fff"
         android:typeface="sans"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:padding="10sp"
         android:layout_marginLeft="70sp"
-        android:layout_marginRight="70sp"/>
+        android:layout_marginRight="70sp"
+        android:layout_marginBottom="10dp"/>
 
 </FrameLayout>

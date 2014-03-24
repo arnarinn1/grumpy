@@ -144,7 +144,7 @@
         android:textAlignment="center"
         android:text="@string/UpdateLabel"
         android:textColor="#fff"
-        android:background="@drawable/btn_login_signup_selector"
+        android:background="@drawable/btn_basic_selector"
         />
 </LinearLayout>
 </ScrollView>

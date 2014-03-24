@@ -83,13 +83,13 @@
 
     <!-- Launcher Theme -->
     <style name="LauncherTheme">
-        <item name="android:paddingTop">20sp</item>
         <item name="android:textColor">#fff</item>
         <item name="android:textSize">45sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">@color/base3_app_color</item>
-        <item name="android:shadowDx">3</item>
-        <item name="android:shadowDy">3</item>
-        <item name="android:shadowRadius">3</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">6</item>
     </style>
 
     <!-- Dialog Theme & Dialog Animations -->

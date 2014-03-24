@@ -4,6 +4,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#fff">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/feedPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="#fff">
 
@@ -55,41 +62,41 @@
             android:visibility="gone"
             style="@style/BaseTextStyle.CommentLikeCount"/>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:background="#dedede"
-            android:layout_below="@id/commentLikeCount"
-            android:layout_marginTop="5sp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/likePost"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_margin="1px"
-                android:background="@drawable/btn_comment_like_selector"
-                android:drawableLeft="@drawable/ic_action_good_dark"
-                android:text="@string/like"
-                android:paddingRight="70sp"
-                android:textSize="16sp"/>
-
-            <Button
-                android:id="@+id/commentOnPost"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_margin="1px"
-                android:background="@drawable/btn_comment_like_selector"
-                android:drawableLeft="@drawable/ic_action_comment"
-                android:text="@string/comment"
-                android:paddingLeft="5sp"
-                android:paddingRight="30sp"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
     </RelativeLayout>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="#dedede"
+        android:layout_below="@id/feedPost"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/likePost"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_margin="1px"
+            android:background="@drawable/btn_comment_like_selector"
+            android:drawableLeft="@drawable/ic_action_good_dark"
+            android:text="@string/like"
+            android:paddingRight="70sp"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/commentOnPost"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_margin="1px"
+            android:background="@drawable/btn_comment_like_selector"
+            android:drawableLeft="@drawable/ic_action_comment"
+            android:text="@string/comment"
+            android:paddingLeft="5sp"
+            android:paddingRight="30sp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    </RelativeLayout>
 </merge>

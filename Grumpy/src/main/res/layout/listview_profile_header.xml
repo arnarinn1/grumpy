@@ -6,6 +6,7 @@
     android:id="@+id/profileHeader"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="10dp"
     android:background="@color/grumpy_feed_background">
 
     <FrameLayout
@@ -15,7 +16,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="150sp"
-            android:background="@drawable/btn_login_signup_pressed"/>
+            android:background="@drawable/profile_background"/>
 
         <TextView
             android:id="@+id/profileFullName"
@@ -44,7 +45,6 @@
         app:border_color="#fff"
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="10sp"
         android:scaleType="centerCrop"/>
 
 </RelativeLayout>

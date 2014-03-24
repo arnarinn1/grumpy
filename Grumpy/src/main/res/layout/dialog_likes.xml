@@ -5,31 +5,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#222">
+    android:padding="10dp"
+    android:background="#fff">
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
         android:text="@string/people_like_posts"
         android:textSize="20sp"
         android:gravity="center"
-        android:paddingTop="10sp"
         android:paddingBottom="10sp"/>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="@drawable/vertical_divider"
-        />
 
     <ListView
         android:id="@+id/postLikes"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@color/base3_app_color"
-        android:dividerHeight="0.5dp"
         android:choiceMode="singleChoice"
         />
 
