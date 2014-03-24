@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,8 +37,11 @@ public class ProfileFragment extends BaseFragment
     @InjectView(R.id.profileLayout) RelativeLayout mLayout;
     @InjectView(R.id.profilePosts) ListView mListView;
 
+    ViewGroup profileHeader;
     private ImageView mProfilePicture;
     private TextView mFullName;
+    private TextView mBirthday;
+    private TextView mAbout;
 
     public static ProfileFragment newInstance(String userId)
     {
@@ -57,9 +61,19 @@ public class ProfileFragment extends BaseFragment
         super.onActivityCreated(savedInstanceState);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        ViewGroup profileHeader = (ViewGroup) inflater.inflate(R.layout.listview_profile_header, mListView , false);
+        profileHeader = (ViewGroup) inflater.inflate(R.layout.listview_profile_header, mListView , false);
         mProfilePicture = (ImageView) profileHeader.findViewById(R.id.profilePicture);
         mFullName = (TextView) profileHeader.findViewById(R.id.profileFullName);
+        mBirthday= (TextView) profileHeader.findViewById(R.id.birthday);
+        mAbout = (TextView) profileHeader.findViewById(R.id.about);
+
+        profileHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ShowProfile();
+            }
+        });
 
         mListView.addHeaderView(profileHeader);
 
@@ -68,6 +82,20 @@ public class ProfileFragment extends BaseFragment
 
         String userId = getArguments().getString(EXTRA_USERID);
         mService.getUserProfileInfo(userId, userProfileCallback);
+    }
+
+    private void ShowProfile()
+    {
+        View profile = profileHeader.findViewById(R.id.full_profile);
+        int visibility = profile.getVisibility();
+        if (visibility==View.VISIBLE)
+        {
+            profile.setVisibility(View.GONE);
+        }
+        else
+        {
+            profile.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -90,6 +118,8 @@ public class ProfileFragment extends BaseFragment
                         .into(mProfilePicture);
 
                 mFullName.setText(user.getUser().getFullName());
+                mAbout.setText(user.getUser().getAbout());
+                mBirthday.setText(user.getUser().getBirthday());
 
                 mListView.setAdapter(new FeedAdapter(IActivity.context(), R.layout.listview_profile_feed, user.getPosts()));
 

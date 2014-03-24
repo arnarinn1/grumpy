@@ -1,7 +1,16 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <gradient
-        android:startColor="@color/basic_button_highlight"
-        android:endColor="@color/drawer_background_pressed"
-        android:angle="90" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/grumpy_feed_background"/>
+        </shape>
+    </item>
+    <item android:bottom="75dp">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <gradient
+                android:startColor="@color/basic_button_highlight"
+                android:endColor="@color/drawer_background_pressed"
+                android:angle="90" />
+        </shape>
+    </item>
+</layer-list>

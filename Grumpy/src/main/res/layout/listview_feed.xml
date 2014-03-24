@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/grumpyFeedPost"
-            android:layout_marginTop="7sp"
+            android:layout_marginTop="5sp"
             android:paddingTop="3sp"
             android:paddingBottom="3sp"
             android:background="@drawable/tv_comment_like_selector"
@@ -78,9 +78,10 @@
             android:layout_width="0dp"
             android:layout_margin="1px"
             android:background="@drawable/btn_comment_like_selector"
-            android:drawableLeft="@drawable/ic_action_good_dark"
+            android:drawableLeft="@drawable/thumbs_up_dark_sm"
             android:text="@string/like"
-            android:paddingRight="70sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="70dp"
             android:textSize="14sp"/>
 
         <Button
@@ -90,9 +91,9 @@
             android:layout_width="0dp"
             android:layout_margin="1px"
             android:background="@drawable/btn_comment_like_selector"
-            android:drawableLeft="@drawable/ic_action_comment"
+            android:drawableLeft="@drawable/bubble_dark_sm"
             android:text="@string/comment"
-            android:paddingLeft="5sp"
+            android:paddingLeft="10dp"
             android:paddingRight="30sp"
             android:textSize="14sp"/>
 

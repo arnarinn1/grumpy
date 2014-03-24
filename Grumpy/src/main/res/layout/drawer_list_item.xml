@@ -10,8 +10,9 @@
 
     <ImageView
         android:id="@+id/drawer_image"
-        android:layout_width="25dp"
+        android:layout_width="16dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:src="@drawable/ic_home"/>
 
     <TextView
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/drawer_message_counter_background"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
         android:layout_marginRight="8dp"
         android:textColor="@color/message_counter_text_color"/>
 
