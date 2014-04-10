@@ -107,7 +107,7 @@ public class FeedAdapter extends BaseAdapter
         String picture = feed.getUser().getAvatar();
 
         Picasso.with(mContext)
-                .load(picture == null ? "https://notendur.hi.is/~arh36/Grumpy/rest/api/arnar2.jpg" : picture)
+                .load(picture)
                 .noFade()
                 .error(R.drawable.ic_launcher)
                 .into(holder.profilePicture);
