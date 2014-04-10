@@ -97,14 +97,12 @@ public class EditProfileFragment extends BaseFragment
         @Override
         public void success(UserData userData, retrofit.client.Response response)
         {
-            if (response.getStatus()==200)
+            if (response.getStatus() == 200)
             {
                 Toast.makeText(getActivity(), "Updated User Info!", Toast.LENGTH_SHORT).show();
                 Credentials credentials = new Credentials(IActivity.context());
                 credentials.updateCache(userData);
             }
-            else
-                Toast.makeText(getActivity(), "Whoops, I have no idea what heppened", Toast.LENGTH_SHORT).show();
         }
 
         @Override
