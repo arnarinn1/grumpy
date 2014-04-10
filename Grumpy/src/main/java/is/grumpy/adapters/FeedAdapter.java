@@ -41,17 +41,20 @@ import retrofit.client.Response;
 public class FeedAdapter extends BaseAdapter
 {
     private static int mFeedPosition;
+    private static String mLikeId;
 
     private Context mContext;
     private int layoutResourceId;
     private List<FeedData> mFeed;
     private GrumpyService mService;
+    private String mUserId;
 
     public FeedAdapter(Context context, int layoutResourceId, List<FeedData> feed)
     {
         this.mContext = context;
         this.layoutResourceId = layoutResourceId;
         this.mFeed = feed;
+        this.mUserId = new Credentials(context).GetCacheToken(Credentials.mId);
         Initialize();
     }
 
@@ -167,17 +170,26 @@ public class FeedAdapter extends BaseAdapter
     private void LikePost(FeedData feed, int position)
     {
         mFeedPosition = position;
+
+        for(LikeData like : feed.getLikes())
+        {
+            if (like.getUserId().equals(mUserId))
+            {
+                mLikeId = like.getId();
+                mService.unlikePost(like.getId(), unlikePostCallback);
+                return;
+            }
+        }
+
         mService.likePost(feed.getId(), likePostCallback);
     }
 
     private void SetLikeButtonStatus(Button likeButton, List<LikeData> likes)
     {
-        String userId = new Credentials(mContext).GetCacheToken(Credentials.mId);
-
         //Set likeButton blue if current user has liked this post
         for(LikeData like : likes)
         {
-            if (like.getUserId().equals(userId))
+            if (like.getUserId().equals(mUserId))
             {
                 likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.thumbs_up_blue, 0, 0, 0);
                 likeButton.setHasTransientState(true);
@@ -257,6 +269,34 @@ public class FeedAdapter extends BaseAdapter
             Toast.makeText(mContext, "You can't like this post again", Toast.LENGTH_SHORT).show();
         }
     };
+
+    Callback<ServerResponse> unlikePostCallback = new Callback<ServerResponse>()
+    {
+        @Override
+        public void success(ServerResponse serverResponse, Response response)
+        {
+            RemoveLike();
+        }
+
+        @Override
+        public void failure(RetrofitError retrofitError)
+        {
+            Toast.makeText(mContext, "You can't like this post again", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private void RemoveLike()
+    {
+        for(LikeData like : mFeed.get(mFeedPosition).getLikes())
+        {
+            if (like.getId().equals(mLikeId))
+            {
+                mFeed.get(mFeedPosition).getLikes().remove(like);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 
     private class DeletePostWorker extends AsyncTask<String, Void, ServerResponse>
     {

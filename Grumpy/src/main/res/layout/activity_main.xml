@@ -19,7 +19,7 @@
         android:choiceMode="singleChoice"
         android:divider="#AAA"
         android:dividerHeight="0dp"
-        android:background="@color/base_app_color"
+        android:background="@drawable/login_background"
         android:listSelector="@drawable/drawer_list_selector"/>
 
 </android.support.v4.widget.DrawerLayout>

@@ -83,4 +83,8 @@ public interface GrumpyService
     @POST("/follow/{userId}")
     void followUser(@Path("userId") String userId,
                     Callback<ServerResponse> callback);
+
+    @DELETE("/post/like/{likeId}")
+    void unlikePost(@Path("likeId") String likeId,
+                    Callback<ServerResponse> callback);
 }
