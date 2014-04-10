@@ -36,7 +36,7 @@ public interface GrumpyService
 
     @PUT("/user")
     void updateUser(@Body UserData user,
-                    Callback<ServerResponse> callback);
+                    Callback<UserData> callback);
 
     @POST("/login")
     void loginUser(@Body PostUser loginUser,

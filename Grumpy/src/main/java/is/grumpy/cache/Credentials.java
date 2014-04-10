@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import is.grumpy.contracts.LoginResponse;
+import is.grumpy.contracts.UserData;
 
 /**
  * Created by Arnar on 20.2.2014.
@@ -47,6 +48,14 @@ public class Credentials
         editor.putString(mAccessToken, response.getAccessToken());
         editor.putString(mId, response.getUser().getId());
         editor.putString(mAvatar, response.getUser().getAvatar());
+        editor.commit();
+    }
+
+    public void updateCache(UserData response)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(mFullName, String.format("%s %s", response.getFirstName(), response.getLastName()));
         editor.commit();
     }
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import is.grumpy.R;
+import is.grumpy.cache.Credentials;
 import is.grumpy.contracts.ServerResponse;
 import is.grumpy.contracts.UserData;
 import is.grumpy.gui.base.BaseFragment;
@@ -91,15 +92,16 @@ public class EditProfileFragment extends BaseFragment
         grumpyApi.updateUser(profile, updateUserCallback);
     }
 
-    Callback<ServerResponse> updateUserCallback = new Callback<ServerResponse>()
+    Callback<UserData> updateUserCallback = new Callback<UserData>()
     {
         @Override
-        public void success(ServerResponse response, retrofit.client.Response response2)
+        public void success(UserData userData, retrofit.client.Response response)
         {
-            //TODO: Return updated user info to update cache credentials
-            if (response.getStatus())
+            if (response.getStatus()==200)
             {
                 Toast.makeText(getActivity(), "Updated User Info!", Toast.LENGTH_SHORT).show();
+                Credentials credentials = new Credentials(IActivity.context());
+                credentials.updateCache(userData);
             }
             else
                 Toast.makeText(getActivity(), "Whoops, I have no idea what heppened", Toast.LENGTH_SHORT).show();
